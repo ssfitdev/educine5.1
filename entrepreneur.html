@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sponsor Registration | Educine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #0f0f11
+          url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMTAxMDEyIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMxNzE3MTkiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=");
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        flex-direction: column;
+      }
+      /* Typography */
+      h1 {
+        color: white;
+        font-size: 1.875rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+      }
+      p {
+        color: #cccccc;
+        font-size: 1.125rem;
+      }
+      /* Accent Gradient combining #FF007A and #883ff9 */
+      .educine-gradient {
+        background: linear-gradient(135deg, #ff007a 0%, #883ff9 100%);
+        color: #ffffff;
+      }
+      /* Card Styling */
+      .form-card {
+        background: linear-gradient(135deg, #1a1a1d, #1f1f22);
+        box-shadow: 0 12px 35px -10px rgba(136, 63, 249, 0.25);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 2rem;
+        backdrop-filter: blur(4px);
+        width: 100%;
+        max-width: 28rem;
+      }
+      @media (min-width: 1024px) {
+        body.instructions-wide #formContainer {
+          max-width: 96vw;
+        }
+        body.instructions-wide .form-card {
+          max-width: 96vw;
+        }
+      }
+      /* Form Elements */
+      label {
+        color: #f8fafc !important;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 0.875rem;
+      }
+      ::placeholder {
+        color: #94a3b8 !important;
+        opacity: 0.8;
+      }
+      .input-field {
+        background-color: #222227;
+        border: 1px solid #4b5563;
+        color: #ffffff;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        width: 100%;
+      }
+      .input-field:hover {
+        border-color: #6b7280;
+      }
+      .input-field:focus {
+        border-color: #883ff9;
+        box-shadow: 0 0 0 3px rgba(136, 63, 249, 0.3);
+        outline: none;
+      }
+      /* Checkbox Styling */
+      .checkbox {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #6b7280;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+      }
+      .checkbox:checked {
+        background-color: #883ff9;
+        border-color: #883ff9;
+      }
+      .checkbox:checked::after {
+        content: "✓";
+        position: absolute;
+        color: white;
+        font-size: 12px;
+        left: 2px;
+        top: -1px;
+      }
+      /* Button Styling */
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          #ff007a 0%,
+          #883ff9 100%
+        ) !important;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        cursor: pointer;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(136, 63, 249, 0.25);
+      }
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+      /* Animations */
+      .animate-bounce-once {
+        animation: bounce 0.5s ease;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+      /* Responsive Adjustments */
+      @media (max-width: 640px) {
+        .form-card {
+          padding: 1.5rem;
+        }
+        .grid-cols-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      /* Success Modal Enhancements */
+      #successModal .rounded-md {
+        border: 2px solid transparent;
+        background-clip: padding-box;
+        background: linear-gradient(135deg, #1a1a1d, #1f1f22);
+        position: relative;
+      }
+      #successModal .rounded-md::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(135deg, #ff007a, #883ff9);
+        z-index: -1;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center p-4">
+    <div id="formContainer" class="w-full max-w-md">
+      <div class="bg-white rounded-xl form-card p-6">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-semibold text-gray-800 text-white">
+            Entrepreneurship Pitch Deck - Registration
+          </h2>
+          <p class="text-sm text-gray-600 mt-1 text-[#cccccc]">
+            Educine Pitch Deck Registration
+          </p>
+        </div>
+
+        <div id="step1" class="space-y-4">
+          <div class="rounded-lg border border-white/10 bg-black/10 p-4">
+            <p class="text-sm text-[#cccccc]" style="margin-bottom: 12px">
+              Welcome to the Educine Pitch Deck
+            </p>
+            <p class="text-sm text-[#cccccc]" style="margin-bottom: 12px">
+              The Entrepreneurship Pitch Deck at Educine provides a platform for aspiring entrepreneurs to present their ideas, receive expert feedback, and explore opportunities for growth and collaboration.
+            </p>
+            <p class="text-sm text-[#cccccc]" style="margin-bottom: 12px">
+              Please Read the Following Instructions Carefully:
+            </p>
+            <div class="space-y-3 text-sm" style="color: #cccccc">
+              <div><span class="font-semibold text-white">Eligibility:</span> Open to students, aspiring entrepreneurs, and early-stage innovators with original ideas.</div>
+              <div><span class="font-semibold text-white">Individual / Team Participation:</span> Participants can register individually or as a team (maximum 5 members).</div>
+              <div><span class="font-semibold text-white">Pitch Format:</span> Each participant/team will present their idea using a pitch deck (PPT/PDF). Duration: 5-7 minutes presentation + Q&amp;A.</div>
+              <div><span class="font-semibold text-white">Originality:</span> All ideas must be original. Plagiarism or copied concepts will lead to disqualification.</div>
+              <div><span class="font-semibold text-white">Selection Process:</span> Entries may be shortlisted based on the information provided in this form.</div>
+              <div><span class="font-semibold text-white">Submission Requirement:</span> Final pitch deck must be submitted before the deadline (details will be shared).</div>
+              <div><span class="font-semibold text-white">Consent:</span> By registering, you agree to allow organizers to use your pitch details for evaluation and event-related purposes.</div>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <input id="instructionsAgree" type="checkbox" class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+            <label for="instructionsAgree" class="text-sm" style="margin: 0; color: #f8fafc !important;">I have read and understood the instructions</label>
+          </div>
+
+          <div class="pt-2">
+            <button id="instructionsNextBtn" type="button" class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white btn-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200" disabled style="opacity: 0.6; cursor: not-allowed;">
+              Next →
+            </button>
+          </div>
+        </div>
+
+        <form id="sponsorForm" class="space-y-4 hidden">
+          <input type="hidden" name="formType" value="pitchdeck" />
+
+          <div>
+            <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name*</label>
+            <input type="text" id="fullName" name="fullName" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number*</label>
+            <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" maxlength="10" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address*</label>
+            <input type="email" id="email" name="email" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="age" class="block text-sm font-medium text-gray-700 mb-1">Age*</label>
+              <input type="number" id="age" name="age" min="15" max="80" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+            </div>
+            <div>
+              <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">Gender*</label>
+              <select id="gender" name="gender" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 appearance-none">
+                <option value="" disabled selected>Select gender</option>
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="place" class="block text-sm font-medium text-gray-700 mb-1">Place (City/Town)*</label>
+              <input type="text" id="place" name="place" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+            </div>
+            <div>
+              <label for="district" class="block text-sm font-medium text-gray-700 mb-1">District*</label>
+              <input type="text" id="district" name="district" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+            </div>
+          </div>
+
+          <h3 class="text-lg font-semibold text-white pt-2">Participation Type</h3>
+          <div>
+            <label for="participationType" class="block text-sm font-medium text-gray-700 mb-1">Are you applying as*</label>
+            <select id="participationType" name="participationType" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 appearance-none">
+              <option value="" disabled selected>Select type</option>
+              <option value="Individual">Individual</option>
+              <option value="Team">Team</option>
+            </select>
+          </div>
+          <div id="teamFields" class="space-y-3 hidden">
+            <div>
+              <label for="teamName" class="block text-sm font-medium text-gray-700 mb-1">Team Name</label>
+              <input type="text" id="teamName" name="teamName" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+            </div>
+            <div>
+              <label for="teamMembers" class="block text-sm font-medium text-gray-700 mb-1">Number of Members</label>
+              <input type="number" id="teamMembers" name="teamMembers" min="2" max="5" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+            </div>
+          </div>
+
+          <h3 class="text-lg font-semibold text-white pt-2">Educational / Professional Background</h3>
+          <div>
+            <label for="currentStatus" class="block text-sm font-medium text-gray-700 mb-1">Current Status*</label>
+            <select id="currentStatus" name="currentStatus" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 appearance-none">
+              <option value="" disabled selected>Select status</option>
+              <option>Student</option>
+              <option>Working Professional</option>
+              <option>Entrepreneur</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="institutionOrganization" class="block text-sm font-medium text-gray-700 mb-1">Institution / Organization Name*</label>
+            <input type="text" id="institutionOrganization" name="institutionOrganization" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+          </div>
+          <div>
+            <label for="courseFieldRole" class="block text-sm font-medium text-gray-700 mb-1">Course / Field / Role*</label>
+            <input type="text" id="courseFieldRole" name="courseFieldRole" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+          </div>
+
+          <h3 class="text-lg font-semibold text-white pt-2">Startup / Idea Details</h3>
+          <div>
+            <label for="ideaTitle" class="block text-sm font-medium text-gray-700 mb-1">Title of the Idea / Startup*</label>
+            <input type="text" id="ideaTitle" name="ideaTitle" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+          </div>
+          <div>
+            <label for="problemStatement" class="block text-sm font-medium text-gray-700 mb-1">Problem Statement*</label>
+            <textarea id="problemStatement" name="problemStatement" rows="2" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700"></textarea>
+          </div>
+          <div>
+            <label for="proposedSolution" class="block text-sm font-medium text-gray-700 mb-1">Proposed Solution*</label>
+            <textarea id="proposedSolution" name="proposedSolution" rows="2" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700"></textarea>
+          </div>
+          <div>
+            <label for="targetAudience" class="block text-sm font-medium text-gray-700 mb-1">Target Audience / Market*</label>
+            <input type="text" id="targetAudience" name="targetAudience" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+          </div>
+          <div>
+            <label for="uniqueValueProposition" class="block text-sm font-medium text-gray-700 mb-1">Unique Value Proposition*</label>
+            <textarea id="uniqueValueProposition" name="uniqueValueProposition" rows="2" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700"></textarea>
+          </div>
+          <div>
+            <label for="ideaStage" class="block text-sm font-medium text-gray-700 mb-1">Current Stage of Idea*</label>
+            <select id="ideaStage" name="ideaStage" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 appearance-none">
+              <option value="" disabled selected>Select stage</option>
+              <option>Idea Stage</option>
+              <option>Prototype</option>
+              <option>Early Revenue</option>
+              <option>Scaling</option>
+            </select>
+          </div>
+          <div>
+            <label for="supportNeeded" class="block text-sm font-medium text-gray-700 mb-1">What kind of support are you looking for?*</label>
+            <select id="supportNeeded" name="supportNeeded" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 appearance-none">
+              <option value="" disabled selected>Select support type</option>
+              <option>Mentorship</option>
+              <option>Funding</option>
+              <option>Networking</option>
+              <option>Incubation</option>
+              <option>Others</option>
+            </select>
+          </div>
+          <div>
+            <label for="pitchDeckFile" class="block text-sm font-medium text-gray-700 mb-1">Upload your Pitch Deck (PDF/PPT)</label>
+            <input type="file" id="pitchDeckFile" name="pitchDeckFile" accept=".pdf,.ppt,.pptx" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
+          </div>
+
+          <h3 class="text-lg font-semibold text-white pt-2">Declaration</h3>
+          <div>
+            <label class="flex items-start gap-2 text-sm">
+              <input type="checkbox" id="declaration" name="declaration" required class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-0.5" />
+              <span>I hereby declare that the idea submitted is original and the information provided is true to the best of my knowledge.</span>
+            </label>
+          </div>
+
+          <div class="pt-2">
+            <button type="submit" class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white btn-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200">
+              Submit
+              <svg class="ml-2 -mr-1 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div
+      id="successModal"
+      class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden"
+    >
+      <div class="bg-white rounded-md p-6 max-w-sm w-full">
+        <div class="text-center">
+          <div
+            class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-400 mb-4"
+          >
+            <svg
+              class="h-6 w-6 text-green-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-white mb-2">Registration Submitted!</h3>
+          <p class="text-sm text-gray-500 mb-4">
+            Thank you for registering for the Educine Pitch Deck.
+          </p>
+          <div class="items-center">
+            <button
+              onclick="window.location.href='https://educine.in'"
+              class="modal-close px-4 py-2 btn-primary text-white text-base font-medium rounded-md w-full shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+            >
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const step1 = document.getElementById("step1");
+        const form = document.getElementById("sponsorForm");
+        const agree = document.getElementById("instructionsAgree");
+        const nextBtn = document.getElementById("instructionsNextBtn");
+        const phoneInput = document.getElementById("phone");
+        const participationType = document.getElementById("participationType");
+        const teamFields = document.getElementById("teamFields");
+
+        function setNextEnabled(enabled) {
+          nextBtn.disabled = !enabled;
+          nextBtn.style.opacity = enabled ? "1" : "0.6";
+          nextBtn.style.cursor = enabled ? "pointer" : "not-allowed";
+        }
+        setNextEnabled(false);
+        document.body.classList.add("instructions-wide");
+        agree?.addEventListener("change", function () {
+          setNextEnabled(!!agree.checked);
+        });
+        nextBtn?.addEventListener("click", function () {
+          if (!agree?.checked) return;
+          step1.classList.add("hidden");
+          form.classList.remove("hidden");
+          document.body.classList.remove("instructions-wide");
+        });
+
+        participationType?.addEventListener("change", function () {
+          if (this.value === "Team") {
+            teamFields.classList.remove("hidden");
+          } else {
+            teamFields.classList.add("hidden");
+            document.getElementById("teamName").value = "";
+            document.getElementById("teamMembers").value = "";
+          }
+        });
+
+        phoneInput?.addEventListener("input", function () {
+          this.value = this.value.replace(/\D/g, "").slice(0, 10);
+        });
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+
+          // Disable button and show loading
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `
+      <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      Processing...
+    `;
+
+          const phone = document.getElementById("phone").value;
+          if (!/^[0-9]{10}$/.test(phone)) {
+            showAlert("Please enter a valid 10-digit phone number");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          const pitchDeckFile = document.getElementById("pitchDeckFile")?.files?.[0];
+          const declarationChecked = document.getElementById("declaration")?.checked;
+
+          const formData = {
+            formType: "pitchdeck",
+            fullName: document.getElementById("fullName").value,
+            phone: phone,
+            email: document.getElementById("email").value,
+            age: document.getElementById("age").value,
+            gender: document.getElementById("gender").value,
+            place: document.getElementById("place").value,
+            district: document.getElementById("district").value,
+            participationType: document.getElementById("participationType").value,
+            teamName: document.getElementById("teamName").value || null,
+            teamMembers: document.getElementById("teamMembers").value || null,
+            currentStatus: document.getElementById("currentStatus").value,
+            institutionOrganization: document.getElementById("institutionOrganization").value,
+            courseFieldRole: document.getElementById("courseFieldRole").value,
+            ideaTitle: document.getElementById("ideaTitle").value,
+            problemStatement: document.getElementById("problemStatement").value,
+            proposedSolution: document.getElementById("proposedSolution").value,
+            targetAudience: document.getElementById("targetAudience").value,
+            uniqueValueProposition: document.getElementById("uniqueValueProposition").value,
+            ideaStage: document.getElementById("ideaStage").value,
+            supportNeeded: document.getElementById("supportNeeded").value,
+            pitchDeckFileName: pitchDeckFile ? pitchDeckFile.name : null,
+            declaration: declarationChecked ? "Yes" : "No",
+          };
+
+          if (
+            !formData.fullName ||
+            !formData.phone ||
+            !formData.email ||
+            !formData.age ||
+            !formData.gender ||
+            !formData.place ||
+            !formData.district ||
+            !formData.participationType ||
+            !formData.currentStatus ||
+            !formData.institutionOrganization ||
+            !formData.courseFieldRole ||
+            !formData.ideaTitle ||
+            !formData.problemStatement ||
+            !formData.proposedSolution ||
+            !formData.targetAudience ||
+            !formData.uniqueValueProposition ||
+            !formData.ideaStage ||
+            !formData.supportNeeded
+          ) {
+            showAlert("Please fill in all required fields");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          if (formData.participationType === "Team") {
+            if (!formData.teamName || !formData.teamMembers) {
+              showAlert("Please provide team details");
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+              return;
+            }
+          }
+
+          if (!declarationChecked) {
+            showAlert("Please accept the declaration before submitting");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          // Submit to Google Apps Script
+          const scriptUrl =
+            "https://script.google.com/macros/s/AKfycbyMlygClMiP1N5K94gR_b8XAem7WCTPzTwFUhVO--WkySYBpXRiigUiriYTJ1jhyrQ/exec";
+
+          fetch(scriptUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+            mode: "no-cors",
+          })
+            .then(() => {
+              // Since we're using no-cors mode, we can't read the response
+              // Assume success if the request completes
+              showSuccessModal("Registration submitted successfully!");
+              document.getElementById("sponsorForm").reset();
+              teamFields.classList.add("hidden");
+              step1.classList.remove("hidden");
+              form.classList.add("hidden");
+              document.body.classList.add("instructions-wide");
+              setNextEnabled(false);
+              document.getElementById("instructionsAgree").checked = false;
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            })
+            .catch((error) => {
+              showAlert("Submission failed. Please try again later.");
+              console.error("Error:", error);
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            });
+        });
+
+        // Helper function for alerts
+        function showAlert(message) {
+          const alertDiv = document.createElement("div");
+          alertDiv.className =
+            "mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg relative";
+          alertDiv.role = "alert";
+          alertDiv.innerHTML = `
+      <span class="block sm:inline">${message}</span>
+      <span class="absolute top-0 bottom-0 right-0 px-4 py-3 alert-close">
+        <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <title>Close</title>
+          <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
+        </svg>
+      </span>
+    `;
+
+          // Add to form container
+          const container =
+            document.querySelector("#sponsorForm").parentElement;
+          container.prepend(alertDiv);
+
+          // Add close functionality
+          alertDiv
+            .querySelector(".alert-close")
+            .addEventListener("click", () => {
+              alertDiv.remove();
+            });
+
+          // Auto-dismiss after 5 seconds
+          setTimeout(() => {
+            if (document.body.contains(alertDiv)) {
+              alertDiv.remove();
+            }
+          }, 5000);
+        }
+
+        // Function to show success modal
+        function showSuccessModal(message) {
+          // You'll need to add a success modal to your HTML
+          const modal = document.getElementById("successModal");
+          if (modal) {
+            const messageElement = modal.querySelector(".modal-message");
+            if (messageElement) {
+              messageElement.textContent =
+                message || "Thank you for your submission";
+            }
+            modal.classList.remove("hidden");
+          } else {
+            // Fallback if no modal exists
+            alert(message || "Thank you for your submission");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

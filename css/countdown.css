@@ -88,6 +88,9 @@
 
 /* Add container styles to ensure proper alignment */
 #section-event-timer .countdown-s1 {
+    transform: translateY(-110px); /* move upward */
+    position: relative;
+    z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -163,3 +166,31 @@
     flex-wrap: wrap;
 }
 
+#section-event-timer h2 {
+    position: relative;
+    z-index: 1;
+}
+.wm1 {
+    width: 100%;
+    position: relative;
+    margin-top: -10px;
+    text-align: center;
+    font-weight: bold;
+    top: 33px;
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .wm1.dark.wm1-border1 {
+    /* Outline variant stays responsive too */
+    font-size: clamp(44px, 15vw, 280px);
+    color: rgba(0, 0, 0, 0);
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .mb301 {
+    margin-bottom: 30px;
+    margin-top: -10px;
+  }

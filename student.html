@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Educine.in - Student Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #0f0f11
+          url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMTAxMDEyIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMxNzE3MTkiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=");
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        flex-direction: column;
+      }
+
+      /* Typography */
+      h1 {
+        color: white;
+        font-size: 1.875rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: #cccccc;
+        font-size: 1.125rem;
+      }
+
+      /* Accent Gradient combining #FF007A and #883ff9 */
+      .educine-gradient {
+        background: linear-gradient(135deg, #ff007a 0%, #883ff9 100%);
+        color: #ffffff;
+      }
+
+      /* Card Styling */
+      .form-card {
+        background: linear-gradient(135deg, #1a1a1d, #1f1f22);
+        box-shadow: 0 12px 35px -10px rgba(136, 63, 249, 0.25);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 2rem;
+        backdrop-filter: blur(4px);
+        width: 100%;
+        max-width: 28rem;
+      }
+
+      /* Form Elements */
+      label {
+        color: #f8fafc !important;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 0.875rem;
+      }
+
+      ::placeholder {
+        color: #94a3b8 !important;
+        opacity: 0.8;
+      }
+
+      .input-field {
+        background-color: #222227;
+        border: 1px solid #4b5563;
+        color: #ffffff;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        width: 100%;
+      }
+
+      .input-field:hover {
+        border-color: #6b7280;
+      }
+
+      .input-field:focus {
+        border-color: #883ff9;
+        box-shadow: 0 0 0 3px rgba(136, 63, 249, 0.3);
+        outline: none;
+      }
+
+      /* Checkbox Styling */
+      .checkbox {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #6b7280;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+      }
+
+      .checkbox:checked {
+        background-color: #883ff9;
+        border-color: #883ff9;
+      }
+
+      .checkbox:checked::after {
+        content: "✓";
+        position: absolute;
+        color: white;
+        font-size: 12px;
+        left: 2px;
+        top: -1px;
+      }
+
+      /* Button Styling */
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          #ff007a 0%,
+          #883ff9 100%
+        ) !important;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(136, 63, 249, 0.25);
+      }
+
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+
+      /* Animations */
+      .animate-bounce-once {
+        animation: bounce 0.5s ease;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 640px) {
+        .form-card {
+          padding: 1.5rem;
+        }
+
+        .grid-cols-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Success Modal Enhancements */
+      #successModal .rounded-md {
+        border: 2px solid transparent;
+        background-clip: padding-box;
+        background: linear-gradient(135deg, #1a1a1d, #1f1f22);
+        position: relative;
+      }
+
+      #successModal .rounded-md::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(135deg, #ff007a, #883ff9);
+        z-index: -1;
+        border-radius: 8px;
+      }
+
+      /* Stall selection section (copied from registeration25.html to keep UI identical) */
+      .stalls-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .stall-option {
+        position: relative;
+      }
+
+      .stall-checkbox {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .stall-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        height: 100%;
+        text-align: center;
+      }
+
+      .stall-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .stall-checkbox:checked + .stall-card {
+        border-color: #ff007a;
+        background: rgba(255, 0, 122, 0.05);
+        box-shadow: 0 8px 15px rgba(255, 0, 122, 0.2);
+      }
+
+      .stall-icon {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+
+      .stall-name {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      @media (max-width: 480px) {
+        .stalls-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+      <!-- Header with Educine branding -->
+      <div class="bg-white rounded-xl form-card p-6">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-semibold text-gray-800 text-white">
+            Student Registration
+          </h2>
+          <p class="text-sm text-gray-600 mt-1 text-[#cccccc]">
+            Please fill out the form to join our programs
+          </p>
+        </div>
+
+        <form id="studentForm" class="space-y-4">
+          <!-- Step 1 -->
+          <div id="step1" class="space-y-4">
+          <!-- Name -->
+          <div>
+            <label
+              for="name"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >Full Name*</label
+            >
+            <div class="relative">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Your full name"
+                class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          <!-- WhatsApp Number -->
+          <div>
+            <label
+              for="whatsapp"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >WhatsApp Number*</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <span class="text-gray-500">+91</span>
+              </div>
+              <input
+                type="tel"
+                id="whatsapp"
+                name="whatsapp"
+                required
+                maxlength="10"
+                pattern="[0-9]{10}"
+                placeholder="9876543210"
+                class="pl-12 input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+              <div
+                id="whatsappValidIcon"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none hidden"
+              >
+                <svg
+                  class="h-5 w-5 text-green-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+            </div>
+            <p id="whatsappError" class="mt-1 text-xs text-red-600 hidden">
+              Please enter a valid 10-digit number
+            </p>
+          </div>
+
+          <!-- Class -->
+          <div>
+            <label
+              for="class"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >Class*</label
+            >
+            <select
+              id="class"
+              name="class"
+              required
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
+            >
+              <option value="" disabled selected>Select your class</option>
+              <option value="6th">6th Standard</option>
+              <option value="7th">7th Standard</option>
+              <option value="8th">8th Standard</option>
+              <option value="9th">9th Standard</option>
+              <option value="10th">10th Standard</option>
+              <option value="11th">11th Standard</option>
+              <option value="12th">12th Standard</option>
+              <option value="UG">Undergraduate (UG)</option>
+              <option value="PG">Postgraduate (PG)</option>
+            </select>
+          </div>
+
+          <!-- Institution -->
+          <div>
+            <label
+              for="institution"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >School/Institution Name*</label
+            >
+            <input
+              type="text"
+              id="institution"
+              name="institution"
+              required
+              placeholder="Your school or college name"
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
+          <!-- District -->
+          <div>
+            <label
+              for="district"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >District*</label
+            >
+            <select
+              id="district"
+              name="district"
+              required
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
+            >
+              <option value="" disabled selected>Select your district</option>
+              <option>Thiruvananthapuram</option>
+              <option>Kollam</option>
+              <option>Pathanamthitta</option>
+              <option>Alappuzha</option>
+              <option>Kottayam</option>
+              <option>Idukki</option>
+              <option>Ernakulam</option>
+              <option>Thrissur</option>
+              <option>Palakkad</option>
+              <option>Malappuram West</option>
+              <option>Malappuram East</option>
+              <option>Kozhikode South</option>
+              <option>Kozhikode North</option>
+              <option>Nilgris</option>
+              <option>Wayanad</option>
+              <option>Kannur</option>
+              <option>Kasaragod</option>
+            </select>
+          </div>
+
+          <!-- Division (only for Kozhikode) -->
+          <div id="divisionContainer" class="hidden">
+            <label
+              for="division"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >Area in Kozhikode</label
+            >
+            <select
+              id="division"
+              name="division"
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
+            >
+              <option value="" disabled selected>Select your area</option>
+              <option>Balussery</option>
+              <option>Poonoor</option>
+              <option>Mukkam</option>
+              <option>Thamarassery</option>
+              <option>Koduvally</option>
+              <option>Narikkuni</option>
+              <option>Kunnamangalam</option>
+              <option>Kozhikode</option>
+              <option>Feroke</option>
+              <option>Omassery</option>
+              <option>Mavoor</option>
+              <option>Koyilandy</option>
+              <option>Vadakara</option>
+              <option>Perambra</option>
+              <option>Nadapuram</option>
+              <option>Kuttiadi</option>
+              <option>Ayanchery</option>
+              <option>Naduvannur</option>
+            </select>
+          </div>
+
+          <!-- Next button (after district / division) -->
+          <div class="pt-2">
+            <button
+              id="nextBtn"
+              type="button"
+              class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white btn-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
+            >
+              Next →
+            </button>
+          </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div id="step2" class="space-y-4 hidden">
+          <!-- Interests (disabled for now) -->
+          <!--
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Career Interests (Optional)</label
+            >
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex items-center">
+                <input
+                  id="medicine"
+                  name="interests"
+                  type="checkbox"
+                  value="Medicine"
+                  class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <label for="medicine" class="ml-2 block text-sm text-gray-700"
+                  >Medicine</label
+                >
+              </div>
+              <div class="flex items-center">
+                <input
+                  id="engineering"
+                  name="interests"
+                  type="checkbox"
+                  value="Engineering"
+                  class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <label
+                  for="engineering"
+                  class="ml-2 block text-sm text-gray-700"
+                  >Engineering</label
+                >
+              </div>
+              <div class="flex items-center">
+                <input
+                  id="commerce"
+                  name="interests"
+                  type="checkbox"
+                  value="Commerce"
+                  class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <label for="commerce" class="ml-2 block text-sm text-gray-700"
+                  >Commerce</label
+                >
+              </div>
+              <div class="flex items-center">
+                <input
+                  id="humanities"
+                  name="interests"
+                  type="checkbox"
+                  value="Humanities"
+                  class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <label for="humanities" class="ml-2 block text-sm text-gray-700"
+                  >Humanities</label
+                >
+              </div>
+              <div class="flex items-center">
+                <input
+                  id="arts"
+                  name="interests"
+                  type="checkbox"
+                  value="Arts"
+                  class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <label for="arts" class="ml-2 block text-sm text-gray-700"
+                  >Arts</label
+                >
+              </div>
+              <div class="flex items-center">
+                <input
+                  id="other"
+                  name="interests"
+                  type="checkbox"
+                  value="Other"
+                  class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <label for="other" class="ml-2 block text-sm text-gray-700"
+                  >Other</label
+                >
+              </div>
+            </div>
+          </div>
+          -->
+
+          <!-- Stall Selection (copied from registeration25.html) -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Select Stalls to Visit (Optional)</label
+            >
+            <p class="text-sm" style="text-align: center; margin-bottom: 12px; color: #cccccc;">
+              Choose one or more stalls you'd like to participate in
+            </p>
+
+            <div class="stalls-grid">
+              <div class="stall-option">
+                <input type="checkbox" id="career-clinic" name="stalls[]" value="career-clinic" class="stall-checkbox">
+                <label for="career-clinic" class="stall-card">
+                  <span class="stall-icon">💼</span>
+                  <span class="stall-name">Career Clinic</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="coding-lab" name="stalls[]" value="coding-lab" class="stall-checkbox">
+                <label for="coding-lab" class="stall-card">
+                  <span class="stall-icon">💻</span>
+                  <span class="stall-name">Coding Lab</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="diy-science" name="stalls[]" value="diy-science" class="stall-checkbox">
+                <label for="diy-science" class="stall-card">
+                  <span class="stall-icon">🔬</span>
+                  <span class="stall-name">DIY Science World</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="design-zone" name="stalls[]" value="design-zone" class="stall-checkbox">
+                <label for="design-zone" class="stall-card">
+                  <span class="stall-icon">🎨</span>
+                  <span class="stall-name">Design Zone</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="robotics" name="stalls[]" value="robotics" class="stall-checkbox">
+                <label for="robotics" class="stall-card">
+                  <span class="stall-icon">🤖</span>
+                  <span class="stall-name">Robotics</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="cv-interview" name="stalls[]" value="cv-interview" class="stall-checkbox">
+                <label for="cv-interview" class="stall-card">
+                  <span class="stall-icon">📝</span>
+                  <span class="stall-name">CV & Interview PrepZone</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="listening-clinic" name="stalls[]" value="listening-clinic" class="stall-checkbox">
+                <label for="listening-clinic" class="stall-card">
+                  <span class="stall-icon">👂</span>
+                  <span class="stall-name">Listening Clinic</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="puzzle-corner" name="stalls[]" value="puzzle-corner" class="stall-checkbox">
+                <label for="puzzle-corner" class="stall-card">
+                  <span class="stall-icon">🧩</span>
+                  <span class="stall-name">Puzzle Corner</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="treasure-hunt" name="stalls[]" value="treasure-hunt" class="stall-checkbox">
+                <label for="treasure-hunt" class="stall-card">
+                  <span class="stall-icon">🗺️</span>
+                  <span class="stall-name">Treasure Hunt</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-2">
+            <button
+              id="backBtn"
+              type="button"
+              class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white btn-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
+              style="background: #222227 !important; border: 1px solid #4b5563;"
+            >
+              ← Back
+            </button>
+          </div>
+
+          <div class="pt-2">
+            <button
+              id="submitBtn"
+              type="submit"
+              class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white btn-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
+            >
+              Register Now
+              <svg
+                class="ml-2 -mr-1 h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </button>
+          </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Success Modal -->
+      <div
+        id="successModal"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden"
+      >
+        <div class="relative p-2 border w-96 shadow-lg rounded-md bg-white">
+          <div class="mt-3 text-center">
+            <div
+              class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-400"
+            >
+              <svg
+                class="h-6 w-6 text-green-800"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <h3 class="text-lg leading-6 font-medium text-white mt-3">
+              Registration Successful!
+            </h3>
+            <div class="mt-2 px-7 py-3">
+              <p class="text-sm text-gray-500 modal-message">
+                Thank you for registering with educine.in. We'll contact you
+                soon.
+              </p>
+            </div>
+            <div class="items-center px-4 py-3">
+              <button
+                onclick="window.location.href='https://educine.in'"
+                class="modal-close px-4 py-2 btn-primary text-white text-base font-medium rounded-md w-full shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              >
+                Back to Home
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const step1 = document.getElementById("step1");
+        const step2 = document.getElementById("step2");
+        const nextBtn = document.getElementById("nextBtn");
+        const backBtn = document.getElementById("backBtn");
+        const districtSelect = document.getElementById("district");
+        const divisionContainer = document.getElementById("divisionContainer");
+        const divisionSelect = document.getElementById("division");
+        const whatsappInput = document.getElementById("whatsapp");
+        const whatsappValidIcon = document.getElementById("whatsappValidIcon");
+        const whatsappError = document.getElementById("whatsappError");
+
+        function showStep(step) {
+          if (step === 1) {
+            step1.classList.remove("hidden");
+            step2.classList.add("hidden");
+            step1.scrollIntoView({ behavior: "smooth", block: "start" });
+            return;
+          }
+          step1.classList.add("hidden");
+          step2.classList.remove("hidden");
+          step2.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        // Default to step 1
+        showStep(1);
+
+        nextBtn?.addEventListener("click", function () {
+          const name = document.getElementById("name");
+          const whatsapp = document.getElementById("whatsapp");
+          const studentClass = document.getElementById("class");
+          const institution = document.getElementById("institution");
+          const district = document.getElementById("district");
+          const division = document.getElementById("division");
+
+          // Basic validation for step 1 required fields
+          if (
+            !name?.value?.trim() ||
+            !whatsapp?.value?.trim() ||
+            !studentClass?.value ||
+            !institution?.value?.trim() ||
+            !district?.value
+          ) {
+            showAlert("Please fill in all required fields before continuing");
+            return;
+          }
+
+          // If Kozhikode area is visible, ensure a selection is made
+          if (!divisionContainer.classList.contains("hidden")) {
+            if (!division?.value) {
+              showAlert("Please select your area in Kozhikode");
+              return;
+            }
+          }
+
+          showStep(2);
+        });
+
+        backBtn?.addEventListener("click", function () {
+          showStep(1);
+        });
+
+        // Validate WhatsApp number
+        whatsappInput.addEventListener("input", function () {
+          const isValid = /^[0-9]{10}$/.test(this.value);
+          if (isValid) {
+            whatsappValidIcon.classList.remove("hidden");
+            whatsappError.classList.add("hidden");
+          } else {
+            whatsappValidIcon.classList.add("hidden");
+            if (this.value.length > 0) {
+              whatsappError.classList.remove("hidden");
+            } else {
+              whatsappError.classList.add("hidden");
+            }
+          }
+        });
+
+        // Show/hide division field based on district selection
+        districtSelect.addEventListener("change", function () {
+          if (
+            this.value === "Kozhikode North" ||
+            this.value === "Kozhikode South"
+          ) {
+            divisionContainer.classList.remove("hidden");
+          } else {
+            divisionContainer.classList.add("hidden");
+            if (divisionSelect) divisionSelect.selectedIndex = 0;
+          }
+        });
+      });
+
+      document
+        .getElementById("studentForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const submitBtn = document.getElementById("submitBtn");
+          const originalText = submitBtn.innerHTML;
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `
+          <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Processing...
+        `;
+
+          // Validate WhatsApp number
+          const whatsapp = document.getElementById("whatsapp").value;
+          if (!/^[0-9]{10}$/.test(whatsapp)) {
+            showAlert("Please enter a valid 10-digit WhatsApp number");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          // Career interests section is currently disabled in the UI
+          // const checkboxes = document.querySelectorAll('input[name="interests"]:checked');
+          // const interests = Array.from(checkboxes).map((cb) => cb.value);
+
+          const stallCheckboxes = document.querySelectorAll(
+            'input[name="stalls[]"]:checked'
+          );
+          const stalls = Array.from(stallCheckboxes).map((cb) => cb.value);
+
+          const formData = {
+            formType: "student",
+            name: document.getElementById("name").value,
+            whatsapp: whatsapp,
+            class: document.getElementById("class").value,
+            institution: document.getElementById("institution").value,
+            district: document.getElementById("district").value,
+            division:
+              document.getElementById("division")?.value || "Not applicable",
+            // interests: interests.length > 0 ? interests : null,
+            stalls: stalls.length > 0 ? stalls : null,
+          };
+
+          // Validate required fields
+          if (
+            !formData.name ||
+            !formData.class ||
+            !formData.institution ||
+            !formData.district
+          ) {
+            showAlert("Please fill in all required fields");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          // Additional validation for Kozhikode division
+          if (
+            formData.district === "Kozhikode" &&
+            (!formData.division || formData.division === "Select your area")
+          ) {
+            showAlert("Please select your area in Kozhikode");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          // Submit to Google Apps Script
+          const scriptUrl =
+            "https://script.google.com/macros/s/AKfycbyMlygClMiP1N5K94gR_b8XAem7WCTPzTwFUhVO--WkySYBpXRiigUiriYTJ1jhyrQ/exec";
+
+          fetch(scriptUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+            mode: "no-cors",
+          })
+            .then(() => {
+              // Since we're using no-cors mode, we can't read the response
+              // Assume success if the request completes
+              showSuccessModal(
+                "Registration successful! We'll contact you soon."
+              );
+              document.getElementById("studentForm").reset();
+              document
+                .getElementById("divisionContainer")
+                .classList.add("hidden");
+              document
+                .getElementById("whatsappValidIcon")
+                .classList.add("hidden");
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            })
+            .catch((error) => {
+              showAlert("Registration failed. Please try again later.");
+              console.error("Error:", error);
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            });
+        });
+
+      function showSuccessModal(message) {
+        const modal = document.getElementById("successModal");
+        const messageElement = modal.querySelector(".modal-message");
+        messageElement.textContent =
+          message || "Thank you for registering with educine.in";
+        modal.classList.remove("hidden");
+      }
+
+      function showAlert(message) {
+        const alertDiv = document.createElement("div");
+        alertDiv.className =
+          "mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg relative";
+        alertDiv.role = "alert";
+        alertDiv.innerHTML = `
+          <span class="block sm:inline">${message}</span>
+          <span class="absolute top-0 bottom-0 right-0 px-4 py-3 alert-close">
+            <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <title>Close</title>
+              <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
+            </svg>
+          </span>
+        `;
+
+        const container = document.querySelector(".form-card");
+        container.prepend(alertDiv);
+
+        alertDiv.querySelector(".alert-close").addEventListener("click", () => {
+          alertDiv.remove();
+        });
+
+        setTimeout(() => {
+          if (document.body.contains(alertDiv)) {
+            alertDiv.remove();
+          }
+        }, 5000);
+      }
+
+      document
+        .querySelector(".modal-close")
+        .addEventListener("click", function () {
+          document.getElementById("successModal").classList.add("hidden");
+        });
+    </script>
+  </body>
+</html>

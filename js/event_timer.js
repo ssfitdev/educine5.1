@@ -1,6 +1,6 @@
 jQuery(document).ready(function() {
     $('#educineEventTimer').countdown({
-        until: new Date(2025, 4, 16, 15, 0), // May 16, 2025 15:00:00
+        until: new Date(2026, 3, 25, 15, 0),
         format: 'DHMS',
         padZeroes: true,
         layout: '<div class="countdown-show4">' +

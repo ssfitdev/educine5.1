@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Seeker Registration | Educine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #0f0f11
+          url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMTAxMDEyIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMxNzE3MTkiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=");
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        flex-direction: column;
+      }
+      /* Typography */
+      h1 {
+        color: white;
+        font-size: 1.875rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+      }
+      p {
+        color: #cccccc;
+        font-size: 1.125rem;
+      }
+      /* Accent Gradient combining #FF007A and #883ff9 */
+      .educine-gradient {
+        background: linear-gradient(135deg, #ff007a 0%, #883ff9 100%);
+        color: #ffffff;
+      }
+      /* Card Styling */
+      .form-card {
+        background: linear-gradient(135deg, #1a1a1d, #1f1f22);
+        box-shadow: 0 12px 35px -10px rgba(136, 63, 249, 0.25);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 2rem;
+        backdrop-filter: blur(4px);
+        width: 100%;
+        max-width: 28rem;
+      }
+
+      /* Make instructions page fit screen on desktop */
+      @media (min-width: 1024px) {
+        body.instructions-wide #formContainer {
+          max-width: 96vw;
+        }
+        body.instructions-wide .form-card {
+          max-width: 96vw;
+        }
+      }
+      /* Form Elements */
+      label {
+        color: #f8fafc !important;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 0.875rem;
+      }
+      ::placeholder {
+        color: #94a3b8 !important;
+        opacity: 0.8;
+      }
+      .input-field {
+        background-color: #222227;
+        border: 1px solid #4b5563;
+        color: #ffffff;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        width: 100%;
+      }
+      .input-field:hover {
+        border-color: #6b7280;
+      }
+      .input-field:focus {
+        border-color: #883ff9;
+        box-shadow: 0 0 0 3px rgba(136, 63, 249, 0.3);
+        outline: none;
+      }
+      /* Checkbox Styling */
+      .checkbox {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #6b7280;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+      }
+      .checkbox:checked {
+        background-color: #883ff9;
+        border-color: #883ff9;
+      }
+      .checkbox:checked::after {
+        content: "✓";
+        position: absolute;
+        color: white;
+        font-size: 12px;
+        left: 2px;
+        top: -1px;
+      }
+      /* Button Styling */
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          #ff007a 0%,
+          #883ff9 100%
+        ) !important;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        cursor: pointer;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(136, 63, 249, 0.25);
+      }
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+      /* Animations */
+      .animate-bounce-once {
+        animation: bounce 0.5s ease;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+      /* Responsive Adjustments */
+      @media (max-width: 640px) {
+        .form-card {
+          padding: 1.5rem;
+        }
+        .grid-cols-2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      /* Success Modal Enhancements */
+      #successModal .rounded-md {
+        border: 2px solid transparent;
+        background-clip: padding-box;
+        background: linear-gradient(135deg, #1a1a1d, #1f1f22);
+        position: relative;
+      }
+      #successModal .rounded-md::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(135deg, #ff007a, #883ff9);
+        z-index: -1;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center p-4">
+    <div id="formContainer" class="w-full max-w-md">
+      <!-- Header with Educine branding -->
+      <div class="bg-white rounded-xl form-card p-6">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-semibold text-gray-800 text-white">
+            Job Fair Registration
+          </h2>
+          <p class="text-sm text-gray-600 mt-1 text-[#cccccc]">
+            Please fill out the form to find your dream job.
+          </p>
+        </div>
+        <!-- Step 1: Instructions -->
+        <div id="step1" class="space-y-4">
+          <div class="rounded-lg border border-white/10 bg-black/10 p-4">
+            <p class="text-sm text-[#cccccc]" style="margin-bottom: 12px">
+              Thank you for your interest in participating in the Educine Job Fair organized by the Wisdom Education Foundation of India.
+            </p>
+            <p class="text-sm text-[#cccccc]" style="margin-bottom: 12px">
+              Please Read the Following Instructions Carefully:
+            </p>
+
+            <div class="space-y-3 text-sm" style="color: #cccccc">
+              <div><span class="font-semibold text-white">Eligibility:</span> This job fair is open to students, fresh graduates, and professionals seeking employment opportunities.</div>
+              <div><span class="font-semibold text-white">Registration Requirement:</span> All participants must complete this registration form accurately to be considered for employer interactions.</div>
+              <div><span class="font-semibold text-white">Information Accuracy:</span> Ensure that all details provided are correct. Incomplete or incorrect information may affect your participation.</div>
+              <div><span class="font-semibold text-white">Resume Requirement:</span> Candidates are advised to carry multiple copies of their updated resume to the venue.</div>
+              <div><span class="font-semibold text-white">Shortlisting Process:</span> Employers may shortlist candidates based on the information provided in this form.</div>
+              <div><span class="font-semibold text-white">Dress Code:</span> Formal or semi-formal attire is recommended.</div>
+              <div><span class="font-semibold text-white">Consent:</span> By proceeding, you agree to the use of your information for job fair coordination and employer matching purposes.</div>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <input
+              id="instructionsAgree"
+              type="checkbox"
+              class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            />
+            <label for="instructionsAgree" class="text-sm" style="margin: 0; color: #f8fafc !important;">
+              I have read and understood the instructions
+            </label>
+          </div>
+
+          <div class="pt-2">
+            <button
+              id="instructionsNextBtn"
+              type="button"
+              class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white btn-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
+              disabled
+              style="opacity: 0.6; cursor: not-allowed;"
+            >
+              Next →
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Registration form -->
+        <form id="jobseekerForm" class="space-y-4 hidden">
+          <input type="hidden" name="formType" value="jobseeker" />
+
+          <div id="registrationPage2" class="space-y-4">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name*</label>
+            <input type="text" id="name" name="name" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Gender*</label>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex items-center">
+                <input type="radio" id="gender-male" name="gender" value="Male" required class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                <label for="gender-male" class="ml-2 block text-sm text-gray-700">Male</label>
+              </div>
+              <div class="flex items-center">
+                <input type="radio" id="gender-female" name="gender" value="Female" required class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+                <label for="gender-female" class="ml-2 block text-sm text-gray-700">Female</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="dob" class="block text-sm font-medium text-gray-700 mb-1">Date of Birth*</label>
+              <input type="date" id="dob" name="dob" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            </div>
+            <div>
+              <label for="age" class="block text-sm font-medium text-gray-700 mb-1">Age*</label>
+              <input type="number" id="age" name="age" min="15" max="80" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            </div>
+          </div>
+
+          <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number*</label>
+            <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" maxlength="10" placeholder="9876543210" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address*</label>
+            <input type="email" id="email" name="email" required placeholder="your.email@example.com" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="place" class="block text-sm font-medium text-gray-700 mb-1">Place (City/Town)*</label>
+              <input type="text" id="place" name="place" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            </div>
+            <div>
+              <label for="district" class="block text-sm font-medium text-gray-700 mb-1">District*</label>
+              <input type="text" id="district" name="district" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            </div>
+          </div>
+
+          <div>
+            <label for="state" class="block text-sm font-medium text-gray-700 mb-1">State*</label>
+            <input type="text" id="state" name="state" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+
+          <div class="pt-2">
+            <button
+              id="registrationPage2NextBtn"
+              type="button"
+              class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white btn-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
+            >
+              Next →
+            </button>
+          </div>
+          </div>
+
+          <div id="registrationPage3" class="space-y-4 hidden">
+          <h3 class="text-lg font-semibold text-white pt-2">Educational Background</h3>
+          <div>
+            <label for="highestQualification" class="block text-sm font-medium text-gray-700 mb-1">Highest Qualification*</label>
+            <input type="text" id="highestQualification" name="highestQualification" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label for="courseSpecialization" class="block text-sm font-medium text-gray-700 mb-1">Course / Specialization*</label>
+            <input type="text" id="courseSpecialization" name="courseSpecialization" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label for="institutionName" class="block text-sm font-medium text-gray-700 mb-1">Institution Name*</label>
+            <input type="text" id="institutionName" name="institutionName" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label for="yearOfCompletion" class="block text-sm font-medium text-gray-700 mb-1">Year of Completion*</label>
+            <input type="number" id="yearOfCompletion" name="yearOfCompletion" min="1980" max="2099" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label for="additionalCertifications" class="block text-sm font-medium text-gray-700 mb-1">Additional Certifications (if any)</label>
+            <textarea id="additionalCertifications" name="additionalCertifications" rows="2" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
+          </div>
+
+          <h3 class="text-lg font-semibold text-white pt-2">Employment Details</h3>
+          <div>
+            <label for="currentStatus" class="block text-sm font-medium text-gray-700 mb-1">Current Status*</label>
+            <select id="currentStatus" name="currentStatus" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none">
+              <option value="" disabled selected>Select current status</option>
+              <option value="Student">Student</option>
+              <option value="Fresher">Fresher</option>
+              <option value="Employed">Employed</option>
+              <option value="Unemployed">Unemployed</option>
+            </select>
+          </div>
+
+          <div id="employedFields" class="space-y-3 hidden">
+            <div>
+              <label for="currentJobRole" class="block text-sm font-medium text-gray-700 mb-1">Current Job Role</label>
+              <input type="text" id="currentJobRole" name="currentJobRole" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            </div>
+            <div>
+              <label for="organizationName" class="block text-sm font-medium text-gray-700 mb-1">Organization Name</label>
+              <input type="text" id="organizationName" name="organizationName" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            </div>
+            <div>
+              <label for="yearsOfExperience" class="block text-sm font-medium text-gray-700 mb-1">Years of Experience</label>
+              <input type="text" id="yearsOfExperience" name="yearsOfExperience" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Job Sector (Multiple choice)*</label>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex items-center"><input type="checkbox" id="sector-it" name="preferredSectors" value="IT / Software" class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" /><label for="sector-it" class="ml-2 block text-sm text-gray-700">IT / Software</label></div>
+              <div class="flex items-center"><input type="checkbox" id="sector-finance" name="preferredSectors" value="Finance / Commerce" class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" /><label for="sector-finance" class="ml-2 block text-sm text-gray-700">Finance / Commerce</label></div>
+              <div class="flex items-center"><input type="checkbox" id="sector-education" name="preferredSectors" value="Education" class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" /><label for="sector-education" class="ml-2 block text-sm text-gray-700">Education</label></div>
+              <div class="flex items-center"><input type="checkbox" id="sector-healthcare" name="preferredSectors" value="Healthcare" class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" /><label for="sector-healthcare" class="ml-2 block text-sm text-gray-700">Healthcare</label></div>
+              <div class="flex items-center"><input type="checkbox" id="sector-media" name="preferredSectors" value="Media & Communication" class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" /><label for="sector-media" class="ml-2 block text-sm text-gray-700">Media & Communication</label></div>
+              <div class="flex items-center"><input type="checkbox" id="sector-design" name="preferredSectors" value="Design" class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" /><label for="sector-design" class="ml-2 block text-sm text-gray-700">Design</label></div>
+              <div class="flex items-center"><input type="checkbox" id="sector-engineering" name="preferredSectors" value="Engineering" class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" /><label for="sector-engineering" class="ml-2 block text-sm text-gray-700">Engineering</label></div>
+              <div class="flex items-center"><input type="checkbox" id="sector-govt" name="preferredSectors" value="Government / Public Sector" class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" /><label for="sector-govt" class="ml-2 block text-sm text-gray-700">Government / Public Sector</label></div>
+            </div>
+            <div class="pt-2">
+              <label for="otherSector" class="block text-sm font-medium text-gray-700 mb-1">Others (Specify)</label>
+              <input type="text" id="otherSector" name="otherSector" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+            </div>
+          </div>
+
+          <div>
+            <label for="expectedSalaryRange" class="block text-sm font-medium text-gray-700 mb-1">Expected Salary Range*</label>
+            <input type="text" id="expectedSalaryRange" name="expectedSalaryRange" required placeholder="e.g. 3 LPA - 5 LPA" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+
+          <h3 class="text-lg font-semibold text-white pt-2">Skills & Competencies</h3>
+          <div>
+            <label for="keySkills" class="block text-sm font-medium text-gray-700 mb-1">Key Skills (Technical / Soft Skills)*</label>
+            <textarea id="keySkills" name="keySkills" rows="2" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
+          </div>
+          <div>
+            <label for="languagesKnown" class="block text-sm font-medium text-gray-700 mb-1">Languages Known*</label>
+            <input type="text" id="languagesKnown" name="languagesKnown" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label for="softwareToolsKnown" class="block text-sm font-medium text-gray-700 mb-1">Software / Tools Known*</label>
+            <input type="text" id="softwareToolsKnown" name="softwareToolsKnown" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+
+          <div>
+            <label for="resume" class="block text-sm font-medium text-gray-700 mb-1">Resume Upload (PDF format preferred)</label>
+            <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+
+          <div>
+            <label class="flex items-start gap-2 text-sm">
+              <input type="checkbox" id="declaration" name="declaration" required class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-0.5" />
+              <span>I hereby declare that the information provided is true and accurate to the best of my knowledge.</span>
+            </label>
+          </div>
+
+          <div class="pt-2">
+            <button
+              id="registrationPage3BackBtn"
+              type="button"
+              class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white btn-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
+              style="background: #222227 !important; border: 1px solid #4b5563;"
+            >
+              ← Back
+            </button>
+          </div>
+
+          <div class="pt-2">
+            <button
+              type="submit"
+              class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white btn-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
+            >
+              Submit
+              <svg
+                class="ml-2 -mr-1 h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </button>
+          </div>
+          </div>
+        </form>
+      </div>
+      <!-- Success Modal -->
+      <div
+        id="successModal"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden"
+      >
+        <div class="bg-white rounded-md p-6 max-w-sm w-full">
+          <div class="text-center">
+            <div
+              class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-400 mb-4"
+            >
+              <svg
+                class="h-6 w-6 text-green-800"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                ></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-medium text-white mb-2">
+              Application Submitted!
+            </h3>
+            <p class="text-sm text-gray-500 mb-4">
+              We'll review your application and contact you soon.
+            </p>
+            <div class="items-center">
+              <button
+                onclick="window.location.href='https://educine.in'"
+                class="modal-close px-4 py-2 btn-primary text-white text-base font-medium rounded-md w-full shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              >
+                Back to Home
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const step1 = document.getElementById("step1");
+        const form = document.getElementById("jobseekerForm");
+        const agree = document.getElementById("instructionsAgree");
+        const nextBtn = document.getElementById("instructionsNextBtn");
+        const registrationPage2 = document.getElementById("registrationPage2");
+        const registrationPage3 = document.getElementById("registrationPage3");
+        const registrationPage2NextBtn = document.getElementById(
+          "registrationPage2NextBtn"
+        );
+        const registrationPage3BackBtn = document.getElementById(
+          "registrationPage3BackBtn"
+        );
+
+        function setNextEnabled(enabled) {
+          if (!nextBtn) return;
+          nextBtn.disabled = !enabled;
+          nextBtn.style.opacity = enabled ? "1" : "0.6";
+          nextBtn.style.cursor = enabled ? "pointer" : "not-allowed";
+        }
+
+        // Default state
+        setNextEnabled(false);
+        document.body.classList.add("instructions-wide");
+
+        agree?.addEventListener("change", function () {
+          setNextEnabled(!!agree.checked);
+        });
+
+        nextBtn?.addEventListener("click", function () {
+          if (!agree?.checked) return;
+          step1?.classList.add("hidden");
+          form?.classList.remove("hidden");
+          registrationPage2?.classList.remove("hidden");
+          registrationPage3?.classList.add("hidden");
+          document.body.classList.remove("instructions-wide");
+          form?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        registrationPage2NextBtn?.addEventListener("click", function () {
+          const page2RequiredFields = [
+            document.getElementById("name"),
+            document.getElementById("dob"),
+            document.getElementById("age"),
+            document.getElementById("phone"),
+            document.getElementById("email"),
+            document.getElementById("place"),
+            document.getElementById("district"),
+            document.getElementById("state"),
+          ];
+
+          const selectedGender = document.querySelector(
+            'input[name="gender"]:checked'
+          );
+          const missingRequired = page2RequiredFields.some(
+            (field) => !field || !String(field.value).trim()
+          );
+
+          if (!selectedGender || missingRequired) {
+            showAlert("Please fill in all required fields in Page 2");
+            return;
+          }
+
+          if (!/^[0-9]{10}$/.test(document.getElementById("phone").value)) {
+            showAlert("Please enter a valid 10-digit phone number");
+            return;
+          }
+
+          registrationPage2?.classList.add("hidden");
+          registrationPage3?.classList.remove("hidden");
+          form?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        registrationPage3BackBtn?.addEventListener("click", function () {
+          registrationPage3?.classList.add("hidden");
+          registrationPage2?.classList.remove("hidden");
+          form?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        const phoneInput = document.getElementById("phone");
+        const dobInput = document.getElementById("dob");
+        const ageInput = document.getElementById("age");
+        const currentStatusSelect = document.getElementById("currentStatus");
+        const employedFields = document.getElementById("employedFields");
+
+        // Phone validation (digits only)
+        if (phoneInput) {
+          phoneInput.addEventListener("input", function () {
+            this.value = this.value.replace(/\D/g, "").slice(0, 10);
+          });
+        }
+
+        // Auto-calculate age from DOB
+        if (dobInput && ageInput) {
+          dobInput.addEventListener("change", function () {
+            const dob = new Date(this.value);
+            if (Number.isNaN(dob.getTime())) return;
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const m = today.getMonth() - dob.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+              age -= 1;
+            }
+            ageInput.value = age > 0 ? age : "";
+          });
+        }
+
+        // Show/hide employed optional fields
+        currentStatusSelect?.addEventListener("change", function () {
+          if (this.value === "Employed") {
+            employedFields?.classList.remove("hidden");
+          } else {
+            employedFields?.classList.add("hidden");
+            const currentJobRole = document.getElementById("currentJobRole");
+            const organizationName = document.getElementById("organizationName");
+            const yearsOfExperience = document.getElementById("yearsOfExperience");
+            if (currentJobRole) currentJobRole.value = "";
+            if (organizationName) organizationName.value = "";
+            if (yearsOfExperience) yearsOfExperience.value = "";
+          }
+        });
+
+        // Form submission
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+
+          // Disable button and show loading
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `
+            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Processing...
+          `;
+
+          // Validate phone number
+          const phone = document.getElementById("phone").value;
+          if (!/^[0-9]{10}$/.test(phone)) {
+            showAlert("Please enter a valid 10-digit phone number");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          const preferredSectorCheckboxes = document.querySelectorAll(
+            'input[name="preferredSectors"]:checked'
+          );
+          const preferredSectors = Array.from(preferredSectorCheckboxes).map(
+            (cb) => cb.value
+          );
+          const resumeFile = document.getElementById("resume")?.files?.[0];
+          const declarationChecked =
+            document.getElementById("declaration")?.checked;
+
+          // Collect form data
+          const formData = {
+            formType: "jobseeker",
+            name: document.getElementById("name").value,
+            gender: document.querySelector('input[name="gender"]:checked')?.value,
+            dob: document.getElementById("dob").value,
+            age: document.getElementById("age").value,
+            phone: phone,
+            email: document.getElementById("email").value,
+            place: document.getElementById("place").value,
+            district: document.getElementById("district").value,
+            state: document.getElementById("state").value,
+            highestQualification: document.getElementById("highestQualification").value,
+            courseSpecialization: document.getElementById("courseSpecialization").value,
+            institutionName: document.getElementById("institutionName").value,
+            yearOfCompletion: document.getElementById("yearOfCompletion").value,
+            additionalCertifications:
+              document.getElementById("additionalCertifications").value || null,
+            currentStatus: document.getElementById("currentStatus").value,
+            currentJobRole:
+              document.getElementById("currentJobRole").value || null,
+            organizationName:
+              document.getElementById("organizationName").value || null,
+            yearsOfExperience:
+              document.getElementById("yearsOfExperience").value || null,
+            preferredSectors:
+              preferredSectors.length > 0 ? preferredSectors : null,
+            otherSector: document.getElementById("otherSector").value || null,
+            expectedSalaryRange:
+              document.getElementById("expectedSalaryRange").value,
+            keySkills: document.getElementById("keySkills").value,
+            languagesKnown: document.getElementById("languagesKnown").value,
+            softwareToolsKnown: document.getElementById("softwareToolsKnown").value,
+            resumeFileName: resumeFile ? resumeFile.name : null,
+            declaration: declarationChecked ? "Yes" : "No",
+          };
+
+          // Validate required fields
+          if (
+            !formData.name ||
+            !formData.gender ||
+            !formData.dob ||
+            !formData.age ||
+            !formData.phone ||
+            !formData.email ||
+            !formData.place ||
+            !formData.district ||
+            !formData.state ||
+            !formData.highestQualification ||
+            !formData.courseSpecialization ||
+            !formData.institutionName ||
+            !formData.yearOfCompletion ||
+            !formData.currentStatus ||
+            !formData.expectedSalaryRange ||
+            !formData.keySkills ||
+            !formData.languagesKnown ||
+            !formData.softwareToolsKnown
+          ) {
+            showAlert("Please fill in all required fields");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          if (!formData.preferredSectors && !formData.otherSector) {
+            showAlert("Please select at least one preferred sector");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          if (!declarationChecked) {
+            showAlert("Please accept the declaration before submitting");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          // Submit to Google Apps Script
+          const scriptUrl =
+            "https://script.google.com/macros/s/AKfycbyMlygClMiP1N5K94gR_b8XAem7WCTPzTwFUhVO--WkySYBpXRiigUiriYTJ1jhyrQ/exec";
+
+          fetch(scriptUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+            mode: "no-cors",
+          })
+            .then(() => {
+              // Since we're using no-cors mode, we can't read the response
+              // Assume success if the request completes
+              showSuccessModal(
+                "Application submitted successfully! We'll contact you soon."
+              );
+              document.getElementById("jobseekerForm").reset();
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            })
+            .catch((error) => {
+              showAlert("Submission failed. Please try again later.");
+              console.error("Error:", error);
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            });
+        });
+
+        // Helper functions for alerts and modals
+        function showSuccessModal(message) {
+          // You'll need to add a success modal to your HTML
+          const modal = document.getElementById("successModal");
+          if (modal) {
+            const messageElement = modal.querySelector(".modal-message");
+            if (messageElement) {
+              messageElement.textContent =
+                message || "Thank you for your application";
+            }
+            modal.classList.remove("hidden");
+          } else {
+            // Fallback if no modal exists
+            alert(message || "Thank you for your application");
+          }
+        }
+
+        function showAlert(message) {
+          // Create an alert element similar to the second script
+          const alertDiv = document.createElement("div");
+          alertDiv.className =
+            "mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg relative";
+          alertDiv.role = "alert";
+          alertDiv.innerHTML = `
+            <span class="block sm:inline">${message}</span>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3 alert-close">
+              <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <title>Close</title>
+                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
+              </svg>
+            </span>
+          `;
+
+          // Add to form container
+          const container =
+            document.querySelector("#jobseekerForm").parentElement;
+          container.prepend(alertDiv);
+
+          // Add close functionality
+          alertDiv
+            .querySelector(".alert-close")
+            .addEventListener("click", () => {
+              alertDiv.remove();
+            });
+
+          // Auto-dismiss after 5 seconds
+          setTimeout(() => {
+            if (document.body.contains(alertDiv)) {
+              alertDiv.remove();
+            }
+          }, 5000);
+        }
+      });
+    </script>
+  </body>
+</html>

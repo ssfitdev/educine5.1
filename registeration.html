@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base target="_top" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Educine Registration Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #0f0f11
+          url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMTAxMDEyIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMxNzE3MTkiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=");
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        flex-direction: column;
+      }
+
+      h1 {
+        color: white;
+        font-size: 1.875rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: #cccccc;
+        font-size: 1.125rem;
+      }
+
+      .educine-gradient {
+        background: linear-gradient(135deg, #ff007a 0%, #883ff9 100%);
+        color: #ffffff;
+      }
+
+      .option-card {
+        background: linear-gradient(135deg, #1a1a1d, #1f1f22);
+        box-shadow: 0 12px 35px -10px rgba(136, 63, 249, 0.25);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .option-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px -10px rgba(255, 0, 122, 0.35);
+      }
+
+      .student-card {
+        border-left: 4px solid #3b82f6;
+      }
+      .jobseeker-card {
+        border-left: 4px solid #10b981;
+      }
+      .sponsor-card {
+        border-left: 4px solid #f59e0b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mx-auto max-w-4xl">
+      <div class="text-center mb-12">
+        <div class="flex justify-center mb-6">
+          <img
+            src="./educine logo light.png"
+            alt="Educine Logo"
+            class="h-12 sm:h-16 w-auto object-contain"
+          />
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl font-semibold text-gray-800 mb-2">
+          Educine Registration Portal
+        </h1>
+        <p class="text-gray-600 text-base sm:text-lg">
+          Please select your registration type
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Student Card -->
+        <div class="option-card student-card" onclick="loadForm('student')">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="bg-blue-600/20 p-3 rounded-full mr-4">
+                <svg
+                  class="w-6 h-6 text-blue-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                  />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-white">
+                Student Registration
+              </h3>
+            </div>
+            <p class="text-gray-400 text-sm">
+              Register for our educational programs and courses
+            </p>
+          </div>
+        </div>
+
+        <!-- Job Seeker Card -->
+        <div class="option-card jobseeker-card" onclick="loadForm('jobseeker')">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="bg-green-600/20 p-3 rounded-full mr-4">
+                <svg
+                  class="w-6 h-6 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-white">Job Seeker</h3>
+            </div>
+            <p class="text-gray-400 text-sm">
+              Explore career opportunities with Educine
+            </p>
+          </div>
+        </div>
+
+        <!-- entrepreneur Card -->
+        <div class="option-card sponsor-card" onclick="loadForm('entrepreneur')">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <div class="bg-yellow-600/20 p-3 rounded-full mr-4">
+                <svg
+                  class="w-6 h-6 text-yellow-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-white">Entrepreneurship Pitch Deck</h3>
+            </div>
+            <p class="text-gray-400 text-sm">
+              Step up. Pitch smart. Stand out.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function loadForm(formType) {
+        window.location.href = `/${formType}.html`;
+      }
+    </script>
+  </body>
+</html>
