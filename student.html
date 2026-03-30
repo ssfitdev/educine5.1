@@ -762,6 +762,7 @@
 
             script.onerror = function () {
               cleanup();
+              console.error("JSONP locations load failed:", script.src);
               reject(new Error("Failed to load location data"));
             };
 
@@ -773,6 +774,20 @@
                 window[cbName] = undefined;
               }
             }
+
+            // Safety timeout in case callback never fires
+            const timer = setTimeout(() => {
+              cleanup();
+              console.error("JSONP locations load timed out:", script.src);
+              reject(new Error("Timed out loading location data"));
+            }, 8000);
+
+            // Ensure timer is cleared when we resolve/reject
+            const originalCleanup = cleanup;
+            cleanup = function () {
+              clearTimeout(timer);
+              originalCleanup();
+            };
 
             document.body.appendChild(script);
           });
@@ -941,7 +956,7 @@
 
           // Submit to Google Apps Script
           const scriptUrl =
-            "https://script.google.com/macros/s/AKfycbyMlygClMiP1N5K94gR_b8XAem7WCTPzTwFUhVO--WkySYBpXRiigUiriYTJ1jhyrQ/exec";
+            "https://script.google.com/macros/s/AKfycbw0I6UWYFYGh3sQmdB0K5c7smxFLmN8mIieowhAvjXB8k_0Z7xK2PJLGeLKcAiWziqy/exec";
 
           fetch(scriptUrl, {
             method: "POST",
