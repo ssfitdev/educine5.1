@@ -640,13 +640,31 @@
           const preferredSectors = Array.from(preferredSectorCheckboxes).map(
             (cb) => cb.value
           );
-          const resumeFile = document.getElementById("resume")?.files?.[0];
           const declarationChecked =
             document.getElementById("declaration")?.checked;
+          const otherSectorRaw =
+            (document.getElementById("otherSector")?.value || "").trim();
 
-          // Collect form data
+          const preferredJobSectors = preferredSectors.slice();
+          if (otherSectorRaw) {
+            preferredJobSectors.push(otherSectorRaw);
+          }
+
+          const ageNum = Number(document.getElementById("age").value);
+          const yearNum = Number(
+            document.getElementById("yearOfCompletion").value
+          );
+          const yoeRaw = (
+            document.getElementById("yearsOfExperience")?.value || ""
+          ).trim();
+          let yearsOfExperience = null;
+          if (yoeRaw) {
+            const n = Number(yoeRaw);
+            yearsOfExperience = Number.isFinite(n) ? n : yoeRaw;
+          }
+
+          // Collect form data (validation uses same fields as before)
           const formData = {
-            formType: "jobseeker",
             name: document.getElementById("name").value,
             gender: document.querySelector('input[name="gender"]:checked')?.value,
             dob: document.getElementById("dob").value,
@@ -661,24 +679,20 @@
             institutionName: document.getElementById("institutionName").value,
             yearOfCompletion: document.getElementById("yearOfCompletion").value,
             additionalCertifications:
-              document.getElementById("additionalCertifications").value || null,
+              document.getElementById("additionalCertifications").value || "",
             currentStatus: document.getElementById("currentStatus").value,
             currentJobRole:
               document.getElementById("currentJobRole").value || null,
             organizationName:
               document.getElementById("organizationName").value || null,
-            yearsOfExperience:
-              document.getElementById("yearsOfExperience").value || null,
-            preferredSectors:
-              preferredSectors.length > 0 ? preferredSectors : null,
-            otherSector: document.getElementById("otherSector").value || null,
+            yearsOfExperience: yoeRaw || null,
+            preferredSectorsForValidation:
+              preferredJobSectors.length > 0 ? preferredJobSectors : null,
             expectedSalaryRange:
               document.getElementById("expectedSalaryRange").value,
             keySkills: document.getElementById("keySkills").value,
             languagesKnown: document.getElementById("languagesKnown").value,
             softwareToolsKnown: document.getElementById("softwareToolsKnown").value,
-            resumeFileName: resumeFile ? resumeFile.name : null,
-            declaration: declarationChecked ? "Yes" : "No",
           };
 
           // Validate required fields
@@ -708,7 +722,10 @@
             return;
           }
 
-          if (!formData.preferredSectors && !formData.otherSector) {
+          if (
+            !formData.preferredSectorsForValidation ||
+            formData.preferredSectorsForValidation.length === 0
+          ) {
             showAlert("Please select at least one preferred sector");
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalText;
@@ -722,30 +739,70 @@
             return;
           }
 
-          // Submit to Google Apps Script
-          const scriptUrl =
-            "https://script.google.com/macros/s/AKfycbyMlygClMiP1N5K94gR_b8XAem7WCTPzTwFUhVO--WkySYBpXRiigUiriYTJ1jhyrQ/exec";
+          // Backend shape (portal API) — matches axios example
+          const apiPayload = {
+            type: "job_seeker",
+            name: formData.name,
+            phone: formData.phone,
+            email: formData.email,
+            gender: formData.gender,
+            dob: formData.dob,
+            age: Number.isFinite(ageNum) ? ageNum : null,
+            place: formData.place,
+            district: formData.district,
+            state: formData.state,
+            highestQualification: formData.highestQualification,
+            courseSpecialization: formData.courseSpecialization,
+            institutionName: formData.institutionName,
+            yearOfCompletion: Number.isFinite(yearNum) ? yearNum : null,
+            additionalCertifications: formData.additionalCertifications || "",
+            currentStatus: formData.currentStatus,
+            currentJobRole: formData.currentJobRole,
+            organizationName: formData.organizationName,
+            yearsOfExperience: yearsOfExperience,
+            preferredJobSectors: preferredJobSectors,
+            expectedSalaryRange: formData.expectedSalaryRange,
+            keySkills: formData.keySkills,
+            languagesKnown: formData.languagesKnown,
+            softwareToolsKnown: formData.softwareToolsKnown,
+            resumeUrl: null,
+            entityId: null,
+          };
 
-          fetch(scriptUrl, {
+          const apiUrl =
+            "https://portal-dev.ssfkerala.org/api/educine";
+
+          fetch(apiUrl, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(formData),
-            mode: "no-cors",
+            body: JSON.stringify(apiPayload),
           })
-            .then(() => {
-              // Since we're using no-cors mode, we can't read the response
-              // Assume success if the request completes
+            .then(async (res) => {
+              if (!res.ok) {
+                let msg = "Submission failed. Please try again.";
+                try {
+                  const errBody = await res.json();
+                  if (errBody && (errBody.message || errBody.error)) {
+                    msg = errBody.message || errBody.error;
+                  }
+                } catch (_) {}
+                throw new Error(msg);
+              }
               showSuccessModal(
                 "Application submitted successfully! We'll contact you soon."
               );
               document.getElementById("jobseekerForm").reset();
+              document.getElementById("employedFields")?.classList.add("hidden");
               submitBtn.disabled = false;
               submitBtn.innerHTML = originalText;
             })
             .catch((error) => {
-              showAlert("Submission failed. Please try again later.");
+              showAlert(
+                error.message ||
+                  "Submission failed. Please try again later."
+              );
               console.error("Error:", error);
               submitBtn.disabled = false;
               submitBtn.innerHTML = originalText;
