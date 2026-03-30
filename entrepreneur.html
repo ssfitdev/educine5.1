@@ -225,8 +225,6 @@
         </div>
 
         <form id="sponsorForm" class="space-y-4 hidden">
-          <input type="hidden" name="formType" value="pitchdeck" />
-
           <div>
             <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name*</label>
             <input type="text" id="fullName" name="fullName" required class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700" />
@@ -475,11 +473,9 @@
             return;
           }
 
-          const pitchDeckFile = document.getElementById("pitchDeckFile")?.files?.[0];
           const declarationChecked = document.getElementById("declaration")?.checked;
 
           const formData = {
-            formType: "pitchdeck",
             fullName: document.getElementById("fullName").value,
             phone: phone,
             email: document.getElementById("email").value,
@@ -488,8 +484,8 @@
             place: document.getElementById("place").value,
             district: document.getElementById("district").value,
             participationType: document.getElementById("participationType").value,
-            teamName: document.getElementById("teamName").value || null,
-            teamMembers: document.getElementById("teamMembers").value || null,
+            teamName: (document.getElementById("teamName").value || "").trim(),
+            teamMembers: (document.getElementById("teamMembers").value || "").trim(),
             currentStatus: document.getElementById("currentStatus").value,
             institutionOrganization: document.getElementById("institutionOrganization").value,
             courseFieldRole: document.getElementById("courseFieldRole").value,
@@ -500,8 +496,6 @@
             uniqueValueProposition: document.getElementById("uniqueValueProposition").value,
             ideaStage: document.getElementById("ideaStage").value,
             supportNeeded: document.getElementById("supportNeeded").value,
-            pitchDeckFileName: pitchDeckFile ? pitchDeckFile.name : null,
-            declaration: declarationChecked ? "Yes" : "No",
           };
 
           if (
@@ -537,6 +531,13 @@
               submitBtn.innerHTML = originalText;
               return;
             }
+            const membersNum = Number(formData.teamMembers);
+            if (!Number.isFinite(membersNum) || membersNum < 2 || membersNum > 5) {
+              showAlert("Number of members must be between 2 and 5");
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+              return;
+            }
           }
 
           if (!declarationChecked) {
@@ -546,21 +547,64 @@
             return;
           }
 
-          // Submit to Google Apps Script
-          const scriptUrl =
-            "https://script.google.com/macros/s/AKfycbyMlygClMiP1N5K94gR_b8XAem7WCTPzTwFUhVO--WkySYBpXRiigUiriYTJ1jhyrQ/exec";
+          const ageNum = Number(formData.age);
+          const membersNum =
+            formData.participationType === "Team"
+              ? Number(formData.teamMembers)
+              : null;
 
-          fetch(scriptUrl, {
+          const apiPayload = {
+            type: "entrepreneur",
+            name: formData.fullName.trim(),
+            phone: formData.phone,
+            email: formData.email.trim(),
+            age: Number.isFinite(ageNum) ? ageNum : null,
+            gender: formData.gender,
+            place: formData.place.trim(),
+            district: formData.district.trim(),
+            participationType: formData.participationType,
+            teamName:
+              formData.participationType === "Team"
+                ? formData.teamName
+                : null,
+            numberOfMembers:
+              formData.participationType === "Team" && Number.isFinite(membersNum)
+                ? membersNum
+                : null,
+            currentStatus: formData.currentStatus,
+            institutionOrOrganization: formData.institutionOrganization.trim(),
+            courseFieldRole: formData.courseFieldRole.trim(),
+            ideaTitle: formData.ideaTitle.trim(),
+            problemStatement: formData.problemStatement.trim(),
+            proposedSolution: formData.proposedSolution.trim(),
+            targetAudience: formData.targetAudience.trim(),
+            uniqueValueProposition: formData.uniqueValueProposition.trim(),
+            currentStage: formData.ideaStage,
+            supportLookingFor: formData.supportNeeded,
+            pitchDeckUrl: null,
+            entityId: null,
+          };
+
+          const apiUrl = "https://portal-dev.ssfkerala.org/api/educine";
+
+          fetch(apiUrl, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(formData),
-            mode: "no-cors",
+            body: JSON.stringify(apiPayload),
           })
-            .then(() => {
-              // Since we're using no-cors mode, we can't read the response
-              // Assume success if the request completes
+            .then(async (res) => {
+              if (!res.ok) {
+                let msg = "Submission failed. Please try again.";
+                try {
+                  const errBody = await res.json();
+                  if (errBody && (errBody.message || errBody.error)) {
+                    msg = errBody.message || errBody.error;
+                  }
+                } catch (_) {}
+                throw new Error(msg);
+              }
               showSuccessModal("Registration submitted successfully!");
               document.getElementById("sponsorForm").reset();
               teamFields.classList.add("hidden");
@@ -573,7 +617,9 @@
               submitBtn.innerHTML = originalText;
             })
             .catch((error) => {
-              showAlert("Submission failed. Please try again later.");
+              showAlert(
+                error.message || "Submission failed. Please try again later."
+              );
               console.error("Error:", error);
               submitBtn.disabled = false;
               submitBtn.innerHTML = originalText;

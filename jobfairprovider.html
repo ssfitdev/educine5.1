@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Fair Employer Registration | Educine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #0f0f11;
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        flex-direction: column;
+      }
+
+      .educine-gradient {
+        background: linear-gradient(135deg, #ff007a 0%, #883ff9 100%);
+        color: #ffffff;
+      }
+
+      .form-card {
+        background: linear-gradient(135deg, #1a1a1d, #1f1f22);
+        box-shadow: 0 12px 35px -10px rgba(136, 63, 249, 0.25);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 2rem;
+        backdrop-filter: blur(4px);
+        width: 100%;
+        max-width: 34rem;
+      }
+
+      @media (min-width: 1024px) {
+        body.instructions-wide #formContainer {
+          max-width: 96vw;
+        }
+        body.instructions-wide .form-card {
+          max-width: 96vw;
+        }
+      }
+
+      label {
+        color: #f8fafc !important;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 0.875rem;
+      }
+
+      .input-field {
+        background-color: #222227;
+        border: 1px solid #4b5563;
+        color: #ffffff;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        width: 100%;
+      }
+      .input-field:hover {
+        border-color: #6b7280;
+      }
+      .input-field:focus {
+        border-color: #883ff9;
+        box-shadow: 0 0 0 3px rgba(136, 63, 249, 0.3);
+        outline: none;
+      }
+
+      .checkbox {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #6b7280;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s ease;
+      }
+      .checkbox:checked {
+        background-color: #883ff9;
+        border-color: #883ff9;
+      }
+      .checkbox:checked::after {
+        content: "✓";
+        position: absolute;
+        color: white;
+        font-size: 12px;
+        left: 2px;
+        top: -1px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #ff007a 0%, #883ff9 100%) !important;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        cursor: pointer;
+      }
+      .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .animate-bounce-once {
+        animation: bounce 0.5s ease;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center p-4">
+    <div id="formContainer" class="w-full max-w-md">
+      <div class="bg-white rounded-xl form-card p-6">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-semibold text-gray-800 text-white">
+            Job Fair Employer Registration
+          </h2>
+          <p class="text-sm text-[#cccccc] mt-1">
+            Educine Job Fair - Employer Registration
+          </p>
+        </div>
+
+        <div id="step1" class="space-y-4">
+          <div class="rounded-lg border border-white/10 bg-black/10 p-4">
+            <p class="text-sm text-[#cccccc]" style="margin-bottom: 12px">
+              Welcome to the Educine Job Fair - Employer Registration
+            </p>
+            <p class="text-sm text-[#cccccc]" style="margin-bottom: 12px">
+              Thank you for your interest in participating as a recruiter at the
+              Educine Job Fair organized by the Wisdom Education Foundation of India.
+              This platform connects employers with a diverse pool of talented candidates
+              across multiple disciplines.
+            </p>
+
+            <p class="text-sm text-[#cccccc]" style="margin-bottom: 12px">
+              Please Read the Following Instructions Carefully:
+            </p>
+            <div class="space-y-3 text-sm" style="color: #cccccc">
+              <div>
+                <span class="font-semibold text-white">Participation Scope:</span>
+                Employers will be provided space to interact with candidates, conduct preliminary screenings,
+                and share information about available roles.
+              </div>
+              <div>
+                <span class="font-semibold text-white">Registration Requirement:</span>
+                All organizations must complete this form to confirm participation.
+              </div>
+              <div>
+                <span class="font-semibold text-white">Job Details:</span>
+                Accurate and detailed job descriptions will help us match suitable candidates to your organization.
+              </div>
+              <div>
+                <span class="font-semibold text-white">Selection Process:</span>
+                Employers are responsible for their own screening and selection procedures.
+              </div>
+              <div>
+                <span class="font-semibold text-white">Logistics:</span>
+                Details regarding stall allocation, reporting time, and event guidelines will be shared after confirmation.
+              </div>
+              <div>
+                <span class="font-semibold text-white">Code of Conduct:</span>
+                Participating organizations are expected to maintain professional and ethical recruitment practices.
+              </div>
+              <div>
+                <span class="font-semibold text-white">Consent:</span>
+                By proceeding, you agree to allow your organization's details to be used for event coordination and
+                promotional purposes.
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <input
+              id="instructionsAgree"
+              type="checkbox"
+              class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            />
+            <label
+              for="instructionsAgree"
+              class="text-sm"
+              style="margin: 0; color: #f8fafc !important"
+              >I have read and understood the instructions</label
+            >
+          </div>
+
+          <div class="pt-2">
+            <button
+              id="instructionsNextBtn"
+              type="button"
+              class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white btn-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
+              disabled
+            >
+              Proceed to Registration Form &rarr;
+            </button>
+          </div>
+        </div>
+
+        <form id="providerForm" class="space-y-4 hidden">
+          <div class="rounded-lg border border-white/10 bg-black/10 p-4 mb-2">
+            <h3 class="text-lg font-semibold text-white">Registration Form</h3>
+            <p class="text-sm text-[#cccccc]" style="margin-top: 6px">
+              Fill all details accurately. Required fields are marked with *.
+            </p>
+          </div>
+
+          <h3 class="text-lg font-semibold text-white pt-2">
+            Section 1: Organization Details
+          </h3>
+
+          <div>
+            <label for="organizationName">Organization Name*</label>
+            <input id="organizationName" name="organizationName" required class="input-field" type="text" />
+          </div>
+
+          <div>
+            <label for="industrySector">Industry / Sector*</label>
+            <input id="industrySector" name="industrySector" required class="input-field" type="text" />
+          </div>
+
+          <div>
+            <label for="companyWebsite">Company Website*</label>
+            <input
+              id="companyWebsite"
+              name="companyWebsite"
+              required
+              class="input-field"
+              type="url"
+              placeholder="https://example.com"
+            />
+          </div>
+
+          <div>
+            <label for="companyAddress">Company Address*</label>
+            <textarea
+              id="companyAddress"
+              name="companyAddress"
+              required
+              class="input-field"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="city">City*</label>
+              <input id="city" name="city" required class="input-field" type="text" />
+            </div>
+            <div>
+              <label for="state">State*</label>
+              <input id="state" name="state" required class="input-field" type="text" />
+            </div>
+          </div>
+
+          <h3 class="text-lg font-semibold text-white pt-2">
+            Section 2: Contact Person Details
+          </h3>
+
+          <div>
+            <label for="contactPersonName">Name of Contact Person*</label>
+            <input
+              id="contactPersonName"
+              name="contactPersonName"
+              required
+              class="input-field"
+              type="text"
+            />
+          </div>
+
+          <div>
+            <label for="designation">Designation*</label>
+            <input id="designation" name="designation" required class="input-field" type="text" />
+          </div>
+
+          <div>
+            <label for="phone">Phone Number*</label>
+            <input
+              id="phone"
+              name="phone"
+              required
+              class="input-field"
+              type="tel"
+              maxlength="10"
+              placeholder="10-digit phone"
+            />
+          </div>
+
+          <div>
+            <label for="email">Email Address*</label>
+            <input
+              id="email"
+              name="email"
+              required
+              class="input-field"
+              type="email"
+              placeholder="name@example.com"
+            />
+          </div>
+
+          <h3 class="text-lg font-semibold text-white pt-2">
+            Section 3: Job Opportunities
+          </h3>
+
+          <div>
+            <label for="jobRolesOffered">Job Role(s) Offered* (comma or new line separated)</label>
+            <textarea
+              id="jobRolesOffered"
+              name="jobRolesOffered"
+              required
+              class="input-field"
+              rows="3"
+              placeholder="e.g. Software Developer, Data Analyst"
+            ></textarea>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="numberOfVacancies">Number of Vacancies*</label>
+              <input
+                id="numberOfVacancies"
+                name="numberOfVacancies"
+                required
+                class="input-field"
+                type="number"
+                min="1"
+              />
+            </div>
+            <div>
+              <label for="employmentType">Employment Type*</label>
+              <select
+                id="employmentType"
+                name="employmentType"
+                required
+                class="input-field appearance-none"
+              >
+                <option value="" disabled selected>Select</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Internship">Internship</option>
+                <option value="Contract">Contract</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="jobLocations">Job Location(s)* (comma or new line separated)</label>
+            <textarea
+              id="jobLocations"
+              name="jobLocations"
+              required
+              class="input-field"
+              rows="3"
+              placeholder="e.g. Kochi, Ernakulam, Remote"
+            ></textarea>
+          </div>
+
+          <div>
+            <label for="keyResponsibilities">Key Responsibilities*</label>
+            <textarea
+              id="keyResponsibilities"
+              name="keyResponsibilities"
+              required
+              class="input-field"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <h3 class="text-lg font-semibold text-white pt-2">Declaration</h3>
+          <div class="flex items-start gap-3 pt-1">
+            <input
+              type="checkbox"
+              id="declaration"
+              name="declaration"
+              required
+              class="checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-0.5"
+            />
+            <label for="declaration" class="text-sm" style="margin: 0; color: #f8fafc !important">
+              We hereby confirm our participation in the Educine Job Fair and agree to abide by the event guidelines.
+            </label>
+          </div>
+
+          <div class="pt-2">
+            <button
+              type="submit"
+              class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white btn-primary hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="successModal"
+      class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden"
+    >
+      <div class="bg-white rounded-md p-6 max-w-sm w-full">
+        <div class="text-center">
+          <div
+            class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-400 mb-4"
+          >
+            <svg
+              class="h-6 w-6 text-green-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-white mb-2">Registration Submitted</h3>
+          <p class="text-sm text-gray-500 mb-4 modal-message">
+            Thank you for your submission.
+          </p>
+          <div class="items-center">
+            <button
+              onclick="window.location.href='https://educine.in'"
+              class="modal-close px-4 py-2 btn-primary text-white text-base font-medium rounded-md w-full shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+            >
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const step1 = document.getElementById("step1");
+        const providerForm = document.getElementById("providerForm");
+        const agree = document.getElementById("instructionsAgree");
+        const nextBtn = document.getElementById("instructionsNextBtn");
+        const phoneInput = document.getElementById("phone");
+
+        const JOB_FAIR_TYPE = "job_fair_provider"; // Adjust if backend expects a different type key
+        const apiUrl = "https://portal-dev.ssfkerala.org/api/educine";
+
+        function setNextEnabled(enabled) {
+          nextBtn.disabled = !enabled;
+          nextBtn.style.opacity = enabled ? "1" : "0.6";
+          nextBtn.style.cursor = enabled ? "pointer" : "not-allowed";
+        }
+
+        setNextEnabled(false);
+        document.body.classList.add("instructions-wide");
+
+        agree?.addEventListener("change", function () {
+          setNextEnabled(!!agree.checked);
+        });
+
+        nextBtn?.addEventListener("click", function () {
+          if (!agree?.checked) return;
+          step1.classList.add("hidden");
+          providerForm.classList.remove("hidden");
+          document.body.classList.remove("instructions-wide");
+        });
+
+        phoneInput?.addEventListener("input", function () {
+          this.value = this.value.replace(/\\D/g, "").slice(0, 10);
+        });
+
+        function splitToArray_(value) {
+          const raw = (value || "").split(/[,\\n\\r]+/);
+          return raw
+            .map((s) => (s || "").trim())
+            .filter(Boolean);
+        }
+
+        providerForm?.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const submitBtn = providerForm.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+
+          // Disable button and show loading
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `
+            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Processing...
+          `;
+
+          const phone = document.getElementById("phone").value;
+          if (!/^[0-9]{10}$/.test(phone)) {
+            showAlert("Please enter a valid 10-digit phone number");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          const declarationChecked = document.getElementById("declaration")?.checked;
+
+          const formFields = {
+            organizationName: document.getElementById("organizationName").value,
+            industrySector: document.getElementById("industrySector").value,
+            companyWebsite: document.getElementById("companyWebsite").value,
+            companyAddress: document.getElementById("companyAddress").value,
+            city: document.getElementById("city").value,
+            state: document.getElementById("state").value,
+            contactPersonName: document.getElementById("contactPersonName").value,
+            designation: document.getElementById("designation").value,
+            phone: phone,
+            email: document.getElementById("email").value,
+            jobRolesOffered: document.getElementById("jobRolesOffered").value,
+            numberOfVacancies: document.getElementById("numberOfVacancies").value,
+            jobLocations: document.getElementById("jobLocations").value,
+            employmentType: document.getElementById("employmentType").value,
+            keyResponsibilities: document.getElementById("keyResponsibilities").value,
+          };
+
+          // Required validation
+          if (
+            !formFields.organizationName ||
+            !formFields.industrySector ||
+            !formFields.companyWebsite ||
+            !formFields.companyAddress ||
+            !formFields.city ||
+            !formFields.state ||
+            !formFields.contactPersonName ||
+            !formFields.designation ||
+            !formFields.email ||
+            !formFields.jobRolesOffered ||
+            !formFields.numberOfVacancies ||
+            !formFields.jobLocations ||
+            !formFields.employmentType ||
+            !formFields.keyResponsibilities
+          ) {
+            showAlert("Please fill in all required fields");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          const rolesArr = splitToArray_(formFields.jobRolesOffered);
+          const locationsArr = splitToArray_(formFields.jobLocations);
+          const vacanciesNum = Number(formFields.numberOfVacancies);
+
+          if (rolesArr.length === 0) {
+            showAlert("Please enter at least one job role");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+          if (locationsArr.length === 0) {
+            showAlert("Please enter at least one job location");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+          if (!Number.isFinite(vacanciesNum) || vacanciesNum < 1) {
+            showAlert("Number of vacancies must be at least 1");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          if (!declarationChecked) {
+            showAlert("Please accept the declaration before submitting");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          // Payload: matches portal API pattern from job_seeker/entrepreneur
+          const apiPayload = {
+            type: JOB_FAIR_TYPE,
+            organizationName: formFields.organizationName.trim(),
+            industrySector: formFields.industrySector.trim(),
+            companyWebsite: formFields.companyWebsite.trim(),
+            companyAddress: formFields.companyAddress.trim(),
+            city: formFields.city.trim(),
+            state: formFields.state.trim(),
+            contactPersonName: formFields.contactPersonName.trim(),
+            designation: formFields.designation.trim(),
+            phone: formFields.phone,
+            email: formFields.email.trim(),
+            jobRolesOffered: rolesArr,
+            numberOfVacancies: vacanciesNum,
+            jobLocations: locationsArr,
+            employmentType: formFields.employmentType,
+            keyResponsibilities: formFields.keyResponsibilities.trim(),
+            entityId: null,
+          };
+
+          fetch(apiUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(apiPayload),
+          })
+            .then(async (res) => {
+              if (!res.ok) {
+                let msg = "Submission failed. Please try again.";
+                try {
+                  const errBody = await res.json();
+                  if (errBody && (errBody.message || errBody.error)) {
+                    msg = errBody.message || errBody.error;
+                  }
+                } catch (_) {}
+                throw new Error(msg);
+              }
+              showSuccessModal("Registration submitted successfully!");
+              providerForm.reset();
+              step1.classList.remove("hidden");
+              providerForm.classList.add("hidden");
+              document.body.classList.add("instructions-wide");
+              setNextEnabled(false);
+              document.getElementById("instructionsAgree").checked = false;
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            })
+            .catch((error) => {
+              showAlert(error.message || "Submission failed. Please try again later.");
+              console.error("Error:", error);
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            });
+        });
+
+        function showAlert(message) {
+          const alertDiv = document.createElement("div");
+          alertDiv.className =
+            "mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg relative";
+          alertDiv.role = "alert";
+          alertDiv.innerHTML = `
+            <span class="block sm:inline">${message}</span>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3 alert-close">
+              <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <title>Close</title>
+                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
+              </svg>
+            </span>
+          `;
+
+          const container = providerForm.parentElement;
+          container.prepend(alertDiv);
+
+          alertDiv
+            .querySelector(".alert-close")
+            .addEventListener("click", () => {
+              alertDiv.remove();
+            });
+
+          setTimeout(() => {
+            if (document.body.contains(alertDiv)) {
+              alertDiv.remove();
+            }
+          }, 5000);
+        }
+
+        function showSuccessModal(message) {
+          const modal = document.getElementById("successModal");
+          if (modal) {
+            const messageElement = modal.querySelector(".modal-message");
+            if (messageElement) {
+              messageElement.textContent =
+                message || "Thank you for your submission";
+            }
+            modal.classList.remove("hidden");
+          } else {
+            alert(message || "Thank you for your submission");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+
