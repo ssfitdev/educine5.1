@@ -389,58 +389,41 @@
               required
               class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
             >
-              <option value="" disabled selected>Select your district</option>
-              <option>Thiruvananthapuram</option>
-              <option>Kollam</option>
-              <option>Pathanamthitta</option>
-              <option>Alappuzha</option>
-              <option>Kottayam</option>
-              <option>Idukki</option>
-              <option>Ernakulam</option>
-              <option>Thrissur</option>
-              <option>Palakkad</option>
-              <option>Malappuram West</option>
-              <option>Malappuram East</option>
-              <option>Kozhikode South</option>
-              <option>Kozhikode North</option>
-              <option>Nilgris</option>
-              <option>Wayanad</option>
-              <option>Kannur</option>
-              <option>Kasaragod</option>
+              <option value="" disabled selected>Loading districts...</option>
             </select>
           </div>
 
-          <!-- Division (only for Kozhikode) -->
+          <!-- Division -->
           <div id="divisionContainer" class="hidden">
             <label
               for="division"
               class="block text-sm font-medium text-gray-700 mb-1"
-              >Area in Kozhikode</label
+              >Division*</label
             >
             <select
               id="division"
               name="division"
+              required
               class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
             >
-              <option value="" disabled selected>Select your area</option>
-              <option>Balussery</option>
-              <option>Poonoor</option>
-              <option>Mukkam</option>
-              <option>Thamarassery</option>
-              <option>Koduvally</option>
-              <option>Narikkuni</option>
-              <option>Kunnamangalam</option>
-              <option>Kozhikode</option>
-              <option>Feroke</option>
-              <option>Omassery</option>
-              <option>Mavoor</option>
-              <option>Koyilandy</option>
-              <option>Vadakara</option>
-              <option>Perambra</option>
-              <option>Nadapuram</option>
-              <option>Kuttiadi</option>
-              <option>Ayanchery</option>
-              <option>Naduvannur</option>
+              <option value="" disabled selected>Select a district first</option>
+            </select>
+          </div>
+
+          <!-- Sector -->
+          <div id="sectorContainer" class="hidden">
+            <label
+              for="sector"
+              class="block text-sm font-medium text-gray-700 mb-1"
+              >Sector*</label
+            >
+            <select
+              id="sector"
+              name="sector"
+              required
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
+            >
+              <option value="" disabled selected>Select a division first</option>
             </select>
           </div>
 
@@ -720,9 +703,52 @@
         const districtSelect = document.getElementById("district");
         const divisionContainer = document.getElementById("divisionContainer");
         const divisionSelect = document.getElementById("division");
+        const sectorContainer = document.getElementById("sectorContainer");
+        const sectorSelect = document.getElementById("sector");
         const whatsappInput = document.getElementById("whatsapp");
         const whatsappValidIcon = document.getElementById("whatsappValidIcon");
         const whatsappError = document.getElementById("whatsappError");
+        const scriptUrl =
+          "https://script.google.com/macros/s/AKfycbwfp8g1_nqI-kD3YUmraXx7rYbJwCi-NwuJ3DB77rcDir6jReFtCMP2QJYEn0PkhpKu/exec";
+
+        let locationData = {};
+
+        function setSelectOptions(selectEl, placeholder, values) {
+          if (!selectEl) return;
+          selectEl.innerHTML = "";
+          const ph = document.createElement("option");
+          ph.value = "";
+          ph.disabled = true;
+          ph.selected = true;
+          ph.textContent = placeholder;
+          selectEl.appendChild(ph);
+          (values || []).forEach((v) => {
+            const opt = document.createElement("option");
+            opt.value = v;
+            opt.textContent = v;
+            selectEl.appendChild(opt);
+          });
+        }
+
+        async function loadLocations() {
+          try {
+            setSelectOptions(districtSelect, "Loading districts...", []);
+            const res = await fetch(`${scriptUrl}?action=locations`, {
+              method: "GET",
+              headers: { Accept: "application/json" },
+            });
+            const json = await res.json();
+            locationData = json?.data || {};
+            const districts = Object.keys(locationData).sort();
+            setSelectOptions(districtSelect, "Select your district", districts);
+          } catch (e) {
+            setSelectOptions(
+              districtSelect,
+              "Failed to load districts (refresh)",
+              []
+            );
+          }
+        }
 
         function showStep(step) {
           if (step === 1) {
@@ -746,6 +772,7 @@
           const institution = document.getElementById("institution");
           const district = document.getElementById("district");
           const division = document.getElementById("division");
+          const sector = document.getElementById("sector");
 
           // Basic validation for step 1 required fields
           if (
@@ -759,12 +786,9 @@
             return;
           }
 
-          // If Kozhikode area is visible, ensure a selection is made
-          if (!divisionContainer.classList.contains("hidden")) {
-            if (!division?.value) {
-              showAlert("Please select your area in Kozhikode");
-              return;
-            }
+          if (!division?.value || !sector?.value) {
+            showAlert("Please select District, Division, and Sector");
+            return;
           }
 
           showStep(2);
@@ -790,17 +814,25 @@
           }
         });
 
-        // Show/hide division field based on district selection
-        districtSelect.addEventListener("change", function () {
-          if (
-            this.value === "Kozhikode North" ||
-            this.value === "Kozhikode South"
-          ) {
-            divisionContainer.classList.remove("hidden");
-          } else {
-            divisionContainer.classList.add("hidden");
-            if (divisionSelect) divisionSelect.selectedIndex = 0;
-          }
+        loadLocations();
+
+        districtSelect?.addEventListener("change", function () {
+          const district = this.value;
+          const divisions = Object.keys(locationData?.[district] || {}).sort();
+          divisionContainer.classList.remove("hidden");
+          sectorContainer.classList.add("hidden");
+          setSelectOptions(divisionSelect, "Select your division", divisions);
+          setSelectOptions(sectorSelect, "Select a division first", []);
+        });
+
+        divisionSelect?.addEventListener("change", function () {
+          const district = districtSelect.value;
+          const division = this.value;
+          const sectors = (locationData?.[district]?.[division] || [])
+            .slice()
+            .sort();
+          sectorContainer.classList.remove("hidden");
+          setSelectOptions(sectorSelect, "Select your sector", sectors);
         });
       });
 
@@ -847,6 +879,7 @@
             district: document.getElementById("district").value,
             division:
               document.getElementById("division")?.value || "Not applicable",
+            sector: document.getElementById("sector")?.value || "Not applicable",
             // interests: interests.length > 0 ? interests : null,
             stalls: stalls.length > 0 ? stalls : null,
           };
@@ -864,12 +897,15 @@
             return;
           }
 
-          // Additional validation for Kozhikode division
-          if (
-            formData.district === "Kozhikode" &&
-            (!formData.division || formData.division === "Select your area")
-          ) {
-            showAlert("Please select your area in Kozhikode");
+          // Validate dependent dropdowns
+          if (!formData.division || formData.division === "Not applicable") {
+            showAlert("Please select your division");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+          if (!formData.sector || formData.sector === "Not applicable") {
+            showAlert("Please select your sector");
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalText;
             return;
@@ -896,6 +932,9 @@
               document.getElementById("studentForm").reset();
               document
                 .getElementById("divisionContainer")
+                .classList.add("hidden");
+              document
+                .getElementById("sectorContainer")
                 .classList.add("hidden");
               document
                 .getElementById("whatsappValidIcon")
