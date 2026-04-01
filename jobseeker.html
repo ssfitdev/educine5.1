@@ -570,6 +570,8 @@
         const ageInput = document.getElementById("age");
         const currentStatusSelect = document.getElementById("currentStatus");
         const employedFields = document.getElementById("employedFields");
+        const CLOUDINARY_CLOUD_NAME = "dzn6bxhwk"; // e.g. "your-cloud-name"
+        const CLOUDINARY_UNSIGNED_PRESET = "educine_unsigned_resume"; // e.g. "educine_unsigned_resume"
 
         // Phone validation (digits only)
         if (phoneInput) {
@@ -608,6 +610,37 @@
           }
         });
 
+        async function uploadResumeToCloudinary(file) {
+          if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_UNSIGNED_PRESET) {
+            throw new Error(
+              "Resume upload is not configured. Set Cloudinary cloud name and unsigned preset in jobseeker.html."
+            );
+          }
+
+          const uploadUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/raw/upload`;
+          const body = new FormData();
+          body.append("file", file);
+          body.append("upload_preset", CLOUDINARY_UNSIGNED_PRESET);
+          body.append("folder", "educine/jobseeker-resumes");
+
+          const res = await fetch(uploadUrl, {
+            method: "POST",
+            body: body,
+          });
+
+          let payload = {};
+          try {
+            payload = await res.json();
+          } catch (_) {}
+
+          if (!res.ok || !(payload.secure_url || payload.url)) {
+            throw new Error(
+              payload.error?.message || "Resume upload failed. Please try again."
+            );
+          }
+          return payload.secure_url || payload.url;
+        }
+
         // Form submission
         form.addEventListener("submit", function (e) {
           e.preventDefault();
@@ -642,6 +675,7 @@
           );
           const declarationChecked =
             document.getElementById("declaration")?.checked;
+          const resumeFile = document.getElementById("resume")?.files?.[0] || null;
           const otherSectorRaw =
             (document.getElementById("otherSector")?.value || "").trim();
 
@@ -739,46 +773,60 @@
             return;
           }
 
-          // Backend shape (portal API) — matches axios example
-          const apiPayload = {
-            type: "job_seeker",
-            name: formData.name,
-            phone: formData.phone,
-            email: formData.email,
-            gender: formData.gender,
-            dob: formData.dob,
-            age: Number.isFinite(ageNum) ? ageNum : null,
-            place: formData.place,
-            district: formData.district,
-            state: formData.state,
-            highestQualification: formData.highestQualification,
-            courseSpecialization: formData.courseSpecialization,
-            institutionName: formData.institutionName,
-            yearOfCompletion: Number.isFinite(yearNum) ? yearNum : null,
-            additionalCertifications: formData.additionalCertifications || "",
-            currentStatus: formData.currentStatus,
-            currentJobRole: formData.currentJobRole,
-            organizationName: formData.organizationName,
-            yearsOfExperience: yearsOfExperience,
-            preferredJobSectors: preferredJobSectors,
-            expectedSalaryRange: formData.expectedSalaryRange,
-            keySkills: formData.keySkills,
-            languagesKnown: formData.languagesKnown,
-            softwareToolsKnown: formData.softwareToolsKnown,
-            resumeUrl: null,
-            entityId: null,
-          };
+          if (resumeFile && resumeFile.type !== "application/pdf") {
+            showAlert("Please upload resume in PDF format");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          const resumeUploadPromise = resumeFile
+            ? uploadResumeToCloudinary(resumeFile)
+            : Promise.resolve(null);
 
           const apiUrl =
             "https://portal-dev.ssfkerala.org/api/educine";
 
-          fetch(apiUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(apiPayload),
-          })
+          resumeUploadPromise
+            .then((resumeUrl) => {
+              // Backend shape (portal API) — matches axios example
+              const apiPayload = {
+                type: "job_seeker",
+                name: formData.name,
+                phone: formData.phone,
+                email: formData.email,
+                gender: formData.gender,
+                dob: formData.dob,
+                age: Number.isFinite(ageNum) ? ageNum : null,
+                place: formData.place,
+                district: formData.district,
+                state: formData.state,
+                highestQualification: formData.highestQualification,
+                courseSpecialization: formData.courseSpecialization,
+                institutionName: formData.institutionName,
+                yearOfCompletion: Number.isFinite(yearNum) ? yearNum : null,
+                additionalCertifications: formData.additionalCertifications || "",
+                currentStatus: formData.currentStatus,
+                currentJobRole: formData.currentJobRole,
+                organizationName: formData.organizationName,
+                yearsOfExperience: yearsOfExperience,
+                preferredJobSectors: preferredJobSectors,
+                expectedSalaryRange: formData.expectedSalaryRange,
+                keySkills: formData.keySkills,
+                languagesKnown: formData.languagesKnown,
+                softwareToolsKnown: formData.softwareToolsKnown,
+                resumeUrl: resumeUrl,
+                entityId: null,
+              };
+
+              return fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(apiPayload),
+              });
+            })
             .then(async (res) => {
               if (!res.ok) {
                 let msg = "Submission failed. Please try again.";
