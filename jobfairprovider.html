@@ -268,9 +268,13 @@
               <input id="city" name="city" required class="input-field" type="text" />
             </div>
             <div>
-              <label for="state">State*</label>
-              <input id="state" name="state" required class="input-field" type="text" />
+              <label for="district">District*</label>
+              <input id="district" name="district" required class="input-field" type="text" />
             </div>
+          </div>
+          <div>
+            <label for="state">State*</label>
+            <input id="state" name="state" required class="input-field" type="text" />
           </div>
 
           <h3 class="text-lg font-semibold text-white pt-2">
@@ -347,19 +351,25 @@
               />
             </div>
             <div>
-              <label for="employmentType">Employment Type*</label>
-              <select
-                id="employmentType"
-                name="employmentType"
-                required
-                class="input-field appearance-none"
-              >
-                <option value="" disabled selected>Select</option>
-                <option value="Full-time">Full-time</option>
-                <option value="Part-time">Part-time</option>
-                <option value="Internship">Internship</option>
-                <option value="Contract">Contract</option>
-              </select>
+              <label>Employment Type* (select one or more)</label>
+              <div class="grid grid-cols-2 gap-2 text-sm text-[#cccccc]">
+                <label class="flex items-center gap-2" style="margin: 0">
+                  <input type="checkbox" name="employmentTypes" value="Full-time" class="checkbox" />
+                  <span>Full-time</span>
+                </label>
+                <label class="flex items-center gap-2" style="margin: 0">
+                  <input type="checkbox" name="employmentTypes" value="Part-time" class="checkbox" />
+                  <span>Part-time</span>
+                </label>
+                <label class="flex items-center gap-2" style="margin: 0">
+                  <input type="checkbox" name="employmentTypes" value="Internship" class="checkbox" />
+                  <span>Internship</span>
+                </label>
+                <label class="flex items-center gap-2" style="margin: 0">
+                  <input type="checkbox" name="employmentTypes" value="Contract" class="checkbox" />
+                  <span>Contract</span>
+                </label>
+              </div>
             </div>
           </div>
 
@@ -459,7 +469,7 @@
         const nextBtn = document.getElementById("instructionsNextBtn");
         const phoneInput = document.getElementById("phone");
 
-        const JOB_FAIR_TYPE = "job_fair_provider"; // Adjust if backend expects a different type key
+        const JOB_FAIR_TYPE = "employer";
         const apiUrl = (function () {
           if (
             typeof window !== "undefined" &&
@@ -533,6 +543,7 @@
             companyWebsite: document.getElementById("companyWebsite").value,
             companyAddress: document.getElementById("companyAddress").value,
             city: document.getElementById("city").value,
+            district: document.getElementById("district").value,
             state: document.getElementById("state").value,
             contactPersonName: document.getElementById("contactPersonName").value,
             designation: document.getElementById("designation").value,
@@ -541,9 +552,11 @@
             jobRolesOffered: document.getElementById("jobRolesOffered").value,
             numberOfVacancies: document.getElementById("numberOfVacancies").value,
             jobLocations: document.getElementById("jobLocations").value,
-            employmentType: document.getElementById("employmentType").value,
             keyResponsibilities: document.getElementById("keyResponsibilities").value,
           };
+          const employmentType = Array.from(
+            document.querySelectorAll('input[name="employmentTypes"]:checked')
+          ).map((cb) => cb.value);
 
           // Required validation
           if (
@@ -552,6 +565,7 @@
             !formFields.companyWebsite ||
             !formFields.companyAddress ||
             !formFields.city ||
+            !formFields.district ||
             !formFields.state ||
             !formFields.contactPersonName ||
             !formFields.designation ||
@@ -559,7 +573,6 @@
             !formFields.jobRolesOffered ||
             !formFields.numberOfVacancies ||
             !formFields.jobLocations ||
-            !formFields.employmentType ||
             !formFields.keyResponsibilities
           ) {
             showAlert("Please fill in all required fields");
@@ -590,6 +603,12 @@
             submitBtn.innerHTML = originalText;
             return;
           }
+          if (employmentType.length === 0) {
+            showAlert("Please select at least one employment type");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
 
           if (!declarationChecked) {
             showAlert("Please accept the declaration before submitting");
@@ -598,23 +617,25 @@
             return;
           }
 
-          // Payload: matches portal API pattern from job_seeker/entrepreneur
+          // Payload: matches employer API shape
           const apiPayload = {
             type: JOB_FAIR_TYPE,
-            organizationName: formFields.organizationName.trim(),
+            name: formFields.contactPersonName.trim(),
+            phone: formFields.phone,
+            email: formFields.email.trim(),
+            district: formFields.district.trim(),
+            organizationNameEmployer: formFields.organizationName.trim(),
             industrySector: formFields.industrySector.trim(),
             companyWebsite: formFields.companyWebsite.trim(),
             companyAddress: formFields.companyAddress.trim(),
             city: formFields.city.trim(),
             state: formFields.state.trim(),
             contactPersonName: formFields.contactPersonName.trim(),
-            designation: formFields.designation.trim(),
-            phone: formFields.phone,
-            email: formFields.email.trim(),
+            contactPersonDesignation: formFields.designation.trim(),
             jobRolesOffered: rolesArr,
             numberOfVacancies: vacanciesNum,
-            jobLocations: locationsArr,
-            employmentType: formFields.employmentType,
+            jobLocations: locationsArr.join(", "),
+            employmentType: employmentType,
             keyResponsibilities: formFields.keyResponsibilities.trim(),
             entityId: null,
           };
