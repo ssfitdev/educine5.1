@@ -784,8 +784,15 @@
             ? uploadResumeToCloudinary(resumeFile)
             : Promise.resolve(null);
 
-          const apiUrl =
-            "https://portal-dev.ssfkerala.org/api/educine";
+          const apiUrl = (function () {
+            if (
+              typeof window !== "undefined" &&
+              /^https?:$/.test(window.location.protocol)
+            ) {
+              return new URL("/api/educine", window.location.origin).href;
+            }
+            return "https://portal-dev.ssfkerala.org/api/educine";
+          })();
 
           resumeUploadPromise
             .then((resumeUrl) => {
