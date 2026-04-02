@@ -418,7 +418,8 @@
         const participationType = document.getElementById("participationType");
         const teamFields = document.getElementById("teamFields");
         const CLOUDINARY_CLOUD_NAME = "dzn6bxhwk"; // e.g. "dzn6bxhwk"
-        const CLOUDINARY_UNSIGNED_PRESET = "educine_unsigned_pitchdeck"; // e.g. "educine_unsigned_resume"
+        // Reuse the same raw unsigned preset used for resume uploads (must exist in Cloudinary).
+        const CLOUDINARY_UNSIGNED_PRESET = "educine_unsigned_resume";
 
         function setNextEnabled(enabled) {
           nextBtn.disabled = !enabled;
@@ -475,7 +476,12 @@
           } catch (_) {}
 
           if (!res.ok || !(payload.secure_url || payload.url)) {
-            throw new Error(payload.error?.message || "Pitch deck upload failed.");
+            const msg =
+              payload?.error?.message ||
+              payload?.error ||
+              payload?.message ||
+              "Pitch deck upload failed.";
+            throw new Error(`Cloudinary upload failed (${res.status}): ${msg}`);
           }
 
           return payload.secure_url || payload.url;
