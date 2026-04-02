@@ -417,6 +417,8 @@
         const phoneInput = document.getElementById("phone");
         const participationType = document.getElementById("participationType");
         const teamFields = document.getElementById("teamFields");
+        const CLOUDINARY_CLOUD_NAME = "dzn6bxhwk"; // e.g. "dzn6bxhwk"
+        const CLOUDINARY_UNSIGNED_PRESET = "educine_unsigned_pitchdeck"; // e.g. "educine_unsigned_resume"
 
         function setNextEnabled(enabled) {
           nextBtn.disabled = !enabled;
@@ -449,6 +451,36 @@
           this.value = this.value.replace(/\D/g, "").slice(0, 10);
         });
 
+        async function uploadPitchDeckToCloudinary(file) {
+          if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_UNSIGNED_PRESET) {
+            throw new Error(
+              "Pitch deck upload is not configured. Set CLOUDINARY_CLOUD_NAME and CLOUDINARY_UNSIGNED_PRESET in entrepreneur.html."
+            );
+          }
+
+          const uploadUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/raw/upload`;
+          const body = new FormData();
+          body.append("file", file);
+          body.append("upload_preset", CLOUDINARY_UNSIGNED_PRESET);
+          body.append("folder", "educine/entrepreneur-pitchdecks");
+
+          const res = await fetch(uploadUrl, {
+            method: "POST",
+            body,
+          });
+
+          let payload = {};
+          try {
+            payload = await res.json();
+          } catch (_) {}
+
+          if (!res.ok || !(payload.secure_url || payload.url)) {
+            throw new Error(payload.error?.message || "Pitch deck upload failed.");
+          }
+
+          return payload.secure_url || payload.url;
+        }
+
         form.addEventListener("submit", function (e) {
           e.preventDefault();
 
@@ -474,6 +506,22 @@
           }
 
           const declarationChecked = document.getElementById("declaration")?.checked;
+          const pitchDeckFile =
+            document.getElementById("pitchDeckFile")?.files?.[0] || null;
+
+          if (!pitchDeckFile) {
+            showAlert("Please upload your pitch deck (PDF).");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          if (pitchDeckFile.type !== "application/pdf") {
+            showAlert("Please upload your pitch deck in PDF format.");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
 
           const formData = {
             fullName: document.getElementById("fullName").value,
@@ -595,13 +643,17 @@
             return "https://portal-dev.ssfkerala.org/api/educine";
           })();
 
-          fetch(apiUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(apiPayload),
-          })
+          uploadPitchDeckToCloudinary(pitchDeckFile)
+            .then((pitchDeckUrl) => {
+              apiPayload.pitchDeckUrl = pitchDeckUrl;
+              return fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(apiPayload),
+              });
+            })
             .then(async (res) => {
               if (!res.ok) {
                 let msg = "Submission failed. Please try again.";
