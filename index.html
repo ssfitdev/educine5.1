@@ -243,33 +243,23 @@
                             data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]">
 
                             <div class="spacer-single"></div>
-                            <div style="display: inline-flex; align-items: center; gap: 30px; flex-wrap: wrap; justify-content: center;">
-                                <span class="h6 date-location-item" style="margin: 0; white-space: nowrap;"><i class="i_h3 fa fa-calendar-check-o id-color"></i> April 25,26</span>
-                                <span class="h6 date-location-item" style="margin: 0; white-space: nowrap;"><i class="i_h3 fa fa-map-marker id-color"></i> Kasargode</span>
+                            <!-- Desktop Date/Location -->
+                            <div class="date-location-desktop" style="display: inline-flex; align-items: center; gap: 30px;">
+                                <span class="h6" style="margin: 0; white-space: nowrap;"><i class="i_h3 fa fa-calendar-check-o id-color"></i> April 25,26</span>
+                                <span class="h6" style="margin: 0; white-space: nowrap;"><i class="i_h3 fa fa-map-marker id-color"></i> Kasargode</span>
+                            </div>
+                            <!-- Mobile Date/Location -->
+                            <div class="date-location-mobile" style="display: none; flex-direction: column; align-items: center; gap: 8px;">
+                                <span class="h6" style="margin: 0; white-space: nowrap; font-size: 11px;"><i class="fa fa-calendar-check-o id-color" style="font-size: 13px;"></i> April 25,26</span>
+                                <span class="h6" style="margin: 0; white-space: nowrap; font-size: 11px;"><i class="fa fa-map-marker id-color" style="font-size: 13px;"></i> Kasargode</span>
                             </div>
                             <style>
-                                @media (max-width: 991px) {
-                                    .date-location-item {
-                                        font-size: 12px !important;
-                                    }
-                                    .date-location-item .i_h3 {
-                                        font-size: 14px !important;
-                                    }
-                                }
                                 @media (max-width: 767px) {
-                                    .date-location-item {
-                                        font-size: 10px !important;
+                                    .date-location-desktop {
+                                        display: none !important;
                                     }
-                                    .date-location-item .i_h3 {
-                                        font-size: 12px !important;
-                                    }
-                                }
-                                @media (max-width: 480px) {
-                                    .date-location-item {
-                                        font-size: 9px !important;
-                                    }
-                                    .date-location-item .i_h3 {
-                                        font-size: 11px !important;
+                                    .date-location-mobile {
+                                        display: flex !important;
                                     }
                                 }
                             </style>
