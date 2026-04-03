@@ -975,6 +975,8 @@
             stalls: formData.stalls,
             entityId: null,
           };
+          
+          console.log("Submitting payload:", apiPayload);
 
           fetch(apiUrl, {
             method: "POST",
@@ -988,10 +990,12 @@
                 let msg = "Registration failed. Please try again.";
                 try {
                   const errBody = await res.json();
+                  console.log("Error response:", errBody);
                   if (errBody && (errBody.message || errBody.error)) {
                     msg = errBody.message || errBody.error;
                   }
                 } catch (_) {}
+                console.error("HTTP Status:", res.status, "Message:", msg);
                 throw new Error(msg);
               }
               showSuccessModal(
