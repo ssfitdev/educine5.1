@@ -914,7 +914,6 @@
           const stalls = Array.from(stallCheckboxes).map((cb) => cb.value);
 
           const formData = {
-            formType: "student",
             name: document.getElementById("name").value,
             whatsapp: whatsapp,
             class: document.getElementById("class").value,
@@ -924,7 +923,7 @@
               document.getElementById("division")?.value || "Not applicable",
             sector: document.getElementById("sector")?.value || "Not applicable",
             // interests: interests.length > 0 ? interests : null,
-            stalls: stalls.length > 0 ? stalls : null,
+            stalls: stalls.length > 0 ? stalls : [],
           };
 
           // Validate required fields
@@ -954,21 +953,47 @@
             return;
           }
 
-          // Submit to Google Apps Script
-          const scriptUrl =
-            "https://script.google.com/macros/s/AKfycbzyjq1gMWqj9lJucT796JYQ-13JXDva53VfRo863WIczmEa_bao6oBa4ITKizPtH2Zf/exec";
+          const apiUrl = (function () {
+            if (
+              typeof window !== "undefined" &&
+              /^https?:$/.test(window.location.protocol)
+            ) {
+              return new URL("/api/educine", window.location.origin).href;
+            }
+            return "https://portal-dev.ssfkerala.org/api/educine";
+          })();
 
-          fetch(scriptUrl, {
+          const apiPayload = {
+            type: "student",
+            name: formData.name,
+            whatsapp: formData.whatsapp,
+            class: formData.class,
+            institution: formData.institution,
+            district: formData.district,
+            division: formData.division,
+            sector: formData.sector,
+            stalls: formData.stalls,
+            entityId: null,
+          };
+
+          fetch(apiUrl, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(formData),
-            mode: "no-cors",
+            body: JSON.stringify(apiPayload),
           })
-            .then(() => {
-              // Since we're using no-cors mode, we can't read the response
-              // Assume success if the request completes
+            .then(async (res) => {
+              if (!res.ok) {
+                let msg = "Registration failed. Please try again.";
+                try {
+                  const errBody = await res.json();
+                  if (errBody && (errBody.message || errBody.error)) {
+                    msg = errBody.message || errBody.error;
+                  }
+                } catch (_) {}
+                throw new Error(msg);
+              }
               showSuccessModal(
                 "Registration successful! We'll contact you soon."
               );
