@@ -234,7 +234,7 @@
 
                         <div class="text-center tp-caption size-20 text-white tp-static-layer"
                             data-x="['center','center','center','center']" data-hoffset="['0']"
-                            data-y="['top','top','top','top']" data-voffset="['430']"
+                            data-y="['top','top','top','top']" data-voffset="['430','380','360','340']"
                             data-lineheight="['30','30','30','30']" data-width="none" data-height="none"
                             data-whitespace="nowrap" data-type="text" data-responsive_offset="on" data-startslide="0"
                             data-endslide="5"
@@ -243,10 +243,36 @@
                             data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]">
 
                             <div class="spacer-single"></div>
-                            <div style="display: inline-flex; align-items: center; gap: 30px;">
-                                <span class="h6" style="margin: 0; white-space: nowrap;"><i class="i_h3 fa fa-calendar-check-o id-color"></i> April 25,26</span>
-                                <span class="h6" style="margin: 0; white-space: nowrap;"><i class="i_h3 fa fa-map-marker id-color"></i> Kasargode</span>
+                            <div style="display: inline-flex; align-items: center; gap: 30px; flex-wrap: wrap; justify-content: center;">
+                                <span class="h6 date-location-item" style="margin: 0; white-space: nowrap;"><i class="i_h3 fa fa-calendar-check-o id-color"></i> April 25,26</span>
+                                <span class="h6 date-location-item" style="margin: 0; white-space: nowrap;"><i class="i_h3 fa fa-map-marker id-color"></i> Kasargode</span>
                             </div>
+                            <style>
+                                @media (max-width: 991px) {
+                                    .date-location-item {
+                                        font-size: 14px !important;
+                                    }
+                                    .date-location-item .i_h3 {
+                                        font-size: 16px !important;
+                                    }
+                                }
+                                @media (max-width: 767px) {
+                                    .date-location-item {
+                                        font-size: 12px !important;
+                                    }
+                                    .date-location-item .i_h3 {
+                                        font-size: 14px !important;
+                                    }
+                                }
+                                @media (max-width: 480px) {
+                                    .date-location-item {
+                                        font-size: 11px !important;
+                                    }
+                                    .date-location-item .i_h3 {
+                                        font-size: 13px !important;
+                                    }
+                                }
+                            </style>
                         </div>
 
 
