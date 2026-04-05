@@ -244,16 +244,23 @@
                             data-paddingright="[0,0,0,0]" data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]">
 
                             <div class="spacer-single"></div>
+
                             <!-- Desktop Date/Location -->
                             <div class="date-location-desktop" style="display: inline-flex; align-items: center; gap: 30px;">
-                                <span class="h6" style="margin: 0; white-space: nowrap; text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.7);"><i class="i_h3 fa fa-calendar-check-o id-color"></i> April 25,26</span>
-                                <span class="h6" style="margin: 0; white-space: nowrap; text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.7);"><i class="i_h3 fa fa-map-marker id-color"></i> Kasargode</span>
+                                <span class="h6" style="margin: 0; white-space: nowrap; text-shadow: 0 4px 12px rgba(0,0,0,0.9), 0 2px 6px rgba(0,0,0,0.7);"><i class="i_h3 fa fa-calendar-check-o id-color"></i> April 25,26</span>
+                                <span class="h6" style="margin: 0; white-space: nowrap; text-shadow: 0 4px 12px rgba(0,0,0,0.9), 0 2px 6px rgba(0,0,0,0.7);"><i class="i_h3 fa fa-map-marker id-color"></i> Kasargode</span>
                             </div>
-                            <!-- Mobile Date/Location -->
-                            <div class="date-location-mobile" style="display: none; align-items: center; gap: 15px; justify-content: center;">
-                                <span class="h6" style="margin: 0; white-space: nowrap; font-size: 9px; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 1px 4px rgba(0, 0, 0, 0.7);"><i class="fa fa-calendar-check-o id-color" style="font-size: 11px;"></i> April 25,26</span>
-                                <span class="h6" style="margin: 0; white-space: nowrap; font-size: 9px; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 1px 4px rgba(0, 0, 0, 0.7);"><i class="fa fa-map-marker id-color" style="font-size: 11px;"></i> Kasargode</span>
+
+                            <!-- Mobile Date/Location + Register Button stacked -->
+                            <div class="date-location-mobile" style="display: none; flex-direction: column; align-items: center; gap: 12px; justify-content: center;">
+                                <div style="display: inline-flex; align-items: center; gap: 15px;">
+                                    <span class="h6" style="margin: 0; white-space: nowrap; font-size: 9px; text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.7);"><i class="fa fa-calendar-check-o id-color" style="font-size: 11px;"></i> April 25,26</span>
+                                    <span class="h6" style="margin: 0; white-space: nowrap; font-size: 9px; text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.7);"><i class="fa fa-map-marker id-color" style="font-size: 11px;"></i> Kasargode</span>
+                                </div>
+                                <!-- Register button only shown on mobile, sits naturally below date/location -->
+                                <a href="registeration.html" class="btn-custom text-white scroll-to" style="margin-top: 8px;">Register Now</a>
                             </div>
+
                             <style>
                                 @media (max-width: 767px) {
                                     .date-location-desktop {
@@ -266,24 +273,23 @@
                             </style>
                         </div>
 
-
+                        <!-- Register button: visible on desktop/tablet only, hidden on mobile -->
                         <div class="tp-caption tp-static-layer" data-x="['center','center','center','center']"
-                            data-hoffset="['0']" data-y="['top','top','top','top']" data-voffset="['506','506','630','660']"
+                            data-hoffset="['0']" data-y="['top','top','top','top']" data-voffset="['506','506','560','580']"
                             data-width="none" data-height="none" data-whitespace="nowrap" data-type="button"
                             data-responsive_offset="on" data-responsive="off" data-startslide="0" data-endslide="5"
-                            data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":500,"ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"},{"frame":"hover","speed":"300","ease":"Power1.easeInOut","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgba(255, 255, 255, 1.00);bg:rgba(255, 255, 255, 0.15);bw:2px 2px 2px 2px;"}]'
+                            data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":500,"ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"},{"frame":"hover","speed":"300","ease":"Power1.easeInOut","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgba(255,255,255,1.00);bg:rgba(255,255,255,0.15);bw:2px 2px 2px 2px;"}]'
                             data-textAlign="['center','center','center','center']" data-paddingtop="[12,12,12,12]"
                             data-paddingright="[20,20,20,20]" data-paddingbottom="[12,12,12,12]"
                             data-paddingleft="[20,20,20,20]">
-                            <a href="registeration.html"
-                                class="btn-custom text-white scroll-to">Register Now</a>
+                            <a href="registeration.html" class="btn-custom text-white scroll-to d-none d-md-inline-block">Register Now</a>
                         </div>
 
                         <div class="tp-caption tp-static-layer" data-x="['center','center','center','center']"
-                            data-hoffset="['0']" data-y="['top','top','top','top']" data-voffset="['506','506','630','660']"
+                            data-hoffset="['0']" data-y="['top','top','top','top']" data-voffset="['506','506','560','580']"
                             data-width="none" data-height="none" data-whitespace="nowrap" data-type="button"
                             data-responsive_offset="on" data-responsive="off" data-startslide="0" data-endslide="3"
-                            data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":500,"ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"},{"frame":"hover","speed":"300","ease":"Power1.easeInOut","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgba(255, 255, 255, 1.00);bg:rgba(255, 255, 255, 0.15);bw:2px 2px 2px 2px;"}]'
+                            data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":500,"ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"to":"opacity:0;","ease":"nothing"},{"frame":"hover","speed":"300","ease":"Power1.easeInOut","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgba(255,255,255,1.00);bg:rgba(255,255,255,0.15);bw:2px 2px 2px 2px;"}]'
                             data-textAlign="['center','center','center','center']" data-paddingtop="[12,12,12,12]"
                             data-paddingright="[20,20,20,20]" data-paddingbottom="[12,12,12,12]"
                             data-paddingleft="[20,20,20,20]">
@@ -343,7 +349,7 @@
 
                         <div class="col-lg-6 mb-sm-30 text-center wow fadeInRight">
                             <div class="de-images">
-                                <img class="di-small wow fadeIn" src="images/13.jpg" alt="" />
+                                <img class="di-small wow fadeIn" src="images/109.jpg" alt="" />
                                 <img class="di-small-2 wow fadeIn" src="images/102.JPG" alt="" />
                                 <img class="di-big img-fluid wow fadeInRight" data-wow-delay=".25s" src="images/103.JPG"
                                     alt="" />
