@@ -4,7 +4,7 @@
  *
  * Optional env: EDUCINE_API_UPSTREAM (default: portal-dev URL below)
  */
-const DEFAULT_UPSTREAM = "https://portal-dev.ssfkerala.org/api/educine";
+const DEFAULT_UPSTREAM = "https://portal.ssfkerala.org/api/educine";
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
