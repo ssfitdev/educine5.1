@@ -193,7 +193,7 @@
             >
               <option value="" disabled selected>Select status</option>
               <option value="student">Student</option>
-              <option value="working professional">Working Professional</option>
+              <option value="working_professional">Working Professional</option>
               <option value="entrepreneur">Entrepreneur</option>
               <option value="other">Other</option>
             </select>
@@ -342,9 +342,9 @@
           type: "launchpad",
           name: formData.name,
           phone: formData.phone,
+          place: formData.place,
           educationalProfessionalBackground: formData.background,
           currentStatus: formData.currentStatus,
-          place: formData.place,
           entityId: null,
         };
 
@@ -364,8 +364,13 @@
             try {
               const errBody = await response.json();
               console.log("Error response:", errBody);
+              console.log("Additional info:", errBody.additionalInfo);
               if (errBody && (errBody.msg || errBody.message || errBody.error)) {
                 msg = errBody.msg || errBody.message || errBody.error;
+              }
+              // Show additional validation details if available
+              if (errBody.additionalInfo) {
+                console.error("Validation details:", JSON.stringify(errBody.additionalInfo, null, 2));
               }
             } catch (_) {}
             console.error("HTTP Status:", response.status, "Message:", msg);
