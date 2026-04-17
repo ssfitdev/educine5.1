@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Launchpad: Entrepreneurship Workshop - Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #0f0f11
+          url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMTAxMDEyIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMxNzE3MTkiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=");
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        flex-direction: column;
+      }
+
+      h1 {
+        color: white;
+        font-size: 1.875rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: #cccccc;
+        font-size: 1.125rem;
+      }
+
+      .educine-gradient {
+        background: linear-gradient(135deg, #ff007a 0%, #883ff9 100%);
+        color: #ffffff;
+      }
+
+      .form-card {
+        background: linear-gradient(135deg, #1a1a1d, #1f1f22);
+        box-shadow: 0 12px 35px -10px rgba(136, 63, 249, 0.25);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 2rem;
+        backdrop-filter: blur(4px);
+        width: 100%;
+        max-width: 28rem;
+      }
+
+      label {
+        color: #f8fafc !important;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 0.875rem;
+      }
+
+      ::placeholder {
+        color: #94a3b8 !important;
+        opacity: 0.8;
+      }
+
+      .input-field {
+        background-color: #222227;
+        border: 1px solid #4b5563;
+        color: #ffffff;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        width: 100%;
+      }
+
+      .input-field:hover {
+        border-color: #6b7280;
+      }
+
+      .input-field:focus {
+        border-color: #883ff9;
+        box-shadow: 0 0 0 3px rgba(136, 63, 249, 0.3);
+        outline: none;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #ff007a 0%, #883ff9 100%) !important;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(136, 63, 249, 0.25);
+      }
+
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+
+      .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+      <div class="bg-white rounded-xl form-card p-6">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-semibold text-gray-800 text-white">
+            Launchpad: Entrepreneurship Workshop
+          </h2>
+          <p class="text-sm text-gray-600 mt-1 text-[#cccccc]">
+            Register for the workshop
+          </p>
+        </div>
+
+        <form id="launchpadForm" class="space-y-4">
+          <!-- Name -->
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+              Full Name*
+            </label>
+            <div class="relative">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Your full name"
+                class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          <!-- Phone Number -->
+          <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
+              Phone Number*
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-gray-500">+91</span>
+              </div>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                maxlength="10"
+                pattern="[0-9]{10}"
+                placeholder="9876543210"
+                class="pl-12 input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          <!-- Educational / Professional Background -->
+          <div>
+            <label for="background" class="block text-sm font-medium text-gray-700 mb-1">
+              Educational / Professional Background*
+            </label>
+            <input
+              type="text"
+              id="background"
+              name="background"
+              required
+              placeholder="e.g., B.Tech Computer Science, MBA"
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
+          <!-- Current Status -->
+          <div>
+            <label for="currentStatus" class="block text-sm font-medium text-gray-700 mb-1">
+              Current Status*
+            </label>
+            <select
+              id="currentStatus"
+              name="currentStatus"
+              required
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
+            >
+              <option value="" disabled selected>Select status</option>
+              <option value="student">Student</option>
+              <option value="working professional">Working Professional</option>
+              <option value="entrepreneur">Entrepreneur</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <!-- Place -->
+          <div>
+            <label for="place" class="block text-sm font-medium text-gray-700 mb-1">
+              Place*
+            </label>
+            <input
+              type="text"
+              id="place"
+              name="place"
+              required
+              placeholder="Your city/town"
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-2">
+            <button
+              type="submit"
+              class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
+            >
+              Register Now
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div
+      id="successModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+      style="backdrop-filter: blur(4px)"
+    >
+      <div
+        class="bg-white rounded-md p-8 max-w-sm mx-4"
+        style="
+          background: linear-gradient(135deg, #1a1a1d, #1f1f22);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        "
+      >
+        <div class="text-center">
+          <div
+            class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-400 mb-4"
+          >
+            <svg
+              class="h-6 w-6 text-green-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-white mb-2">Registration Successful!</h3>
+          <p class="text-sm text-gray-400 mb-4 modal-message">
+            Thank you for registering for the Launchpad workshop.
+          </p>
+          <div class="items-center">
+            <button
+              onclick="window.location.href='index.html'"
+              class="modal-close px-4 py-2 btn-primary text-white text-base font-medium rounded-md w-full shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+            >
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Phone input validation
+      const phoneInput = document.getElementById("phone");
+      phoneInput?.addEventListener("input", function () {
+        this.value = this.value.replace(/\D/g, "").slice(0, 10);
+      });
+
+      // Form submission
+      document.getElementById("launchpadForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+
+        // Disable button and show loading
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Processing...
+        `;
+
+        const phone = document.getElementById("phone").value;
+        if (!/^[0-9]{10}$/.test(phone)) {
+          showAlert("Please enter a valid 10-digit phone number");
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          return;
+        }
+
+        const formData = {
+          name: document.getElementById("name").value.trim(),
+          phone: phone,
+          background: document.getElementById("background").value.trim(),
+          currentStatus: document.getElementById("currentStatus").value,
+          place: document.getElementById("place").value.trim(),
+        };
+
+        // Validate required fields
+        if (
+          !formData.name ||
+          !formData.phone ||
+          !formData.background ||
+          !formData.currentStatus ||
+          !formData.place
+        ) {
+          showAlert("Please fill in all required fields");
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          return;
+        }
+
+        const apiUrl = (function () {
+          if (
+            typeof window !== "undefined" &&
+            /^https?:$/.test(window.location.protocol)
+          ) {
+            return new URL("/api/educine", window.location.origin).href;
+          }
+          return "https://portal.ssfkerala.org/api/educine";
+        })();
+
+        const apiPayload = {
+          type: "launchpad",
+          name: formData.name,
+          phone: formData.phone,
+          educationalProfessionalBackground: formData.background,
+          currentStatus: formData.currentStatus,
+          place: formData.place,
+          entityId: null,
+        };
+
+        console.log("Submitting payload:", apiPayload);
+
+        try {
+          const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(apiPayload),
+          });
+
+          if (!response.ok) {
+            let msg = "Registration failed. Please try again.";
+            try {
+              const errBody = await response.json();
+              console.log("Error response:", errBody);
+              if (errBody && (errBody.msg || errBody.message || errBody.error)) {
+                msg = errBody.msg || errBody.message || errBody.error;
+              }
+            } catch (_) {}
+            console.error("HTTP Status:", response.status, "Message:", msg);
+            throw new Error(msg);
+          }
+
+          showSuccessModal("Registration successful! We'll contact you soon.");
+          document.getElementById("launchpadForm").reset();
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        } catch (error) {
+          showAlert(error.message || "Registration failed. Please try again later.");
+          console.error("Error:", error);
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      });
+
+      function showAlert(message) {
+        const alertDiv = document.createElement("div");
+        alertDiv.className =
+          "mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg relative";
+        alertDiv.role = "alert";
+        alertDiv.innerHTML = `
+          <span class="block sm:inline">${message}</span>
+          <span class="absolute top-0 bottom-0 right-0 px-4 py-3 alert-close cursor-pointer">
+            <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <title>Close</title>
+              <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
+            </svg>
+          </span>
+        `;
+
+        const container = document.getElementById("launchpadForm").parentElement;
+        container.prepend(alertDiv);
+
+        alertDiv.querySelector(".alert-close").addEventListener("click", () => {
+          alertDiv.remove();
+        });
+
+        setTimeout(() => {
+          alertDiv.remove();
+        }, 5000);
+      }
+
+      function showSuccessModal(message) {
+        const modal = document.getElementById("successModal");
+        const modalMessage = modal.querySelector(".modal-message");
+        modalMessage.textContent = message;
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+    </script>
+  </body>
+</html>
