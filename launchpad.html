@@ -214,6 +214,21 @@
             />
           </div>
 
+          <!-- District -->
+          <div>
+            <label for="district" class="block text-sm font-medium text-gray-700 mb-1">
+              District*
+            </label>
+            <input
+              type="text"
+              id="district"
+              name="district"
+              required
+              placeholder="Your district"
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
           <!-- Submit Button -->
           <div class="pt-2">
             <button
@@ -312,6 +327,7 @@
           background: document.getElementById("background").value.trim(),
           currentStatus: document.getElementById("currentStatus").value,
           place: document.getElementById("place").value.trim(),
+          district: document.getElementById("district").value.trim(),
         };
 
         // Validate required fields
@@ -320,7 +336,8 @@
           !formData.phone ||
           !formData.background ||
           !formData.currentStatus ||
-          !formData.place
+          !formData.place ||
+          !formData.district
         ) {
           showAlert("Please fill in all required fields");
           submitBtn.disabled = false;
@@ -339,9 +356,10 @@
         })();
 
         const apiPayload = {
-          type: "launchpad",
+          type: "workshop_launchpad",
           name: formData.name,
           phone: formData.phone,
+          district: formData.district,
           place: formData.place,
           educationalProfessionalBackground: formData.background,
           currentStatus: formData.currentStatus,
