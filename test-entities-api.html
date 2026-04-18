@@ -85,7 +85,9 @@
         <div class="info">
             <strong>Testing:</strong> /api/entities (proxied to https://portal.ssfkerala.org/api/entities)
             <br><br>
-            This will test the entities API with parentId parameter for cascading data (districts → divisions → sectors).
+            This will test the entities API with parentId query parameter for cascading data (districts → divisions → sectors).
+            <br><br>
+            <strong>API Format:</strong> <code>GET /api/entities?parentId=xxx</code>
             <br><br>
             <div style="background: #fff3cd; padding: 10px; border-radius: 4px; margin-top: 10px; border-left: 4px solid #ffc107;">
                 <strong>⚠️ Authentication Required:</strong><br>
@@ -140,19 +142,16 @@
                 // Use relative URL to leverage the proxy
                 const apiUrl = (function () {
                     if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
-                        return new URL("/api/entities", window.location.origin).href;
+                        return new URL("/api/entities?parentId=", window.location.origin).href;
                     }
-                    return "https://www.educine.in/api/entities";
+                    return "https://www.educine.in/api/entities?parentId=";
                 })();
 
                 const response = await fetch(apiUrl, {
-                    method: 'POST',
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        parentId: null
-                    })
+                    }
                 });
 
                 console.log('Response status:', response.status);
@@ -217,19 +216,16 @@
             try {
                 const apiUrl = (function () {
                     if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
-                        return new URL("/api/entities", window.location.origin).href;
+                        return new URL(`/api/entities?parentId=${sampleParentId}`, window.location.origin).href;
                     }
-                    return "https://www.educine.in/api/entities";
+                    return `https://www.educine.in/api/entities?parentId=${sampleParentId}`;
                 })();
 
                 const response = await fetch(apiUrl, {
-                    method: 'POST',
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        parentId: sampleParentId
-                    })
+                    }
                 });
 
                 if (!response.ok) {
@@ -245,7 +241,7 @@
                         <strong>✓ Success!</strong> Got ${Array.isArray(data) ? data.length : 'unknown'} child entities for "${sampleDistrictName}".
                     </div>
                     <h3>Request:</h3>
-                    <pre>{ "parentId": "${sampleParentId}" }</pre>
+                    <pre>GET /api/entities?parentId=${sampleParentId}</pre>
                     <h3>Response Data:</h3>
                     <pre>${JSON.stringify(data, null, 2)}</pre>
                 `;
@@ -301,19 +297,16 @@
             try {
                 const apiUrl = (function () {
                     if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
-                        return new URL("/api/entities", window.location.origin).href;
+                        return new URL(`/api/entities?parentId=${districtId}`, window.location.origin).href;
                     }
-                    return "https://www.educine.in/api/entities";
+                    return `https://www.educine.in/api/entities?parentId=${districtId}`;
                 })();
 
                 const response = await fetch(apiUrl, {
-                    method: 'POST',
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        parentId: districtId
-                    })
+                    }
                 });
 
                 if (!response.ok) {
@@ -360,19 +353,16 @@
             try {
                 const apiUrl = (function () {
                     if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
-                        return new URL("/api/entities", window.location.origin).href;
+                        return new URL(`/api/entities?parentId=${divisionId}`, window.location.origin).href;
                     }
-                    return "https://www.educine.in/api/entities";
+                    return `https://www.educine.in/api/entities?parentId=${divisionId}`;
                 })();
 
                 const response = await fetch(apiUrl, {
-                    method: 'POST',
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        parentId: divisionId
-                    })
+                    }
                 });
 
                 if (!response.ok) {

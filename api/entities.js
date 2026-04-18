@@ -1,14 +1,14 @@
 /**
  * Proxy for Educine entities API (avoids browser CORS).
- * Deploy on Vercel: POST /api/entities → forwards to upstream.
+ * Deploy on Vercel: GET /api/entities?parentId=xxx → forwards to upstream.
  * 
  * Set ENTITIES_API_TOKEN environment variable for authentication.
  */
 const DEFAULT_UPSTREAM = "https://portal.ssfkerala.org/api/entities";
 
 module.exports = async function handler(req, res) {
-  if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
+  if (req.method !== "GET") {
+    res.setHeader("Allow", "GET");
     return res.status(405).json({ error: "Method not allowed" });
   }
 
@@ -16,10 +16,13 @@ module.exports = async function handler(req, res) {
   const apiToken = process.env.ENTITIES_API_TOKEN;
 
   try {
-    const body =
-      typeof req.body === "string"
-        ? req.body
-        : JSON.stringify(req.body ?? {});
+    // Get parentId from query parameters
+    const parentId = req.query.parentId;
+    
+    // Build upstream URL with query parameter
+    const upstreamUrl = parentId 
+      ? `${upstream}/?parentId=${encodeURIComponent(parentId)}`
+      : `${upstream}/?parentId=`;
 
     const headers = { 
       "Content-Type": "application/json"
@@ -32,10 +35,9 @@ module.exports = async function handler(req, res) {
         : `Bearer ${apiToken}`;
     }
 
-    const upstreamRes = await fetch(upstream, {
-      method: "POST",
+    const upstreamRes = await fetch(upstreamUrl, {
+      method: "GET",
       headers: headers,
-      body,
     });
 
     const text = await upstreamRes.text();
