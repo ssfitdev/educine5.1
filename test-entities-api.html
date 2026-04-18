@@ -103,10 +103,9 @@
             </div>
         </div>
 
-        <button onclick="testRootEntities()">1. Get Root Entities (Districts)</button>
-        <button onclick="testWithParentId()">2. Test with Sample Parent ID</button>
-        <button onclick="testWithEmptyString()">3. Try parentId="" (empty string)</button>
-        <button onclick="testWithoutParentId()">4. Try without parentId parameter</button>
+        <button onclick="testRootEntities()">1. Get Root Entities (parentId=null)</button>
+        <button onclick="testWithStateId()">2. Get Districts (parentId=Kerala State ID)</button>
+        <button onclick="testWithParentId()">3. Test with Sample Parent ID</button>
         
         <div id="result"></div>
 
@@ -214,7 +213,147 @@
             }
         }
 
+        async function testWithStateId() {
+            const resultDiv = document.getElementById('result');
+            const keralaStateId = 'am6ekeeb8tqkqqq1j2itba0l';
+            resultDiv.innerHTML = `<p>Loading districts for Kerala (State ID: ${keralaStateId})...</p>`;
+
+            try {
+                const apiUrl = (function () {
+                    if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                        return new URL(`/api/entities?parentId=${keralaStateId}`, window.location.origin).href;
+                    }
+                    return `https://www.educine.in/api/entities?parentId=${keralaStateId}`;
+                })();
+
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Error response:', errorText);
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                
+                console.log('Districts data:', data);
+
+                let entities = [];
+                if (data && data.data && Array.isArray(data.data)) {
+                    entities = data.data;
+                    districtsData = entities;
+                }
+
+                resultDiv.innerHTML = `
+                    <div class="${entities.length > 0 ? 'success' : 'error'}">
+                        <strong>${entities.length > 0 ? '✓ Success!' : '⚠️ Warning:'}</strong> Got ${entities.length} districts for Kerala.
+                    </div>
+                    <h3>Request:</h3>
+                    <pre>GET /api/entities?parentId=${keralaStateId}</pre>
+                    <h3>Full Response:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+
+                if (entities.length > 0) {
+                    populateDistrictSelector(entities);
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <strong>✗ Error:</strong> ${error.message}
+                    </div>
+                    <p>Check the browser console for more details.</p>
+                `;
+            }
+        }
+
         async function testWithParentId() {
+            const resultDiv = document.getElementById('result');
+            
+            console.log('districtsData:', districtsData);
+            console.log('districtsData length:', districtsData ? districtsData.length : 'null');
+            
+            // First, we need to get a parent ID from the districts
+            if (!districtsData || (Array.isArray(districtsData) && districtsData.length === 0)) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <strong>Note:</strong> Please run "Get Districts" first to get district IDs.
+                        <br><br>
+                        <strong>Debug Info:</strong><br>
+                        districtsData exists: ${!!districtsData}<br>
+                        districtsData is array: ${Array.isArray(districtsData)}<br>
+                        districtsData length: ${districtsData ? (Array.isArray(districtsData) ? districtsData.length : 'not an array') : 'null'}<br>
+                        <br>
+                        <strong>Full data:</strong>
+                        <pre>${JSON.stringify(districtsData, null, 2)}</pre>
+                    </div>
+                `;
+                return;
+            }
+
+            const sampleParentId = districtsData[0].id || districtsData[0]._id;
+            const sampleDistrictName = districtsData[0].name;
+
+            resultDiv.innerHTML = `<p>Loading divisions for: ${sampleDistrictName} (ID: ${sampleParentId})...</p>`;
+
+            try {
+                const apiUrl = (function () {
+                    if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                        return new URL(`/api/entities?parentId=${sampleParentId}`, window.location.origin).href;
+                    }
+                    return `https://www.educine.in/api/entities?parentId=${sampleParentId}`;
+                })();
+
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                console.log(`Divisions for ${sampleDistrictName}:`, data);
+
+                let entities = [];
+                if (data && data.data && Array.isArray(data.data)) {
+                    entities = data.data;
+                }
+
+                resultDiv.innerHTML = `
+                    <div class="${entities.length > 0 ? 'success' : 'error'}">
+                        <strong>${entities.length > 0 ? '✓ Success!' : '⚠️ Warning:'}</strong> Got ${entities.length} divisions for "${sampleDistrictName}".
+                    </div>
+                    <h3>Request:</h3>
+                    <pre>GET /api/entities?parentId=${sampleParentId}</pre>
+                    <h3>Response Data:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <strong>✗ Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testWithEmptyString() {
             const resultDiv = document.getElementById('result');
             
             console.log('districtsData:', districtsData);
