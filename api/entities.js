@@ -1,6 +1,8 @@
 /**
  * Proxy for Educine entities API (avoids browser CORS).
  * Deploy on Vercel: POST /api/entities → forwards to upstream.
+ * 
+ * Set ENTITIES_API_TOKEN environment variable for authentication.
  */
 const DEFAULT_UPSTREAM = "https://portal.ssfkerala.org/api/entities";
 
@@ -11,6 +13,7 @@ module.exports = async function handler(req, res) {
   }
 
   const upstream = process.env.ENTITIES_API_UPSTREAM || DEFAULT_UPSTREAM;
+  const apiToken = process.env.ENTITIES_API_TOKEN;
 
   try {
     const body =
@@ -18,9 +21,20 @@ module.exports = async function handler(req, res) {
         ? req.body
         : JSON.stringify(req.body ?? {});
 
+    const headers = { 
+      "Content-Type": "application/json"
+    };
+
+    // Add authentication token if available
+    if (apiToken) {
+      headers["Authorization"] = apiToken.startsWith("Bearer ") 
+        ? apiToken 
+        : `Bearer ${apiToken}`;
+    }
+
     const upstreamRes = await fetch(upstream, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: headers,
       body,
     });
 
