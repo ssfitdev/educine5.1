@@ -168,45 +168,37 @@
                 }
 
                 const data = await response.json();
-                districtsData = data;
-
-                console.log('Districts data:', data);
+                
+                console.log('Full response:', data);
                 console.log('Is array?', Array.isArray(data));
                 console.log('Data type:', typeof data);
 
-                // Handle different response formats
+                // Handle API response format: { msg, status, data: [], pagination }
+                let entities = [];
                 let displayData = data;
-                let dataLength = 'unknown';
                 
-                if (Array.isArray(data)) {
-                    dataLength = data.length;
-                } else if (data && typeof data === 'object') {
-                    // Check if it's wrapped in a data property
+                if (data && typeof data === 'object') {
                     if (data.data && Array.isArray(data.data)) {
-                        districtsData = data.data;
-                        displayData = data.data;
-                        dataLength = data.data.length;
-                    } else if (data.entities && Array.isArray(data.entities)) {
-                        districtsData = data.entities;
-                        displayData = data.entities;
-                        dataLength = data.entities.length;
-                    } else {
-                        // Count object keys
-                        dataLength = Object.keys(data).length;
+                        entities = data.data;
+                    } else if (Array.isArray(data)) {
+                        entities = data;
                     }
                 }
+                
+                districtsData = entities;
 
                 resultDiv.innerHTML = `
-                    <div class="success">
-                        <strong>✓ Success!</strong> Got ${dataLength} root entities.
+                    <div class="${entities.length > 0 ? 'success' : 'error'}">
+                        <strong>${entities.length > 0 ? '✓ Success!' : '⚠️ Warning:'}</strong> Got ${entities.length} root entities.
+                        ${entities.length === 0 ? '<br><br><strong>Possible reasons:</strong><ul style="text-align: left; margin: 10px 0; padding-left: 20px;"><li>Authentication token not set (add ENTITIES_API_TOKEN to Vercel)</li><li>parentId=null might not be correct for root entities</li><li>No data in database</li></ul>' : ''}
                     </div>
-                    <h3>Response Data:</h3>
+                    <h3>Full Response:</h3>
                     <pre>${JSON.stringify(data, null, 2)}</pre>
                 `;
 
                 // Populate the test selectors with districts
-                if (Array.isArray(districtsData) && districtsData.length > 0) {
-                    populateDistrictSelector(districtsData);
+                if (entities.length > 0) {
+                    populateDistrictSelector(entities);
                 }
 
             } catch (error) {
