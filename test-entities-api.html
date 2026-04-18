@@ -140,11 +140,12 @@
 
             try {
                 // Use relative URL to leverage the proxy
+                // For root entities, pass "null" as the parentId value
                 const apiUrl = (function () {
                     if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
-                        return new URL("/api/entities?parentId=", window.location.origin).href;
+                        return new URL("/api/entities?parentId=null", window.location.origin).href;
                     }
-                    return "https://www.educine.in/api/entities?parentId=";
+                    return "https://www.educine.in/api/entities?parentId=null";
                 })();
 
                 const response = await fetch(apiUrl, {

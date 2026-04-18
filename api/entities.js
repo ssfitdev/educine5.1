@@ -20,9 +20,7 @@ module.exports = async function handler(req, res) {
     const parentId = req.query.parentId;
     
     // Build upstream URL with query parameter
-    const upstreamUrl = parentId 
-      ? `${upstream}/?parentId=${encodeURIComponent(parentId)}`
-      : `${upstream}/?parentId=`;
+    const upstreamUrl = `${upstream}/?parentId=${parentId || 'null'}`;
 
     const headers = { 
       "Content-Type": "application/json"
