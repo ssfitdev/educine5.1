@@ -223,11 +223,22 @@
         async function testWithParentId() {
             const resultDiv = document.getElementById('result');
             
+            console.log('districtsData:', districtsData);
+            console.log('districtsData length:', districtsData ? districtsData.length : 'null');
+            
             // First, we need to get a parent ID from the districts
-            if (!districtsData || districtsData.length === 0) {
+            if (!districtsData || (Array.isArray(districtsData) && districtsData.length === 0)) {
                 resultDiv.innerHTML = `
                     <div class="error">
                         <strong>Note:</strong> Please run "Get Root Entities" first to get district IDs.
+                        <br><br>
+                        <strong>Debug Info:</strong><br>
+                        districtsData exists: ${!!districtsData}<br>
+                        districtsData is array: ${Array.isArray(districtsData)}<br>
+                        districtsData length: ${districtsData ? (Array.isArray(districtsData) ? districtsData.length : 'not an array') : 'null'}<br>
+                        <br>
+                        <strong>Full data:</strong>
+                        <pre>${JSON.stringify(districtsData, null, 2)}</pre>
                     </div>
                 `;
                 return;
