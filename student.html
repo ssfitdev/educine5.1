@@ -715,6 +715,11 @@
         let districtsData = [];
         let divisionsData = [];
         let sectorsData = [];
+        
+        // Store selected entity IDs
+        let selectedDistrictId = null;
+        let selectedDivisionId = null;
+        let selectedSectorId = null;
 
         function setSelectOptions(selectEl, placeholder, values) {
           if (!selectEl) return;
@@ -859,6 +864,11 @@
           }
 
           const districtId = districtObj.id || districtObj._id;
+          selectedDistrictId = districtId; // Store selected district ID
+          
+          // Reset division and sector selections
+          selectedDivisionId = null;
+          selectedSectorId = null;
           
           divisionContainer.classList.remove("hidden");
           sectorContainer.classList.add("hidden");
@@ -916,6 +926,10 @@
           }
 
           const divisionId = divisionObj.id || divisionObj._id;
+          selectedDivisionId = divisionId; // Store selected division ID
+          
+          // Reset sector selection
+          selectedSectorId = null;
           
           sectorContainer.classList.remove("hidden");
           setSelectOptions(sectorSelect, "Loading sectors...", []);
