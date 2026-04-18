@@ -105,6 +105,8 @@
 
         <button onclick="testRootEntities()">1. Get Root Entities (Districts)</button>
         <button onclick="testWithParentId()">2. Test with Sample Parent ID</button>
+        <button onclick="testWithEmptyString()">3. Try parentId="" (empty string)</button>
+        <button onclick="testWithoutParentId()">4. Try without parentId parameter</button>
         
         <div id="result"></div>
 
@@ -273,6 +275,120 @@
                     <h3>Response Data:</h3>
                     <pre>${JSON.stringify(data, null, 2)}</pre>
                 `;
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <strong>✗ Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testWithEmptyString() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing with parentId="" (empty string)...</p>';
+
+            try {
+                const apiUrl = (function () {
+                    if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                        return new URL("/api/entities?parentId=", window.location.origin).href;
+                    }
+                    return "https://www.educine.in/api/entities?parentId=";
+                })();
+
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Error response:', errorText);
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                
+                let entities = [];
+                if (data && data.data && Array.isArray(data.data)) {
+                    entities = data.data;
+                    districtsData = entities;
+                }
+
+                resultDiv.innerHTML = `
+                    <div class="${entities.length > 0 ? 'success' : 'error'}">
+                        <strong>${entities.length > 0 ? '✓ Success!' : '⚠️ Warning:'}</strong> Got ${entities.length} entities with empty string parentId.
+                    </div>
+                    <h3>Full Response:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+
+                if (entities.length > 0) {
+                    populateDistrictSelector(entities);
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <strong>✗ Error:</strong> ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        async function testWithoutParentId() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Testing without parentId parameter...</p>';
+
+            try {
+                const apiUrl = (function () {
+                    if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                        return new URL("/api/entities", window.location.origin).href;
+                    }
+                    return "https://www.educine.in/api/entities";
+                })();
+
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Error response:', errorText);
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                
+                let entities = [];
+                if (data && data.data && Array.isArray(data.data)) {
+                    entities = data.data;
+                    districtsData = entities;
+                }
+
+                resultDiv.innerHTML = `
+                    <div class="${entities.length > 0 ? 'success' : 'error'}">
+                        <strong>${entities.length > 0 ? '✓ Success!' : '⚠️ Warning:'}</strong> Got ${entities.length} entities without parentId.
+                    </div>
+                    <h3>Full Response:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+
+                if (entities.length > 0) {
+                    populateDistrictSelector(entities);
+                }
 
             } catch (error) {
                 console.error('Error:', error);
