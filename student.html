@@ -708,10 +708,13 @@
         const whatsappInput = document.getElementById("whatsapp");
         const whatsappValidIcon = document.getElementById("whatsappValidIcon");
         const whatsappError = document.getElementById("whatsappError");
-        const scriptUrl =
-          "https://script.google.com/macros/s/AKfycbzyjq1gMWqj9lJucT796JYQ-13JXDva53VfRo863WIczmEa_bao6oBa4ITKizPtH2Zf/exec";
+        
+        // Kerala state ID for fetching districts
+        const KERALA_STATE_ID = "p97po7woj9xtuy4lhi3bosvl";
 
-        let locationData = {};
+        let districtsData = [];
+        let divisionsData = [];
+        let sectorsData = [];
 
         function setSelectOptions(selectEl, placeholder, values) {
           if (!selectEl) return;
@@ -733,64 +736,49 @@
         async function loadLocations() {
           try {
             setSelectOptions(districtSelect, "Loading districts...", []);
-            const json = await loadLocationsJSONP(scriptUrl);
-            locationData = json?.data || {};
-            const districts = Object.keys(locationData).sort();
-            setSelectOptions(districtSelect, "Select your district", districts);
+            
+            // Fetch districts using Kerala state ID
+            const apiUrl = (function () {
+              if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                return new URL(`/api/entities?parentId=${KERALA_STATE_ID}`, window.location.origin).href;
+              }
+              return `https://www.educine.in/api/entities?parentId=${KERALA_STATE_ID}`;
+            })();
+
+            const response = await fetch(apiUrl, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
+
+            const responseData = await response.json();
+            console.log('Districts loaded:', responseData);
+
+            // Extract districts array from response
+            districtsData = responseData.data || [];
+            
+            if (districtsData.length === 0) {
+              setSelectOptions(districtSelect, "No districts available", []);
+              return;
+            }
+
+            // Populate district dropdown with names
+            const districtNames = districtsData.map(d => d.name).sort();
+            setSelectOptions(districtSelect, "Select your district", districtNames);
+            
           } catch (e) {
+            console.error('Error loading districts:', e);
             setSelectOptions(
               districtSelect,
               "Failed to load districts (refresh)",
               []
             );
           }
-        }
-
-        function loadLocationsJSONP(url) {
-          return new Promise((resolve, reject) => {
-            const cbName = `educineLocations_${Date.now()}_${Math.floor(
-              Math.random() * 1000
-            )}`;
-            const script = document.createElement("script");
-            script.src = `${url}?action=locations&callback=${cbName}`;
-            script.async = true;
-
-            window[cbName] = function (data) {
-              cleanup();
-              resolve(data);
-            };
-
-            script.onerror = function () {
-              cleanup();
-              console.error("JSONP locations load failed:", script.src);
-              reject(new Error("Failed to load location data"));
-            };
-
-            function cleanup() {
-              if (script.parentNode) script.parentNode.removeChild(script);
-              try {
-                delete window[cbName];
-              } catch (_) {
-                window[cbName] = undefined;
-              }
-            }
-
-            // Safety timeout in case callback never fires
-            const timer = setTimeout(() => {
-              cleanup();
-              console.error("JSONP locations load timed out:", script.src);
-              reject(new Error("Timed out loading location data"));
-            }, 8000);
-
-            // Ensure timer is cleared when we resolve/reject
-            const originalCleanup = cleanup;
-            cleanup = function () {
-              clearTimeout(timer);
-              originalCleanup();
-            };
-
-            document.body.appendChild(script);
-          });
         }
 
         function showStep(step) {
@@ -859,23 +847,116 @@
 
         loadLocations();
 
-        districtSelect?.addEventListener("change", function () {
-          const district = this.value;
-          const divisions = Object.keys(locationData?.[district] || {}).sort();
+        districtSelect?.addEventListener("change", async function () {
+          const districtName = this.value;
+          
+          // Find the district object by name
+          const districtObj = districtsData.find(d => d.name === districtName);
+          
+          if (!districtObj) {
+            console.error('District not found:', districtName);
+            return;
+          }
+
+          const districtId = districtObj.id || districtObj._id;
+          
           divisionContainer.classList.remove("hidden");
           sectorContainer.classList.add("hidden");
-          setSelectOptions(divisionSelect, "Select your division", divisions);
+          setSelectOptions(divisionSelect, "Loading divisions...", []);
           setSelectOptions(sectorSelect, "Select a division first", []);
+
+          try {
+            // Fetch divisions for selected district
+            const apiUrl = (function () {
+              if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                return new URL(`/api/entities?parentId=${districtId}`, window.location.origin).href;
+              }
+              return `https://www.educine.in/api/entities?parentId=${districtId}`;
+            })();
+
+            const response = await fetch(apiUrl, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
+
+            const responseData = await response.json();
+            console.log('Divisions loaded:', responseData);
+
+            divisionsData = responseData.data || [];
+            
+            if (divisionsData.length === 0) {
+              setSelectOptions(divisionSelect, "No divisions available", []);
+              return;
+            }
+
+            const divisionNames = divisionsData.map(d => d.name).sort();
+            setSelectOptions(divisionSelect, "Select your division", divisionNames);
+            
+          } catch (e) {
+            console.error('Error loading divisions:', e);
+            setSelectOptions(divisionSelect, "Failed to load divisions", []);
+          }
         });
 
-        divisionSelect?.addEventListener("change", function () {
-          const district = districtSelect.value;
-          const division = this.value;
-          const sectors = (locationData?.[district]?.[division] || [])
-            .slice()
-            .sort();
+        divisionSelect?.addEventListener("change", async function () {
+          const divisionName = this.value;
+          
+          // Find the division object by name
+          const divisionObj = divisionsData.find(d => d.name === divisionName);
+          
+          if (!divisionObj) {
+            console.error('Division not found:', divisionName);
+            return;
+          }
+
+          const divisionId = divisionObj.id || divisionObj._id;
+          
           sectorContainer.classList.remove("hidden");
-          setSelectOptions(sectorSelect, "Select your sector", sectors);
+          setSelectOptions(sectorSelect, "Loading sectors...", []);
+
+          try {
+            // Fetch sectors for selected division
+            const apiUrl = (function () {
+              if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                return new URL(`/api/entities?parentId=${divisionId}`, window.location.origin).href;
+              }
+              return `https://www.educine.in/api/entities?parentId=${divisionId}`;
+            })();
+
+            const response = await fetch(apiUrl, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
+
+            const responseData = await response.json();
+            console.log('Sectors loaded:', responseData);
+
+            sectorsData = responseData.data || [];
+            
+            if (sectorsData.length === 0) {
+              setSelectOptions(sectorSelect, "No sectors available", []);
+              return;
+            }
+
+            const sectorNames = sectorsData.map(d => d.name).sort();
+            setSelectOptions(sectorSelect, "Select your sector", sectorNames);
+            
+          } catch (e) {
+            console.error('Error loading sectors:', e);
+            setSelectOptions(sectorSelect, "Failed to load sectors", []);
+          }
         });
       });
 
