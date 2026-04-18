@@ -675,12 +675,15 @@
                     throw new Error(`HTTP ${response.status}`);
                 }
 
-                const divisions = await response.json();
-                console.log(`Divisions for ${districtName}:`, divisions);
+                const responseData = await response.json();
+                console.log(`Divisions for ${districtName}:`, responseData);
+
+                // Extract divisions array from response
+                const divisions = responseData.data || responseData;
 
                 divisionSelect.innerHTML = '<option value="">-- Select Division --</option>';
                 
-                if (Array.isArray(divisions)) {
+                if (Array.isArray(divisions) && divisions.length > 0) {
                     divisions.forEach(division => {
                         const option = document.createElement('option');
                         option.value = division.id || division._id;
@@ -688,6 +691,8 @@
                         option.dataset.divisionName = division.name;
                         divisionSelect.appendChild(option);
                     });
+                } else {
+                    divisionSelect.innerHTML = '<option value="">No divisions found</option>';
                 }
 
             } catch (error) {
@@ -731,12 +736,15 @@
                     throw new Error(`HTTP ${response.status}`);
                 }
 
-                const sectors = await response.json();
-                console.log(`Sectors for ${divisionName}:`, sectors);
+                const responseData = await response.json();
+                console.log(`Sectors for ${divisionName}:`, responseData);
+
+                // Extract sectors array from response
+                const sectors = responseData.data || responseData;
 
                 sectorSelect.innerHTML = '<option value="">-- Select Sector --</option>';
                 
-                if (Array.isArray(sectors)) {
+                if (Array.isArray(sectors) && sectors.length > 0) {
                     sectors.forEach(sector => {
                         const option = document.createElement('option');
                         option.value = sector.id || sector._id;
@@ -744,6 +752,8 @@
                         option.dataset.sectorName = sector.name;
                         sectorSelect.appendChild(option);
                     });
+                } else {
+                    sectorSelect.innerHTML = '<option value="">No sectors found</option>';
                 }
 
                 updateSelectionResult();
