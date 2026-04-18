@@ -171,18 +171,42 @@
                 districtsData = data;
 
                 console.log('Districts data:', data);
+                console.log('Is array?', Array.isArray(data));
+                console.log('Data type:', typeof data);
+
+                // Handle different response formats
+                let displayData = data;
+                let dataLength = 'unknown';
+                
+                if (Array.isArray(data)) {
+                    dataLength = data.length;
+                } else if (data && typeof data === 'object') {
+                    // Check if it's wrapped in a data property
+                    if (data.data && Array.isArray(data.data)) {
+                        districtsData = data.data;
+                        displayData = data.data;
+                        dataLength = data.data.length;
+                    } else if (data.entities && Array.isArray(data.entities)) {
+                        districtsData = data.entities;
+                        displayData = data.entities;
+                        dataLength = data.entities.length;
+                    } else {
+                        // Count object keys
+                        dataLength = Object.keys(data).length;
+                    }
+                }
 
                 resultDiv.innerHTML = `
                     <div class="success">
-                        <strong>✓ Success!</strong> Got ${Array.isArray(data) ? data.length : 'unknown'} root entities.
+                        <strong>✓ Success!</strong> Got ${dataLength} root entities.
                     </div>
                     <h3>Response Data:</h3>
                     <pre>${JSON.stringify(data, null, 2)}</pre>
                 `;
 
                 // Populate the test selectors with districts
-                if (Array.isArray(data) && data.length > 0) {
-                    populateDistrictSelector(data);
+                if (Array.isArray(districtsData) && districtsData.length > 0) {
+                    populateDistrictSelector(districtsData);
                 }
 
             } catch (error) {
