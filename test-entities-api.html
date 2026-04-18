@@ -107,6 +107,12 @@
         <button onclick="testWithStateId()">2. Get Districts (parentId=Kerala State ID)</button>
         <button onclick="testWithParentId()">3. Test with Sample Parent ID</button>
         
+        <div style="margin: 20px 0; padding: 15px; background: #f0f0f0; border-radius: 4px;">
+            <label for="customParentId" style="font-weight: bold;">Test with Custom Parent ID:</label>
+            <input type="text" id="customParentId" placeholder="Enter parentId" style="width: 70%; padding: 8px; margin: 10px 5px; border: 1px solid #ddd; border-radius: 4px;">
+            <button onclick="testWithCustomParentId()">Test</button>
+        </div>
+        
         <div id="result"></div>
 
         <div id="testSelectors" style="display: none; margin-top: 30px;">
@@ -555,6 +561,79 @@
                 option.dataset.districtName = district.name;
                 districtSelect.appendChild(option);
             });
+        }
+
+        async function testWithCustomParentId() {
+            const customParentId = document.getElementById('customParentId').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            if (!customParentId) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <strong>Error:</strong> Please enter a parentId to test.
+                    </div>
+                `;
+                return;
+            }
+
+            resultDiv.innerHTML = `<p>Loading entities for parentId: ${customParentId}...</p>`;
+
+            try {
+                const apiUrl = (function () {
+                    if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                        return new URL(`/api/entities?parentId=${customParentId}`, window.location.origin).href;
+                    }
+                    return `https://www.educine.in/api/entities?parentId=${customParentId}`;
+                })();
+
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Error response:', errorText);
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                
+                console.log('Custom parentId data:', data);
+
+                let entities = [];
+                if (data && data.data && Array.isArray(data.data)) {
+                    entities = data.data;
+                    districtsData = entities;
+                }
+
+                resultDiv.innerHTML = `
+                    <div class="${entities.length > 0 ? 'success' : 'error'}">
+                        <strong>${entities.length > 0 ? '✓ Success!' : '⚠️ Warning:'}</strong> Got ${entities.length} entities for parentId: ${customParentId}
+                    </div>
+                    <h3>Request:</h3>
+                    <pre>GET /api/entities?parentId=${customParentId}</pre>
+                    <h3>Full Response:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+
+                if (entities.length > 0) {
+                    populateDistrictSelector(entities);
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <strong>✗ Error:</strong> ${error.message}
+                    </div>
+                    <p>Check the browser console for more details.</p>
+                `;
+            }
         }
 
         async function onDistrictChange() {
