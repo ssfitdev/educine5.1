@@ -83,21 +83,9 @@
         <h1>Test Entities API</h1>
         
         <div class="info">
-            <strong>Testing:</strong> https://portal.ssfkerala.org/api/entities
+            <strong>Testing:</strong> /api/entities (proxied to https://portal.ssfkerala.org/api/entities)
             <br><br>
             This will test the entities API with parentId parameter for cascading data (districts → divisions → sectors).
-            <br><br>
-            <strong style="color: #ff6b6b;">Note:</strong> This API requires authentication. If you get a 401 error, you need to:
-            <ul style="margin: 10px 0; padding-left: 20px;">
-                <li>Deploy the site and test from the deployed URL, OR</li>
-                <li>Run a local server (e.g., <code>python -m http.server 8000</code> or <code>npx serve</code>), OR</li>
-                <li>Add an API key/token if available</li>
-            </ul>
-        </div>
-
-        <div style="margin: 15px 0; padding: 10px; background: #fff3cd; border-radius: 4px; border-left: 4px solid #ffc107;">
-            <strong>Alternative:</strong> Enter API Key/Token (if available):
-            <input type="text" id="apiToken" placeholder="Bearer token or API key" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px;">
         </div>
 
         <button onclick="testRootEntities()">1. Get Root Entities (Districts)</button>
@@ -136,19 +124,19 @@
             resultDiv.innerHTML = '<p>Loading root entities (districts)...</p>';
 
             try {
-                const apiToken = document.getElementById('apiToken').value.trim();
-                const headers = {
-                    'Content-Type': 'application/json'
-                };
-                
-                // Add authorization header if token is provided
-                if (apiToken) {
-                    headers['Authorization'] = apiToken.startsWith('Bearer ') ? apiToken : `Bearer ${apiToken}`;
-                }
+                // Use relative URL to leverage the proxy
+                const apiUrl = (function () {
+                    if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                        return new URL("/api/entities", window.location.origin).href;
+                    }
+                    return "https://www.educine.in/api/entities";
+                })();
 
-                const response = await fetch('https://portal.ssfkerala.org/api/entities', {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
-                    headers: headers,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({
                         parentId: null
                     })
@@ -159,10 +147,6 @@
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('Error response:', errorText);
-                    
-                    if (response.status === 401) {
-                        throw new Error(`HTTP 401: Unauthorized - This API requires authentication. Please provide an API token or test from a deployed environment.`);
-                    }
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
 
@@ -191,14 +175,6 @@
                         <strong>✗ Error:</strong> ${error.message}
                     </div>
                     <p>Check the browser console for more details.</p>
-                    ${error.message.includes('401') ? `
-                        <p style="margin-top: 10px;"><strong>Solutions:</strong></p>
-                        <ol style="text-align: left; margin: 10px 0; padding-left: 20px;">
-                            <li>Ask your backend team for an API token and enter it above</li>
-                            <li>Test from your deployed site (not file://)</li>
-                            <li>Run a local server: <code>python -m http.server 8000</code> then visit <code>http://localhost:8000/test-entities-api.html</code></li>
-                        </ol>
-                    ` : ''}
                 `;
             }
         }
@@ -222,18 +198,18 @@
             resultDiv.innerHTML = `<p>Loading entities for parent: ${sampleDistrictName} (ID: ${sampleParentId})...</p>`;
 
             try {
-                const apiToken = document.getElementById('apiToken').value.trim();
-                const headers = {
-                    'Content-Type': 'application/json'
-                };
-                
-                if (apiToken) {
-                    headers['Authorization'] = apiToken.startsWith('Bearer ') ? apiToken : `Bearer ${apiToken}`;
-                }
+                const apiUrl = (function () {
+                    if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                        return new URL("/api/entities", window.location.origin).href;
+                    }
+                    return "https://www.educine.in/api/entities";
+                })();
 
-                const response = await fetch('https://portal.ssfkerala.org/api/entities', {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
-                    headers: headers,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({
                         parentId: sampleParentId
                     })
@@ -306,18 +282,18 @@
             divisionSelect.disabled = false;
 
             try {
-                const apiToken = document.getElementById('apiToken').value.trim();
-                const headers = {
-                    'Content-Type': 'application/json'
-                };
-                
-                if (apiToken) {
-                    headers['Authorization'] = apiToken.startsWith('Bearer ') ? apiToken : `Bearer ${apiToken}`;
-                }
+                const apiUrl = (function () {
+                    if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                        return new URL("/api/entities", window.location.origin).href;
+                    }
+                    return "https://www.educine.in/api/entities";
+                })();
 
-                const response = await fetch('https://portal.ssfkerala.org/api/entities', {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
-                    headers: headers,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({
                         parentId: districtId
                     })
@@ -365,18 +341,18 @@
             sectorSelect.disabled = false;
 
             try {
-                const apiToken = document.getElementById('apiToken').value.trim();
-                const headers = {
-                    'Content-Type': 'application/json'
-                };
-                
-                if (apiToken) {
-                    headers['Authorization'] = apiToken.startsWith('Bearer ') ? apiToken : `Bearer ${apiToken}`;
-                }
+                const apiUrl = (function () {
+                    if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                        return new URL("/api/entities", window.location.origin).href;
+                    }
+                    return "https://www.educine.in/api/entities";
+                })();
 
-                const response = await fetch('https://portal.ssfkerala.org/api/entities', {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
-                    headers: headers,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({
                         parentId: divisionId
                     })
