@@ -1109,14 +1109,14 @@
                 .classList.add("hidden");
               submitBtn.disabled = false;
               submitBtn.innerHTML = originalText;
-            })
+            }) // Close .then()
             .catch((error) => {
               showAlert("Registration failed. Please try again later.");
               console.error("Error:", error);
               submitBtn.disabled = false;
               submitBtn.innerHTML = originalText;
             });
-        });
+        }); // Close form submit handler
 
         // Modal close handler
         document
