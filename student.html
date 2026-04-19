@@ -989,9 +989,18 @@
           .getElementById("studentForm")
           .addEventListener("submit", function (e) {
             e.preventDefault();
+            
+            console.log("Form submit triggered"); // Debug log
 
             const submitBtn = document.getElementById("submitBtn");
             const originalText = submitBtn.innerHTML;
+            
+            // Prevent multiple submissions
+            if (submitBtn.disabled) {
+              console.log("Submit button already disabled, ignoring duplicate submission");
+              return;
+            }
+            
             submitBtn.disabled = true;
             submitBtn.innerHTML = `
             <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -1092,6 +1101,7 @@
             body: JSON.stringify(apiPayload),
           })
             .then(async (res) => {
+              console.log("Fetch response received:", res.status); // Debug log
               if (!res.ok) {
                 let msg = "Registration failed. Please try again.";
                 try {
