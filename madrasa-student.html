@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Educine.in - Madrasa Student Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #0f0f11
+          url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMTAxMDEyIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMxNzE3MTkiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=");
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        flex-direction: column;
+      }
+
+      h1 {
+        color: white;
+        font-size: 1.875rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: #cccccc;
+        font-size: 1.125rem;
+      }
+
+      .educine-gradient {
+        background: linear-gradient(135deg, #ff007a 0%, #883ff9 100%);
+        color: #ffffff;
+      }
+
+      .form-card {
+        background: linear-gradient(135deg, #1a1a1d, #1f1f22);
+        box-shadow: 0 12px 35px -10px rgba(136, 63, 249, 0.25);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 2rem;
+        backdrop-filter: blur(4px);
+        width: 100%;
+        max-width: 28rem;
+      }
+
+      label {
+        color: #f8fafc !important;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 0.875rem;
+      }
+
+      ::placeholder {
+        color: #94a3b8 !important;
+        opacity: 0.8;
+      }
+
+      .input-field {
+        background-color: #222227;
+        border: 1px solid #4b5563;
+        color: #ffffff;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        width: 100%;
+      }
+
+      .input-field:hover {
+        border-color: #6b7280;
+      }
+
+      .input-field:focus {
+        border-color: #883ff9;
+        box-shadow: 0 0 0 3px rgba(136, 63, 249, 0.3);
+        outline: none;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #ff007a 0%, #883ff9 100%) !important;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(136, 63, 249, 0.25);
+      }
+
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+
+      .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Stall selection */
+      .stalls-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .stall-option {
+        position: relative;
+      }
+
+      .stall-checkbox {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .stall-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        height: 100%;
+        text-align: center;
+      }
+
+      .stall-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .stall-checkbox:checked + .stall-card {
+        border-color: #ff007a;
+        background: rgba(255, 0, 122, 0.05);
+        box-shadow: 0 8px 15px rgba(255, 0, 122, 0.2);
+      }
+
+      .stall-icon {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+
+      .stall-name {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      @media (max-width: 480px) {
+        .stalls-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+      <div class="bg-white rounded-xl form-card p-6">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-semibold text-gray-800 text-white">
+            Madrasa Student Registration
+          </h2>
+          <p class="text-sm text-gray-600 mt-1 text-[#cccccc]">
+            Please fill out the form to register
+          </p>
+        </div>
+
+        <form id="madrasaForm" class="space-y-4">
+          <!-- Name -->
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+              Full Name*
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              placeholder="Your full name"
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
+          <!-- Phone Number -->
+          <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
+              Phone Number*
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-gray-500">+91</span>
+              </div>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                maxlength="10"
+                pattern="[0-9]{10}"
+                placeholder="9876543210"
+                class="pl-12 input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+              Email*
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="your.email@example.com"
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
+          <!-- Age -->
+          <div>
+            <label for="age" class="block text-sm font-medium text-gray-700 mb-1">
+              Age*
+            </label>
+            <input
+              type="number"
+              id="age"
+              name="age"
+              required
+              min="5"
+              max="25"
+              placeholder="16"
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
+          <!-- Gender -->
+          <div>
+            <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">
+              Gender*
+            </label>
+            <select
+              id="gender"
+              name="gender"
+              required
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
+            >
+              <option value="" disabled selected>Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <!-- Class -->
+          <div>
+            <label for="class" class="block text-sm font-medium text-gray-700 mb-1">
+              Class*
+            </label>
+            <input
+              type="text"
+              id="class"
+              name="class"
+              required
+              placeholder="e.g., 10"
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
+          <!-- Institution -->
+          <div>
+            <label for="institution" class="block text-sm font-medium text-gray-700 mb-1">
+              Institution Name*
+            </label>
+            <input
+              type="text"
+              id="institution"
+              name="institution"
+              required
+              placeholder="Your institution name"
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
+
+          <!-- Range -->
+          <div>
+            <label for="range" class="block text-sm font-medium text-gray-700 mb-1">
+              Range*
+            </label>
+            <select
+              id="range"
+              name="range"
+              required
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
+            >
+              <option value="" disabled selected>Select range</option>
+              <!-- Ranges will be populated here -->
+            </select>
+          </div>
+
+          <!-- Madrasa -->
+          <div id="madrasaContainer" class="hidden">
+            <label for="madrasa" class="block text-sm font-medium text-gray-700 mb-1">
+              Madrasa*
+            </label>
+            <select
+              id="madrasa"
+              name="madrasa"
+              required
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
+            >
+              <option value="" disabled selected>Select a range first</option>
+            </select>
+          </div>
+
+          <!-- District -->
+          <div>
+            <label for="district" class="block text-sm font-medium text-gray-700 mb-1">
+              District*
+            </label>
+            <select
+              id="district"
+              name="district"
+              required
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
+            >
+              <option value="" disabled selected>Loading districts...</option>
+            </select>
+          </div>
+
+          <!-- Division -->
+          <div id="divisionContainer" class="hidden">
+            <label for="division" class="block text-sm font-medium text-gray-700 mb-1">
+              Division*
+            </label>
+            <select
+              id="division"
+              name="division"
+              required
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
+            >
+              <option value="" disabled selected>Select a district first</option>
+            </select>
+          </div>
+
+          <!-- Sector -->
+          <div id="sectorContainer" class="hidden">
+            <label for="sector" class="block text-sm font-medium text-gray-700 mb-1">
+              Sector*
+            </label>
+            <select
+              id="sector"
+              name="sector"
+              required
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
+            >
+              <option value="" disabled selected>Select a division first</option>
+            </select>
+          </div>
+
+          <!-- State -->
+          <div>
+            <label for="state" class="block text-sm font-medium text-gray-700 mb-1">
+              State*
+            </label>
+            <input
+              type="text"
+              id="state"
+              name="state"
+              required
+              value="Kerala"
+              readonly
+              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-gray-100 text-gray-700"
+            />
+          </div>
+
+          <!-- Stall Selection -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Select Stalls to Visit (Optional)
+            </label>
+            <p class="text-sm" style="text-align: center; margin-bottom: 12px; color: #cccccc;">
+              Choose one or more stalls you'd like to participate in
+            </p>
+
+            <div class="stalls-grid">
+              <div class="stall-option">
+                <input type="checkbox" id="career-clinic" name="stalls[]" value="career-clinic" class="stall-checkbox">
+                <label for="career-clinic" class="stall-card">
+                  <span class="stall-icon">💼</span>
+                  <span class="stall-name">Career Clinic</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="coding-lab" name="stalls[]" value="coding-lab" class="stall-checkbox">
+                <label for="coding-lab" class="stall-card">
+                  <span class="stall-icon">💻</span>
+                  <span class="stall-name">Coding Lab</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="diy-science" name="stalls[]" value="diy-science" class="stall-checkbox">
+                <label for="diy-science" class="stall-card">
+                  <span class="stall-icon">🔬</span>
+                  <span class="stall-name">DIY Science World</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="design-zone" name="stalls[]" value="design-zone" class="stall-checkbox">
+                <label for="design-zone" class="stall-card">
+                  <span class="stall-icon">🎨</span>
+                  <span class="stall-name">Design Zone</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="robotics" name="stalls[]" value="robotics" class="stall-checkbox">
+                <label for="robotics" class="stall-card">
+                  <span class="stall-icon">🤖</span>
+                  <span class="stall-name">Robotics</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="cv-interview" name="stalls[]" value="cv-interview" class="stall-checkbox">
+                <label for="cv-interview" class="stall-card">
+                  <span class="stall-icon">📝</span>
+                  <span class="stall-name">CV & Interview PrepZone</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="listening-clinic" name="stalls[]" value="listening-clinic" class="stall-checkbox">
+                <label for="listening-clinic" class="stall-card">
+                  <span class="stall-icon">👂</span>
+                  <span class="stall-name">Listening Clinic</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="puzzle-corner" name="stalls[]" value="puzzle-corner" class="stall-checkbox">
+                <label for="puzzle-corner" class="stall-card">
+                  <span class="stall-icon">🧩</span>
+                  <span class="stall-name">Puzzle Corner</span>
+                </label>
+              </div>
+
+              <div class="stall-option">
+                <input type="checkbox" id="treasure-hunt" name="stalls[]" value="treasure-hunt" class="stall-checkbox">
+                <label for="treasure-hunt" class="stall-card">
+                  <span class="stall-icon">🗺️</span>
+                  <span class="stall-name">Treasure Hunt</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-2">
+            <button
+              type="submit"
+              class="btn-primary w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
+            >
+              Register Now
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div
+      id="successModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+      style="backdrop-filter: blur(4px)"
+    >
+      <div
+        class="bg-white rounded-md p-8 max-w-sm mx-4"
+        style="
+          background: linear-gradient(135deg, #1a1a1d, #1f1f22);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        "
+      >
+        <div class="text-center">
+          <div
+            class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-400 mb-4"
+          >
+            <svg
+              class="h-6 w-6 text-green-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-white mb-2">Registration Successful!</h3>
+          <p class="text-sm text-gray-400 mb-4 modal-message">
+            Thank you for registering.
+          </p>
+          <div class="items-center">
+            <button
+              onclick="window.location.href='index.html'"
+              class="modal-close px-4 py-2 btn-primary text-white text-base font-medium rounded-md w-full shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+            >
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const rangeSelect = document.getElementById("range");
+        const madrasaContainer = document.getElementById("madrasaContainer");
+        const madrasaSelect = document.getElementById("madrasa");
+        const phoneInput = document.getElementById("phone");
+        
+        // Entities API integration
+        const districtSelect = document.getElementById("district");
+        const divisionContainer = document.getElementById("divisionContainer");
+        const divisionSelect = document.getElementById("division");
+        const sectorContainer = document.getElementById("sectorContainer");
+        const sectorSelect = document.getElementById("sector");
+        
+        const KERALA_STATE_ID = "p97po7woj9xtuy4lhi3bosvl";
+        
+        let districtsData = [];
+        let divisionsData = [];
+        let sectorsData = [];
+        let selectedSectorId = null;
+
+        // Madrasa data structure: { range: [madrasas] }
+        const madrasaData = {
+          "Manjeshwaram Range": [
+            "Alhithyad Thuminad",
+            "Ahmadal Badavi Pullarakatta",
+            "Badriya Sunni Bejja",
+            "Hidayathul Islam Santhadka",
+            "Jisthiya Bejjangala",
+            "Farookiya Hosangadi Malhar",
+            "Manarul Hidaya Bejjangal",
+            "Mambaul Huda Berika",
+            "Mifthaul Huda Moodambail",
+            "Misbahul Huda Darkas",
+            "Munavirul Islam Bejja",
+            "Nooraniya Mount Noor Posot",
+            "Noorul Huda Cm Nagar",
+            "Noorul Islam Bachalika",
+            "Sirajul Islam Battipadau",
+            "Thajul Uloom Chinala",
+            "Thajul Uloom Miyapadau",
+            "Thajul Uloom Puchathaval",
+            "Noorul Islam Durgipalla",
+            "Uvaisul Qarni Parandarakkudi",
+            "Badriya Eidya",
+            "Badriya Amai Bakimar"
+          ],
+          "Cherkala Range": [
+            "Hidayathul Uloom Cherkala",
+            "Noorul Huda Star Nagar Bevinje",
+            "Hidayathul Islam Peradukam",
+            "Mambaul Huda Panhippara",
+            "Majmaul Hikmathil Haidurisiya Kallakatta",
+            "Busthanul Uloom Madrasa Ermalam",
+            "Saadiya Center Madrasa Bc Road",
+            "Thajul Ulama Sunni Madrasa Chettumkuzi",
+            "Thajul Ulama Sunni Madrasa Aaladukan Aalur"
+          ],
+          "SJM Vayakkara Range": [
+            "Hidayathul Islam Neelampara",
+            "Hidayathul Islam Thattummal",
+            "Sirajul Islam Vayakkara",
+            "Noorul Islam Kollad",
+            "Nibrasul Islam Kamballur Kollad",
+            "Hidayathul Islam Pavoor",
+            "Hujjathul Islam Choral",
+            "Nibrasul Huda Vayakkara",
+            "Hidayathul Islam Kannikkalam",
+            "Irshadul Islam Hajimukku",
+            "Noorul Huda Perinthatta",
+            "Noorul Huda Chattyol",
+            "Noorul Huda Cherupuzha",
+            "Hidayathul Islam Prappoyil",
+            "Hasaniyya Poongod",
+            "Noorul Huda Peruvamba",
+            "Subulussalam Kadayakkara"
+          ],
+          "SJM Thrikkarippur Range": [
+            "Darul Islam Vellachal",
+            "Noorul Islam Veluthapoyya",
+            "Thaqweemul Muslimeen Kulappuram",
+            "Thaqweemul Muslimeen Valiyapoyil",
+            "Thajul Ulama Memorial Udinur",
+            "Noorul Ulama Memorial Papparatta",
+            "Noorul Ulama Memorial Kanthilottu",
+            "Al Madrasathul Bukhariya Ramanthali",
+            "Rifaiyya Chembrakanam",
+            "Mishkathul Uloom Pilavalappu",
+            "Noorul Islam Thekkekad",
+            "Al Madrasathul Badriya Kookanam"
+          ],
+          "SJM Perumbatta Range": [
+            "Hidayathus Sibiyan Pettikkundu",
+            "Hidayathus Sibiyan Kakkadav",
+            "Nusrathul Islam Pothamkandam",
+            "Subulussalam Athootti",
+            "Al Falah Sunni Madrasa Vazhappally",
+            "Rifaiyya Sunni Madrasa Kunnunkai East"
+          ],
+          "Bedaduka": [
+            "Noorul Huda Madrasa Manimoola",
+            "Noorul Huda Madrasa Eniyadi",
+            "Noorul Huda Madrasa Thalekkunnu",
+            "Nooraniya Madrasa Kundam Kuzhi",
+            "Nusrathul Islam Madrasa Maruthadukkam",
+            "Ansarul Islam Bedakam",
+            "Mambaul Uloom Bavikkara Adukka",
+            "Noorul Islam Paduppu",
+            "Noorul Islam Kuttikkol",
+            "Sirajul Huda Ambiladi",
+            "Zeenathul Islam Chedikkundu",
+            "Muneerul Islam Kattippara",
+            "Muneerul Islam Karivedakam",
+            "Noorul Islam Munambam",
+            "Noorul Islam Moonnamkadavu"
+          ],
+          "Badiyaduka": [
+            "Sirajul Hudha Arladka",
+            "Madrasathul Fathimiyya Amoos Nagar",
+            "Muhimmath Rashidhiya Nellikatta",
+            "Hayathul Islam Beejanthadka",
+            "Farooqiyya Badiadka",
+            "Darul Ihsan Baradka",
+            "Noorul Hudha Pavooradka",
+            "Noorul Hudha Muniyoor",
+            "Sirajul Hudha Panjikkal",
+            "Sirajul Islam Pallapadi",
+            "Thajul Ulama Pallapadi",
+            "Hayathul Islam Mukkur",
+            "Quvvathul Islam Korikkar",
+            "Munavirul Islam Thuppakkal",
+            "Noorul Hudha Bedirampalla"
+          ],
+          "Paivalike": [
+            "Misbahul Huda Kiyoor",
+            "Malharus Sunni Uppala Town",
+            "Qadisiyya Mannamkuzhi",
+            "Rifaiyya Bekoor",
+            "Hayathul Islam Oberla",
+            "Noorul Huda Chimparam",
+            "Thajul Ulama Bekoor",
+            "Noorul Huda Shanthiyod",
+            "Ahmad Raza Khan Kedakkar",
+            "Raudathul Uloom Safa Nagar",
+            "Noorul Ulama Badariyya Nagar",
+            "Sirajul Islam Attagoli",
+            "Thajush Sharia Valachil",
+            "Sirajul Huda Ambikanam",
+            "Ahdaliyya Siranthadka",
+            "Ahdaliyya Chevar",
+            "Ahdaliyya Ponnangala",
+            "Khilriya Aavalam",
+            "Thaqweemul Quran Chippar",
+            "Munavvirul Islam Bellippadavu"
+          ],
+          "Deli Range": [
+            "Noorul Islam Madrasa Puthariyadukkam",
+            "Thamreenuthalaba Thairakkadav",
+            "Mambahul Uloom Mylaty",
+            "Usmaniya Ambathancham Mile",
+            "Rifaiyya Sunni Madrasa Nizamuddin Nagar",
+            "Thajul Ulama Kunnupara",
+            "Hidayathul Islam Kappanadukkam",
+            "Najathul Islam Makkod",
+            "Sirajul Huda Chembarikka",
+            "Sirajul Huda Kattekkal",
+            "Cm Madrasa Aramangaanam",
+            "Orphanage Madrasa Saadiyya"
+          ],
+          "Puthige Range": [
+            "Thajul Ulama Faizal Saquafi",
+            "Madee Maqdoom Km Kalathur",
+            "Bellippadi Ustad Madrasa Kattathadka",
+            "Muhimmatuddeen Ak Saadi Chullikkanam",
+            "Ujampadav Latheef Saquafi",
+            "Perladam Basheer Madani",
+            "Mogaradka Muhammad Arshad",
+            "Uppina Shammas Saadi",
+            "Sarve Shakeer Latheefi",
+            "Mantama Moidu Himami",
+            "Bapaliponam Shakir Hashimi",
+            "Sangayam Kara Amsa Saadi",
+            "Mugrod Safwan Himami",
+            "Mukharikandam Aboobacker Zuhri",
+            "Kodimoola Abdulla Saadi",
+            "C Ustad Madrasa Bilal Nagar Basheer Saadi",
+            "Ahdaliya Madrasa Akg Habeeb Thangal",
+            "Sulaiman Haji Madrasa Seething Haidar Thangal",
+            "Rifayiyya Madrasa Rifayinagar",
+            "Ajmeer Street Seethangoli Sulthanul Arif Saquafi"
+          ],
+          "Vorkady Range": [
+            "Busthanul Uloom Thoke",
+            "Noorul Islam Maniparamba",
+            "Al Badriya Thoke",
+            "Thajul Islam Purushangodi",
+            "Irshadul Muslimeen Madrasa Koliyoor Padavu",
+            "Al Bishara Educational Complex Bishara Nagar",
+            "Sirajul Huda Mudimar",
+            "Thwahiriyya Educational Centre Thoke Sunnangala",
+            "Badrul Huda Madrasa Senya",
+            "Sirajul Huda Madrasa Pavoor Koppala",
+            "Hidayathul Islam Madrasa Darmanagar",
+            "Nusrathul Islam Madrasa Poyyathabail",
+            "Hidayathussibyan Sunni Madrasa Daigoli",
+            "Hidayathul Islam Madrasa Sunkadakatte",
+            "Badriya Madrasa Kotemar",
+            "Khilriya Madrasa Orpangodi",
+            "Nusrathul Islam Madrasa Nachapadavu",
+            "Noorul Islam Madrasa Koliyoor",
+            "Irshadul Muslimeen Neerolike Koliyoor Padavu",
+            "Manikkoth Usthad Memorial Adakalakatte"
+          ],
+          "Kumbala Range": [
+            "Badrul Uloom Mogral Nangi",
+            "Muneerul Islam Maimoon Nagar",
+            "Al Madrasathul Badariyya Pappamkoya Nagar",
+            "Latheefiyya Secondary Shiriya Kunnil",
+            "Muhimmath Secondary Madrasa Shanthipallam",
+            "Quvvathul Islam Sunni Madrasa Kodiyamma",
+            "Salamathul Islam Mangalpadi",
+            "Madrasathul Ahdaliyya Ahdaliyya Nagar Peral",
+            "Noorul Huda Madrasa Muhyiddeen Nagar Aarikkadi",
+            "Raudathul Uloom Madrasa Darbarkatta",
+            "Makhdoomiyya Madrasa Muttam Kunnil",
+            "Al Madrasathul Ahdaliyya Ahdaliyya Nagar Pelthaduka",
+            "Noorul Ulama Smaraka Madrasa Pookatta",
+            "Hidayathul Islam Madrasa Ulwar",
+            "Najmul Huda Madrasa Muliyadukka",
+            "Sirajul Huda Madrasa Kuttiyalam",
+            "Sirajul Huda Madrasa Koduva Uluvar",
+            "Mifthahul Uloom Madrasa Bandiyod"
+          ],
+          "Perumude Range": [
+            "Madrasathul Islam Chellangayam",
+            "Busthanul Arifeen Madrasa Kaniyala",
+            "Mifthahul Uloom Madrasa Darmathadka",
+            "Ahdaliyya Madrasa Ajikumar",
+            "Madeenathunnoor Sunni Madrasa Madeena Nagar Deradka",
+            "Noorul Islam Badoorpadavu",
+            "Rifaiyya Subaykatta",
+            "Thaaleemussibyan Chinnamugar",
+            "Thajul Ulama Educational Centre Merkal",
+            "Busthanul Uloom Madrasa Meepiry",
+            "Al Madrasathul Bahboodoyya Pachanipara Ahdal Nagar",
+            "Tharbiyathu Manbaul Huda Secondary Madrasa Kalappara Kalazi"
+          ],
+          "Parappa Range": [
+            "Mifthahul Uloom Madrasa Kammadam",
+            "Hidayathul Islam Madrasa Nelliyadukkam",
+            "Hayathul Islam Madrasa Konnakkad",
+            "Mifthahul Uloom Katur Udiyapuram",
+            "Izzathul Islam Madrasa Ayyankau",
+            "Irshadul Uloom Klaikode"
+          ],
+          "Kasaragod Range": [
+            "Muneerul Islam Madoor",
+            "Sebeelussalam Payotta",
+            "Sirajul Huda Muttathodi",
+            "Abid Juma Thwaha Nagar",
+            "Noorul Huda Majal",
+            "Cm Madavoor Smaraka Sunni Madrasa Periyaduka",
+            "Badrul Huda Madrasa Chettumkuzi",
+            "Markazul Uloom Sunni Choori",
+            "Al Madrasathu Sunniyya Kottakkunnu",
+            "Thajul Ulama Madrasa Chemnad",
+            "Najathul Islam Madrasa Aranthodu Junction"
+          ]
+        };
+
+        // Helper function to set select options
+        function setSelectOptions(selectEl, placeholder, values) {
+          if (!selectEl) return;
+          selectEl.innerHTML = "";
+          const ph = document.createElement("option");
+          ph.value = "";
+          ph.disabled = true;
+          ph.selected = true;
+          ph.textContent = placeholder;
+          selectEl.appendChild(ph);
+          (values || []).forEach((v) => {
+            const opt = document.createElement("option");
+            opt.value = v;
+            opt.textContent = v;
+            selectEl.appendChild(opt);
+          });
+        }
+
+        // Load districts from entities API
+        async function loadDistricts() {
+          try {
+            setSelectOptions(districtSelect, "Loading districts...", []);
+            
+            const apiUrl = (function () {
+              if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                return new URL(`/api/entities?parentId=${KERALA_STATE_ID}`, window.location.origin).href;
+              }
+              return `https://www.educine.in/api/entities?parentId=${KERALA_STATE_ID}`;
+            })();
+
+            const response = await fetch(apiUrl, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
+
+            const responseData = await response.json();
+            console.log('Districts loaded:', responseData);
+
+            districtsData = responseData.data || [];
+            
+            if (districtsData.length === 0) {
+              setSelectOptions(districtSelect, "No districts available", []);
+              return;
+            }
+
+            const districtNames = districtsData.map(d => d.name).sort();
+            setSelectOptions(districtSelect, "Select your district", districtNames);
+            
+          } catch (e) {
+            console.error('Error loading districts:', e);
+            setSelectOptions(districtSelect, "Failed to load districts (refresh)", []);
+          }
+        }
+
+        // Handle district selection
+        districtSelect.addEventListener("change", async function () {
+          const districtName = this.value;
+          const districtObj = districtsData.find(d => d.name === districtName);
+          
+          if (!districtObj) {
+            console.error('District not found:', districtName);
+            return;
+          }
+
+          const districtId = districtObj.id || districtObj._id;
+          
+          divisionContainer.classList.remove("hidden");
+          sectorContainer.classList.add("hidden");
+          setSelectOptions(divisionSelect, "Loading divisions...", []);
+          setSelectOptions(sectorSelect, "Select a division first", []);
+
+          try {
+            const apiUrl = (function () {
+              if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                return new URL(`/api/entities?parentId=${districtId}`, window.location.origin).href;
+              }
+              return `https://www.educine.in/api/entities?parentId=${districtId}`;
+            })();
+
+            const response = await fetch(apiUrl, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
+
+            const responseData = await response.json();
+            console.log('Divisions loaded:', responseData);
+
+            divisionsData = responseData.data || [];
+            
+            if (divisionsData.length === 0) {
+              setSelectOptions(divisionSelect, "No divisions available", []);
+              return;
+            }
+
+            const divisionNames = divisionsData.map(d => d.name).sort();
+            setSelectOptions(divisionSelect, "Select your division", divisionNames);
+            
+          } catch (e) {
+            console.error('Error loading divisions:', e);
+            setSelectOptions(divisionSelect, "Failed to load divisions", []);
+          }
+        });
+
+        // Handle division selection
+        divisionSelect.addEventListener("change", async function () {
+          const divisionName = this.value;
+          const divisionObj = divisionsData.find(d => d.name === divisionName);
+          
+          if (!divisionObj) {
+            console.error('Division not found:', divisionName);
+            return;
+          }
+
+          const divisionId = divisionObj.id || divisionObj._id;
+          selectedSectorId = null;
+          
+          sectorContainer.classList.remove("hidden");
+          setSelectOptions(sectorSelect, "Loading sectors...", []);
+
+          try {
+            const apiUrl = (function () {
+              if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+                return new URL(`/api/entities?parentId=${divisionId}`, window.location.origin).href;
+              }
+              return `https://www.educine.in/api/entities?parentId=${divisionId}`;
+            })();
+
+            const response = await fetch(apiUrl, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
+
+            const responseData = await response.json();
+            console.log('Sectors loaded:', responseData);
+
+            sectorsData = responseData.data || [];
+            
+            if (sectorsData.length === 0) {
+              setSelectOptions(sectorSelect, "No sectors available", []);
+              return;
+            }
+
+            const sectorNames = sectorsData.map(d => d.name).sort();
+            setSelectOptions(sectorSelect, "Select your sector", sectorNames);
+            
+          } catch (e) {
+            console.error('Error loading sectors:', e);
+            setSelectOptions(sectorSelect, "Failed to load sectors", []);
+          }
+        });
+
+        // Track sector selection to get its entity ID
+        sectorSelect.addEventListener("change", function () {
+          const sectorName = this.value;
+          const sectorObj = sectorsData.find(d => d.name === sectorName);
+          
+          if (sectorObj) {
+            selectedSectorId = sectorObj.id || sectorObj._id;
+            console.log('Selected sector ID:', selectedSectorId);
+          }
+        });
+
+        // Populate ranges
+        function loadRanges() {
+          const ranges = Object.keys(madrasaData).sort();
+          rangeSelect.innerHTML = '<option value="" disabled selected>Select range</option>';
+          ranges.forEach(range => {
+            const option = document.createElement("option");
+            option.value = range;
+            option.textContent = range;
+            rangeSelect.appendChild(option);
+          });
+        }
+
+        // Handle range selection
+        rangeSelect.addEventListener("change", function () {
+          const selectedRange = this.value;
+          const madrasas = madrasaData[selectedRange] || [];
+          
+          madrasaContainer.classList.remove("hidden");
+          madrasaSelect.innerHTML = '<option value="" disabled selected>Select madrasa</option>';
+          
+          madrasas.forEach(madrasa => {
+            const option = document.createElement("option");
+            option.value = madrasa;
+            option.textContent = madrasa;
+            madrasaSelect.appendChild(option);
+          });
+        });
+
+        // Phone validation
+        phoneInput.addEventListener("input", function () {
+          this.value = this.value.replace(/\D/g, "").slice(0, 10);
+        });
+
+        // Load ranges and districts on page load
+        loadRanges();
+        loadDistricts();
+
+        // Form submission
+        document.getElementById("madrasaForm").addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          console.log("Form submit triggered");
+
+          const submitBtn = this.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+
+          // Prevent multiple submissions
+          if (submitBtn.disabled) {
+            console.log("Submit button already disabled, ignoring duplicate submission");
+            return;
+          }
+
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `
+            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Processing...
+          `;
+
+          // Validate phone
+          const phone = document.getElementById("phone").value;
+          if (!/^[0-9]{10}$/.test(phone)) {
+            showAlert("Please enter a valid 10-digit phone number");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
+
+          // Collect stalls
+          const stallCheckboxes = document.querySelectorAll('input[name="stalls[]"]:checked');
+          const stalls = Array.from(stallCheckboxes).map((cb) => cb.value);
+
+          const apiUrl = (function () {
+            if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
+              return new URL("/api/educine", window.location.origin).href;
+            }
+            return "https://portal.ssfkerala.org/api/educine";
+          })();
+
+          const apiPayload = {
+            type: "madrasa_student",
+            name: document.getElementById("name").value.trim(),
+            phone: phone,
+            email: document.getElementById("email").value.trim(),
+            age: parseInt(document.getElementById("age").value),
+            gender: document.getElementById("gender").value,
+            district: document.getElementById("district").value,
+            state: document.getElementById("state").value,
+            division: document.getElementById("division").value,
+            sector: document.getElementById("sector").value,
+            class: document.getElementById("class").value.trim(),
+            institution: document.getElementById("institution").value.trim(),
+            range: document.getElementById("range").value,
+            madrasa: document.getElementById("madrasa").value,
+            stalls: stalls,
+            entityId: selectedSectorId // Send sector's entity ID for mapping
+          };
+
+          console.log("Submitting payload:", apiPayload);
+
+          try {
+            const response = await fetch(apiUrl, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(apiPayload),
+            });
+
+            console.log("Fetch response received:", response.status);
+
+            if (!response.ok) {
+              let msg = "Registration failed. Please try again.";
+              try {
+                const errBody = await response.json();
+                console.log("Error response:", errBody);
+                if (errBody && (errBody.msg || errBody.message || errBody.error)) {
+                  msg = errBody.msg || errBody.message || errBody.error;
+                }
+              } catch (_) {}
+              console.error("HTTP Status:", response.status, "Message:", msg);
+              throw new Error(msg);
+            }
+
+            showSuccessModal("Registration successful! We'll contact you soon.");
+            document.getElementById("madrasaForm").reset();
+            madrasaContainer.classList.add("hidden");
+            // Don't re-enable button on success
+          } catch (error) {
+            showAlert(error.message || "Registration failed. Please try again later.");
+            console.error("Error:", error);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
+        });
+      });
+
+      function showSuccessModal(message) {
+        const modal = document.getElementById("successModal");
+        const messageElement = modal.querySelector(".modal-message");
+        messageElement.textContent = message;
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+
+      function showAlert(message) {
+        const alertDiv = document.createElement("div");
+        alertDiv.className =
+          "mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg relative";
+        alertDiv.role = "alert";
+        alertDiv.innerHTML = `
+          <span class="block sm:inline">${message}</span>
+          <span class="absolute top-0 bottom-0 right-0 px-4 py-3 alert-close cursor-pointer">
+            <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <title>Close</title>
+              <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
+            </svg>
+          </span>
+        `;
+
+        const container = document.querySelector(".form-card");
+        container.prepend(alertDiv);
+
+        alertDiv.querySelector(".alert-close").addEventListener("click", () => {
+          alertDiv.remove();
+        });
+
+        setTimeout(() => {
+          if (document.body.contains(alertDiv)) {
+            alertDiv.remove();
+          }
+        }, 5000);
+      }
+    </script>
+  </body>
+</html>
