@@ -972,6 +972,7 @@
             setSelectOptions(sectorSelect, "Failed to load sectors", []);
           }
         });
+      });
 
         // Form submission handler (moved inside DOMContentLoaded for variable access)
         document
@@ -1068,7 +1069,7 @@
             division: formData.division,
             sector: formData.sector,
             stalls: formData.stalls,
-            entityId: null,
+            entityId: selectedSectorId, // Send sector's entity ID for mapping
           };
           
           console.log("Submitting payload:", apiPayload);
