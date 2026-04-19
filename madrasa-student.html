@@ -1108,8 +1108,19 @@
               try {
                 const errBody = await response.json();
                 console.log("Error response:", errBody);
+                console.log("Additional info:", errBody.additionalInfo);
                 if (errBody && (errBody.msg || errBody.message || errBody.error)) {
                   msg = errBody.msg || errBody.message || errBody.error;
+                }
+                // If there's additional validation info, show it
+                if (errBody.additionalInfo) {
+                  console.error("Validation details:", JSON.stringify(errBody.additionalInfo, null, 2));
+                  if (typeof errBody.additionalInfo === 'object') {
+                    const details = Object.entries(errBody.additionalInfo)
+                      .map(([key, val]) => `${key}: ${val}`)
+                      .join(', ');
+                    msg = `${msg} - ${details}`;
+                  }
                 }
               } catch (_) {}
               console.error("HTTP Status:", response.status, "Message:", msg);
