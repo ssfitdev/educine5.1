@@ -1118,6 +1118,15 @@
             });
         });
 
+        // Modal close handler
+        document
+          .querySelector(".modal-close")
+          .addEventListener("click", function () {
+            document.getElementById("successModal").classList.add("hidden");
+          });
+      }); // Close DOMContentLoaded
+
+      // Standalone helper functions (outside DOMContentLoaded)
       function showSuccessModal(message) {
         const modal = document.getElementById("successModal");
         const messageElement = modal.querySelector(".modal-message");
@@ -1154,14 +1163,6 @@
           }
         }, 5000);
       }
-
-        // Modal close handler
-        document
-          .querySelector(".modal-close")
-          .addEventListener("click", function () {
-            document.getElementById("successModal").classList.add("hidden");
-          });
-      }); // Close DOMContentLoaded
     </script>
   </body>
 </html>
