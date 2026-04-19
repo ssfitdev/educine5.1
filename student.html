@@ -972,7 +972,17 @@
             setSelectOptions(sectorSelect, "Failed to load sectors", []);
           }
         });
-      });
+        
+        // Track sector selection to get its entity ID
+        sectorSelect?.addEventListener("change", function () {
+          const sectorName = this.value;
+          const sectorObj = sectorsData.find(d => d.name === sectorName);
+          
+          if (sectorObj) {
+            selectedSectorId = sectorObj.id || sectorObj._id;
+            console.log('Selected sector ID:', selectedSectorId);
+          }
+        });
 
         // Form submission handler (moved inside DOMContentLoaded for variable access)
         document
