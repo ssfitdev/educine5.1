@@ -1091,6 +1091,15 @@
           };
 
           console.log("Submitting payload:", apiPayload);
+          console.log("Selected sector ID:", selectedSectorId);
+          
+          // Validate entityId is present
+          if (!selectedSectorId) {
+            showAlert("Please select a sector before submitting");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            return;
+          }
 
           try {
             const response = await fetch(apiUrl, {
