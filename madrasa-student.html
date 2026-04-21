@@ -227,13 +227,12 @@
           <!-- Email -->
           <div>
             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
-              Email*
+              Email
             </label>
             <input
               type="email"
               id="email"
               name="email"
-              required
               placeholder="your.email@example.com"
               class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
@@ -333,67 +332,6 @@
             >
               <option value="" disabled selected>Select a range first</option>
             </select>
-          </div>
-
-          <!-- District -->
-          <div>
-            <label for="district" class="block text-sm font-medium text-gray-700 mb-1">
-              District*
-            </label>
-            <select
-              id="district"
-              name="district"
-              required
-              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
-            >
-              <option value="" disabled selected>Loading districts...</option>
-            </select>
-          </div>
-
-          <!-- Division -->
-          <div id="divisionContainer" class="hidden">
-            <label for="division" class="block text-sm font-medium text-gray-700 mb-1">
-              Division*
-            </label>
-            <select
-              id="division"
-              name="division"
-              required
-              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
-            >
-              <option value="" disabled selected>Select a district first</option>
-            </select>
-          </div>
-
-          <!-- Sector -->
-          <div id="sectorContainer" class="hidden">
-            <label for="sector" class="block text-sm font-medium text-gray-700 mb-1">
-              Sector*
-            </label>
-            <select
-              id="sector"
-              name="sector"
-              required
-              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-white text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 appearance-none"
-            >
-              <option value="" disabled selected>Select a division first</option>
-            </select>
-          </div>
-
-          <!-- State -->
-          <div>
-            <label for="state" class="block text-sm font-medium text-gray-700 mb-1">
-              State*
-            </label>
-            <input
-              type="text"
-              id="state"
-              name="state"
-              required
-              value="Kerala"
-              readonly
-              class="input-field w-full rounded-lg border border-gray-200 py-2.5 px-4 bg-gray-100 text-gray-700"
-            />
           </div>
 
           <!-- Stall Selection -->
@@ -546,20 +484,6 @@
         const madrasaContainer = document.getElementById("madrasaContainer");
         const madrasaSelect = document.getElementById("madrasa");
         const phoneInput = document.getElementById("phone");
-        
-        // Entities API integration
-        const districtSelect = document.getElementById("district");
-        const divisionContainer = document.getElementById("divisionContainer");
-        const divisionSelect = document.getElementById("division");
-        const sectorContainer = document.getElementById("sectorContainer");
-        const sectorSelect = document.getElementById("sector");
-        
-        const KERALA_STATE_ID = "p97po7woj9xtuy4lhi3bosvl";
-        
-        let districtsData = [];
-        let divisionsData = [];
-        let sectorsData = [];
-        let selectedSectorId = null;
 
         // Madrasa data structure: { range: [madrasas] }
         const madrasaData = {
@@ -810,186 +734,6 @@
           ]
         };
 
-        // Helper function to set select options
-        function setSelectOptions(selectEl, placeholder, values) {
-          if (!selectEl) return;
-          selectEl.innerHTML = "";
-          const ph = document.createElement("option");
-          ph.value = "";
-          ph.disabled = true;
-          ph.selected = true;
-          ph.textContent = placeholder;
-          selectEl.appendChild(ph);
-          (values || []).forEach((v) => {
-            const opt = document.createElement("option");
-            opt.value = v;
-            opt.textContent = v;
-            selectEl.appendChild(opt);
-          });
-        }
-
-        // Load districts from entities API
-        async function loadDistricts() {
-          try {
-            setSelectOptions(districtSelect, "Loading districts...", []);
-            
-            const apiUrl = (function () {
-              if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
-                return new URL(`/api/entities?parentId=${KERALA_STATE_ID}`, window.location.origin).href;
-              }
-              return `https://www.educine.in/api/entities?parentId=${KERALA_STATE_ID}`;
-            })();
-
-            const response = await fetch(apiUrl, {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            });
-
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}`);
-            }
-
-            const responseData = await response.json();
-            console.log('Districts loaded:', responseData);
-
-            districtsData = responseData.data || [];
-            
-            if (districtsData.length === 0) {
-              setSelectOptions(districtSelect, "No districts available", []);
-              return;
-            }
-
-            const districtNames = districtsData.map(d => d.name).sort();
-            setSelectOptions(districtSelect, "Select your district", districtNames);
-            
-          } catch (e) {
-            console.error('Error loading districts:', e);
-            setSelectOptions(districtSelect, "Failed to load districts (refresh)", []);
-          }
-        }
-
-        // Handle district selection
-        districtSelect.addEventListener("change", async function () {
-          const districtName = this.value;
-          const districtObj = districtsData.find(d => d.name === districtName);
-          
-          if (!districtObj) {
-            console.error('District not found:', districtName);
-            return;
-          }
-
-          const districtId = districtObj.id || districtObj._id;
-          
-          divisionContainer.classList.remove("hidden");
-          sectorContainer.classList.add("hidden");
-          setSelectOptions(divisionSelect, "Loading divisions...", []);
-          setSelectOptions(sectorSelect, "Select a division first", []);
-
-          try {
-            const apiUrl = (function () {
-              if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
-                return new URL(`/api/entities?parentId=${districtId}`, window.location.origin).href;
-              }
-              return `https://www.educine.in/api/entities?parentId=${districtId}`;
-            })();
-
-            const response = await fetch(apiUrl, {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            });
-
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}`);
-            }
-
-            const responseData = await response.json();
-            console.log('Divisions loaded:', responseData);
-
-            divisionsData = responseData.data || [];
-            
-            if (divisionsData.length === 0) {
-              setSelectOptions(divisionSelect, "No divisions available", []);
-              return;
-            }
-
-            const divisionNames = divisionsData.map(d => d.name).sort();
-            setSelectOptions(divisionSelect, "Select your division", divisionNames);
-            
-          } catch (e) {
-            console.error('Error loading divisions:', e);
-            setSelectOptions(divisionSelect, "Failed to load divisions", []);
-          }
-        });
-
-        // Handle division selection
-        divisionSelect.addEventListener("change", async function () {
-          const divisionName = this.value;
-          const divisionObj = divisionsData.find(d => d.name === divisionName);
-          
-          if (!divisionObj) {
-            console.error('Division not found:', divisionName);
-            return;
-          }
-
-          const divisionId = divisionObj.id || divisionObj._id;
-          selectedSectorId = null;
-          
-          sectorContainer.classList.remove("hidden");
-          setSelectOptions(sectorSelect, "Loading sectors...", []);
-
-          try {
-            const apiUrl = (function () {
-              if (typeof window !== "undefined" && /^https?:$/.test(window.location.protocol)) {
-                return new URL(`/api/entities?parentId=${divisionId}`, window.location.origin).href;
-              }
-              return `https://www.educine.in/api/entities?parentId=${divisionId}`;
-            })();
-
-            const response = await fetch(apiUrl, {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            });
-
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}`);
-            }
-
-            const responseData = await response.json();
-            console.log('Sectors loaded:', responseData);
-
-            sectorsData = responseData.data || [];
-            
-            if (sectorsData.length === 0) {
-              setSelectOptions(sectorSelect, "No sectors available", []);
-              return;
-            }
-
-            const sectorNames = sectorsData.map(d => d.name).sort();
-            setSelectOptions(sectorSelect, "Select your sector", sectorNames);
-            
-          } catch (e) {
-            console.error('Error loading sectors:', e);
-            setSelectOptions(sectorSelect, "Failed to load sectors", []);
-          }
-        });
-
-        // Track sector selection to get its entity ID
-        sectorSelect.addEventListener("change", function () {
-          const sectorName = this.value;
-          const sectorObj = sectorsData.find(d => d.name === sectorName);
-          
-          if (sectorObj) {
-            selectedSectorId = sectorObj.id || sectorObj._id;
-            console.log('Selected sector ID:', selectedSectorId);
-          }
-        });
-
         // Populate ranges
         function loadRanges() {
           const ranges = Object.keys(madrasaData).sort();
@@ -1023,9 +767,8 @@
           this.value = this.value.replace(/\D/g, "").slice(0, 10);
         });
 
-        // Load ranges and districts on page load
+        // Load ranges on page load
         loadRanges();
-        loadDistricts();
 
         // Form submission
         document.getElementById("madrasaForm").addEventListener("submit", async function (e) {
@@ -1075,19 +818,14 @@
             type: "madrasa_student",
             name: document.getElementById("name").value.trim(),
             phone: phone,
-            email: document.getElementById("email").value.trim(),
+            email: document.getElementById("email").value.trim() || undefined,
             age: parseInt(document.getElementById("age").value),
             gender: document.getElementById("gender").value,
-            district: document.getElementById("district").value,
-            state: document.getElementById("state").value,
-            division: document.getElementById("division").value,
-            sector: document.getElementById("sector").value,
             class: document.getElementById("class").value.trim(),
             institution: document.getElementById("institution").value.trim(),
             range: document.getElementById("range").value,
             madrasa: document.getElementById("madrasa").value,
-            stalls: stalls,
-            entityId: selectedSectorId
+            stalls: stalls
           };
 
           console.log("Submitting payload:", apiPayload);
