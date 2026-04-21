@@ -1087,19 +1087,10 @@
             range: document.getElementById("range").value,
             madrasa: document.getElementById("madrasa").value,
             stalls: stalls,
-            entityId: selectedSectorId // Send sector's entity ID for mapping
+            entityId: selectedSectorId
           };
 
           console.log("Submitting payload:", apiPayload);
-          console.log("Selected sector ID:", selectedSectorId);
-          
-          // Validate entityId is present
-          if (!selectedSectorId) {
-            showAlert("Please select a sector before submitting");
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
-            return;
-          }
 
           try {
             const response = await fetch(apiUrl, {
@@ -1117,19 +1108,8 @@
               try {
                 const errBody = await response.json();
                 console.log("Error response:", errBody);
-                console.log("Additional info:", errBody.additionalInfo);
                 if (errBody && (errBody.msg || errBody.message || errBody.error)) {
                   msg = errBody.msg || errBody.message || errBody.error;
-                }
-                // If there's additional validation info, show it
-                if (errBody.additionalInfo) {
-                  console.error("Validation details:", JSON.stringify(errBody.additionalInfo, null, 2));
-                  if (typeof errBody.additionalInfo === 'object') {
-                    const details = Object.entries(errBody.additionalInfo)
-                      .map(([key, val]) => `${key}: ${val}`)
-                      .join(', ');
-                    msg = `${msg} - ${details}`;
-                  }
                 }
               } catch (_) {}
               console.error("HTTP Status:", response.status, "Message:", msg);
