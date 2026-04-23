@@ -498,207 +498,163 @@
                                     
                                     <div class="tab-pane fade show active" id="day1" role="tabpanel" aria-labelledby="day1-tab">
                                         <div class="row g-4 flex-nowrap overflow-auto schedule-scroll-row pb-3" style="flex-wrap: nowrap !important;">
-                                            <!-- Session 1: 10:30 AM -->
+                                            <!-- 10:30 AM -->
                                             <div class="col-md-6 wow fadeInLeft" data-wow-delay=".1s">
                                                 <div class="schedule-card card h-100">
                                                     <div class="card-body d-flex flex-column">
-                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
+                                                        <div class="d-flex align-items-center mb-3">
                                                             <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 10:30 AM</div>
-                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Zakeer Hussain</div>
-                                                                    <div class="text-muted small">WEFI Career Counsellor</div>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                         <h5 class="card-title">After 10th: Conventional Pathways</h5>
-                                                        <p class="card-text flex-grow-1">Discover traditional academic routes after 10th grade including Science, Commerce, and Arts streams, understanding the opportunities and career prospects each pathway offers.</p>
-                                                        <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-primary">Academic Pathways</span>
+                                                        <div class="schedule-speakers mt-3">
+                                                            <div class="schedule-speaker-card bg-dark rounded-3 p-3 mb-2 text-center shadow-sm">
+                                                                <div class="fw-bold text-white">Zakeer Hussain</div>
+                                                                <div class="text-muted small">WEFI Career Counsellor</div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Session 2: 11:00 AM -->
+                                            <!-- 11:00 AM -->
                                             <div class="col-md-6 wow fadeInRight" data-wow-delay=".2s">
                                                 <div class="schedule-card card h-100">
                                                     <div class="card-body d-flex flex-column">
-                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
+                                                        <div class="d-flex align-items-center mb-3">
                                                             <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 11:00 AM</div>
-                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Rahul Raghavan IAS</div>
-                                                                    <div class="text-muted small">Assistant Collector (Under Training)<br>Trichurappoli</div>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                         <h5 class="card-title">The Civil Services Journey: Strategy, Struggles, and Success</h5>
-                                                        <p class="card-text flex-grow-1">An inspiring session on preparing for UPSC and state civil services exams, covering preparation strategies, overcoming challenges, and insights from a successful IAS officer's journey.</p>
-                                                        <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-danger">Civil Services</span>
-                                                            <span class="badge bg-danger">UPSC</span>
+                                                        <div class="schedule-speakers mt-3">
+                                                            <div class="schedule-speaker-card bg-dark rounded-3 p-3 mb-2 text-center shadow-sm">
+                                                                <div class="fw-bold text-white">Rahul Raghavan IAS</div>
+                                                                <div class="text-muted small">Assistant Collector (Under Training), Trichurappoli</div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Session 3: 2:00 PM -->
+                                            <!-- 2:00 PM -->
                                             <div class="col-md-6 wow fadeInLeft" data-wow-delay=".3s">
                                                 <div class="schedule-card card h-100">
                                                     <div class="card-body d-flex flex-column">
-                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
-                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 02:00 PM</div>
-                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Muhammed Hussain</div>
-                                                                    <div class="text-muted small">Banyan Impact Fellowship Alum<br>WEFI Career Counsellor</div>
-                                                                </div>
-                                                            </div>
+                                                        <div class="d-flex align-items-center mb-3">
+                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 2:00 PM</div>
                                                         </div>
                                                         <h5 class="card-title">Fellowships: Building Leadership Through Social Impact</h5>
-                                                        <p class="card-text flex-grow-1">Learn about prestigious fellowship programs that combine leadership development with social impact work, including application strategies and how these experiences shape careers.</p>
-                                                        <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-info">Fellowships</span>
-                                                            <span class="badge bg-info">Leadership</span>
+                                                        <div class="schedule-speakers mt-3">
+                                                            <div class="schedule-speaker-card bg-dark rounded-3 p-3 mb-2 text-center shadow-sm">
+                                                                <div class="fw-bold text-white">Muhammed Hussain</div>
+                                                                <div class="text-muted small">Banyan Impact Fellowship Alum<br>WEFI Career Counsellor</div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Session 4: 2:30 PM -->
+                                            <!-- 2:30 PM -->
                                             <div class="col-md-6 wow fadeInRight" data-wow-delay=".4s">
                                                 <div class="schedule-card card h-100">
                                                     <div class="card-body d-flex flex-column">
-                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
-                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 02:30 PM</div>
-                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Navas Kuthiradam</div>
-                                                                    <div class="text-muted small">Medical Imaging Technologist<br>WEFI Career Counsellor</div>
-                                                                </div>
-                                                            </div>
+                                                        <div class="d-flex align-items-center mb-3">
+                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 2:30 PM</div>
                                                         </div>
                                                         <h5 class="card-title">Careers in Healthcare: MBBS and Beyond</h5>
-                                                        <p class="card-text flex-grow-1">Explore diverse healthcare career options beyond MBBS including nursing, physiotherapy, medical technology, pharmacy, and allied health sciences with their scope and opportunities.</p>
-                                                        <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-success">Healthcare</span>
-                                                            <span class="badge bg-success">Medical Careers</span>
+                                                        <div class="schedule-speakers mt-3">
+                                                            <div class="schedule-speaker-card bg-dark rounded-3 p-3 mb-2 text-center shadow-sm">
+                                                                <div class="fw-bold text-white">Navas Kuthiradam</div>
+                                                                <div class="text-muted small">Medical Imaging Technologist<br>WEFI Career Counsellor</div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Session 5: 3:00 PM -->
+                                            <!-- 3:00 PM -->
                                             <div class="col-md-6 wow fadeInLeft" data-wow-delay=".5s">
                                                 <div class="schedule-card card h-100">
                                                     <div class="card-body d-flex flex-column">
-                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
-                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 03:00 PM</div>
-                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">CKM Rafeekh</div>
-                                                                    <div class="text-muted small">Career Counsellor<br>CEO, WEFI</div>
-                                                                </div>
-                                                            </div>
+                                                        <div class="d-flex align-items-center mb-3">
+                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 3:00 PM</div>
                                                         </div>
                                                         <h5 class="card-title">Beyond Barriers: Higher Education Opportunities for Minority and Tribal Communities</h5>
-                                                        <p class="card-text flex-grow-1">Understanding scholarships, reservations, and special programs designed to support minority and tribal students in accessing quality higher education and professional courses.</p>
-                                                        <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-warning">Scholarships</span>
-                                                            <span class="badge bg-warning">Minority Education</span>
+                                                        <div class="schedule-speakers mt-3">
+                                                            <div class="schedule-speaker-card bg-dark rounded-3 p-3 mb-2 text-center shadow-sm">
+                                                                <div class="fw-bold text-white">CKM Rafeekh</div>
+                                                                <div class="text-muted small">Career Counsellor<br>CEO, WEFI</div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Session 6: 4:00 PM -->
+                                            <!-- 4:00 PM -->
                                             <div class="col-md-6 wow fadeInRight" data-wow-delay=".6s">
                                                 <div class="schedule-card card h-100">
                                                     <div class="card-body d-flex flex-column">
-                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
-                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 04:00 PM</div>
-                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Anas Poyil</div>
-                                                                    <div class="text-muted small">WEFI Career Counsellor</div>
-                                                                </div>
-                                                            </div>
+                                                        <div class="d-flex align-items-center mb-3">
+                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 4:00 PM</div>
                                                         </div>
                                                         <h5 class="card-title">Engineering Today: Branches, Trends & Future Scape</h5>
-                                                        <p class="card-text flex-grow-1">Navigate the world of engineering with insights on various branches, emerging technologies, industry trends, and future career prospects in the rapidly evolving engineering landscape.</p>
-                                                        <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-primary">Engineering</span>
-                                                            <span class="badge bg-primary">Technology</span>
+                                                        <div class="schedule-speakers mt-3">
+                                                            <div class="schedule-speaker-card bg-dark rounded-3 p-3 mb-2 text-center shadow-sm">
+                                                                <div class="fw-bold text-white">Anas Poyil</div>
+                                                                <div class="text-muted small">WEFI Career Counsellor</div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Session 7: 4:30 PM -->
+                                            <!-- 4:30 PM -->
                                             <div class="col-md-6 wow fadeInLeft" data-wow-delay=".7s">
                                                 <div class="schedule-card card h-100">
                                                     <div class="card-body d-flex flex-column">
-                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
-                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 04:30 PM</div>
-                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Muhammed Rameez</div>
-                                                                    <div class="text-muted small">WEFI Career Counsellor</div>
-                                                                </div>
-                                                            </div>
+                                                        <div class="d-flex align-items-center mb-3">
+                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 4:30 PM</div>
                                                         </div>
-                                                        <h5 class="card-title">Alternative Education Pathways: Open Schooling & Online Courses</h5>
-                                                        <p class="card-text flex-grow-1">Discover flexible learning options through NIOS, online degree programs, MOOCs, and certification courses that provide quality education with flexibility for diverse learners.</p>
-                                                        <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-info">Online Learning</span>
-                                                            <span class="badge bg-info">Open Schooling</span>
+                                                        <h5 class="card-title">Alternative Education Pathways: Open Schooling & Online courses</h5>
+                                                        <div class="schedule-speakers mt-3">
+                                                            <div class="schedule-speaker-card bg-dark rounded-3 p-3 mb-2 text-center shadow-sm">
+                                                                <div class="fw-bold text-white">Muhammed Rameez</div>
+                                                                <div class="text-muted small">WEFI Career Counsellor</div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Session 8: 5:00 PM -->
+                                            <!-- 5:00 PM -->
                                             <div class="col-md-6 wow fadeInRight" data-wow-delay=".8s">
                                                 <div class="schedule-card card h-100">
                                                     <div class="card-body d-flex flex-column">
-                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
-                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 05:00 PM</div>
-                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Ubaid KK</div>
-                                                                    <div class="text-muted small">HISST Commerce<br>WEFI Career Counsellor</div>
-                                                                </div>
-                                                            </div>
+                                                        <div class="d-flex align-items-center mb-3">
+                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 5:00 PM</div>
                                                         </div>
                                                         <h5 class="card-title">Careers in Commerce: CA, CS, CMA and Beyond</h5>
-                                                        <p class="card-text flex-grow-1">Comprehensive guide to commerce careers including Chartered Accountancy, Company Secretary, Cost Management Accountancy, and other professional courses with career trajectories.</p>
-                                                        <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-success">Commerce</span>
-                                                            <span class="badge bg-success">Professional Courses</span>
+                                                        <div class="schedule-speakers mt-3">
+                                                            <div class="schedule-speaker-card bg-dark rounded-3 p-3 mb-2 text-center shadow-sm">
+                                                                <div class="fw-bold text-white">Ubaid KK</div>
+                                                                <div class="text-muted small">HISST Commerce<br>WEFI Career counsellor</div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Session 9: 5:30 PM -->
+                                            <!-- 5:30 PM -->
                                             <div class="col-md-6 wow fadeInLeft" data-wow-delay=".9s">
                                                 <div class="schedule-card card h-100">
                                                     <div class="card-body d-flex flex-column">
-                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
-                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 05:30 PM</div>
-                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Muhammed Munaver</div>
-                                                                    <div class="text-muted small">Technical Assistant, NIT Calicut</div>
-                                                                </div>
-                                                            </div>
+                                                        <div class="d-flex align-items-center mb-3">
+                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 5:30 PM</div>
                                                         </div>
                                                         <h5 class="card-title">Government Careers: Pathways, Exams and Opportunities</h5>
-                                                        <p class="card-text flex-grow-1">Complete overview of government job opportunities, competitive exams like SSC, Banking, Railways, PSUs, and strategies for securing stable and rewarding government positions.</p>
-                                                        <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-danger">Government Jobs</span>
-                                                            <span class="badge bg-danger">Competitive Exams</span>
+                                                        <div class="schedule-speakers mt-3">
+                                                            <div class="schedule-speaker-card bg-dark rounded-3 p-3 mb-2 text-center shadow-sm">
+                                                                <div class="fw-bold text-white">Muhammed Munaver</div>
+                                                                <div class="text-muted small">Technical Assistant, NIT Calicut</div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -708,12 +664,11 @@
                                     
                                     <div class="tab-pane fade" id="day2" role="tabpanel" aria-labelledby="day2-tab">
                                         <div class="row g-4 flex-nowrap overflow-auto schedule-scroll-row pb-3" style="flex-wrap: nowrap !important;">
-                                            <!-- Session 1: 10:30 AM -->
                                             <div class="col-md-6 wow fadeInLeft" data-wow-delay=".1s">
                                                 <div class="schedule-card card h-100">
                                                     <div class="card-body d-flex flex-column">
                                                         <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
-                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 10:30 AM</div>
+                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 11:00 AM</div>
                                                             <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
                                                                 <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
                                                                     <div class="fw-bold text-white">Bisharathu Rahman Saquafi</div>
@@ -722,7 +677,7 @@
                                                             </div>
                                                         </div>
                                                         <h5 class="card-title">After 10th: ITI, Polytechnic and Vocational Routes</h5>
-                                                        <p class="card-text flex-grow-1">Explore alternative pathways after 10th grade including ITI, Polytechnic, and vocational training programs that offer practical skills and faster entry into the workforce.</p>
+                                                        <p class="card-text flex-grow-1">Success in climbing the corporate ladder usually involves a combination of strong performance, strategic thinking, effective communication, adaptability, and a commitment to continuous learning. Building professional relationships, demonstrating initiative, and aligning with the company’s goals are also key factors.</p>
                                                         <div class="schedule-extra mt-2">
                                                             <span class="badge bg-success">Vocational Education</span>
                                                         </div>
@@ -730,117 +685,70 @@
                                                 </div>
                                             </div>
                                             
-                                            <!-- Session 2: 11:00 AM -->
-                                            <div class="col-md-6 wow fadeInLeft" data-wow-delay=".2s">
-                                                <div class="schedule-card card h-100">
-                                                    <div class="card-body d-flex flex-column">
-                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
-                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 11:00 AM</div>
-                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 me-md-2 mb-2 mb-md-0 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Dr. Hassan Shihab</div>
-                                                                    <div class="text-muted small">Panelist</div>
-                                                                </div>
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 me-md-2 mb-2 mb-md-0 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Hiyas M Backer</div>
-                                                                    <div class="text-muted small">Panelist</div>
-                                                                </div>
-                                                                <div class="schedule-speaker-card flex-fill bg-info rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Ahammed Shareen</div>
-                                                                    <div class="text-muted small">Moderator</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <h5 class="card-title">The Gulf 2.0: From Labor to Professional Migration</h5>
-                                                        <p class="card-text flex-grow-1">Understanding the transformation of Gulf migration from traditional labor roles to professional opportunities and how to prepare for this shift.</p>
-                                                        <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-warning">Gulf Migration</span>
-                                                            <span class="badge bg-warning">Professional Development</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Session 3: 2:00 PM -->
-                                            <div class="col-md-6 wow fadeInRight" data-wow-delay=".3s">
+                                            <div class="col-md-6 wow fadeInRight" data-wow-delay=".2s">
                                                 <div class="schedule-card card h-100">
                                                     <div class="card-body d-flex flex-column">
                                                         <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
                                                             <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 02:00 PM</div>
                                                             <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
+                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 me-md-2 mb-2 mb-md-0 text-center shadow-sm">
+                                                                    <div class="fw-bold text-white">Dr. Sarin P</div>
+                                                                    <div class="text-muted small">Strategic Adviser<br>Vijnana Keralam Campaign</div>
+                                                                </div>
+                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 me-md-2 mb-2 mb-md-0 text-center shadow-sm">
+                                                                    <div class="fw-bold text-white">Abdunnasar UK</div>
+                                                                    <div class="text-muted small">Principal, District Institute of Education and Training (DIET)<br>Kozhikode, Kerala</div>
+                                                                </div>
                                                                 <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Samad Sir</div>
-                                                                    <div class="text-muted small">Speaker</div>
+                                                                    <div class="fw-bold text-white">CN Jafar Sadiq</div>
+                                                                    <div class="text-muted small">CEO, Risala Update</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <h5 class="card-title">The Gulf 2.0: From Labor to Professional Migration</h5>
+                                                        <p class="card-text flex-grow-1">The foundation of this transformation lies in integrating technology-enhanced learning, fostering critical thinking, and encouraging creativity from the grassroots level. Emphasis must be placed on vocational training, multilingual education, emotional intelligence, and digital literacy, ensuring students are not only academically competent but also socially and emotionally equipped for real-world challenges.</p>
+                                                        <div class="schedule-extra mt-2">
+                                                            <span class="badge bg-primary">Education System</span>
+                                                            <span class="badge bg-primary">encouraging creativity</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 wow fadeInRight" data-wow-delay=".2s">
+                                                <div class="schedule-card card h-100">
+                                                    <div class="card-body d-flex flex-column">
+                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
+                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 07:00 PM</div>
+                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
+                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 me-md-2 mb-2 mb-md-0 text-center shadow-sm">
+                                                                    <div class="fw-bold text-white">CK Muhammed Rafeek </div>
+                                                                    <div class="text-muted small">CEO, Wisdom Education Foundation of India</div>
+                                                                </div>
+                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 me-md-2 mb-2 mb-md-0 text-center shadow-sm">
+                                                                    <div class="fw-bold text-white">Muhammad Rameez</div>
+                                                                    <div class="text-muted small">Career Counsellor, WEFI</div>
+                                                                </div>
+                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
+                                                                    <div class="fw-bold text-white">Muhammed Navas</div>
+                                                                    <div class="text-muted small">Paramedic, GMC Calicut<br>Career Counsellor, WEFI</div>
+                                                                </div>
+                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
+                                                                    <div class="fw-bold text-white">Muhammed Ubaid</div>
+                                                                    <div class="text-muted small">Teacher<br>Career Counsellor, WEFI</div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <h5 class="card-title">Career Parenting: Guiding Children in a Changing World</h5>
-                                                        <p class="card-text flex-grow-1">Learn effective strategies for parents to guide their children's career choices in today's rapidly evolving job market and educational landscape.</p>
+                                                        <p class="card-text flex-grow-1">Vocational paths offer practical, skill-based education and training that prepare individuals for specific careers in a shorter time frame compared to traditional academic routes. These paths focus on hands-on experience and industry-relevant knowledge, enabling faster entry into the workforce.</p>
                                                         <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-primary">Parenting</span>
-                                                            <span class="badge bg-primary">Career Guidance</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Session 4: 4:00 PM -->
-                                            <div class="col-md-6 wow fadeInRight" data-wow-delay=".4s">
-                                                <div class="schedule-card card h-100">
-                                                    <div class="card-body d-flex flex-column">
-                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
-                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 04:00 PM</div>
-                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 me-md-2 mb-2 mb-md-0 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Sabu Abraham</div>
-                                                                    <div class="text-muted small">Panelist</div>
-                                                                </div>
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 me-md-2 mb-2 mb-md-0 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Thankachan MM</div>
-                                                                    <div class="text-muted small">Panelist</div>
-                                                                </div>
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 me-md-2 mb-2 mb-md-0 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Dr Muhammed Shameem</div>
-                                                                    <div class="text-muted small">Panelist</div>
-                                                                </div>
-                                                                <div class="schedule-speaker-card flex-fill bg-info rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">CN Jafar Sadiq</div>
-                                                                    <div class="text-muted small">Moderator</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <h5 class="card-title">Panel Discussion</h5>
-                                                        <p class="card-text flex-grow-1">An engaging panel discussion featuring industry experts sharing insights on career development, education pathways, and professional growth opportunities.</p>
-                                                        <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-danger">Panel Discussion</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Session 5: 5:30 PM -->
-                                            <div class="col-md-6 wow fadeInRight" data-wow-delay=".5s">
-                                                <div class="schedule-card card h-100">
-                                                    <div class="card-body d-flex flex-column">
-                                                        <div class="d-flex align-items-center mb-3 flex-wrap gap-3 w-100">
-                                                            <div class="schedule-time me-3"><i class="fa fa-clock-o"></i> 05:30 PM</div>
-                                                            <div class="schedule-speakers d-flex flex-column flex-md-row gap-2 w-100">
-                                                                <div class="schedule-speaker-card flex-fill bg-dark rounded-3 p-3 text-center shadow-sm">
-                                                                    <div class="fw-bold text-white">Muhammed Sirajudheen P</div>
-                                                                    <div class="text-muted small">HISST Geography<br>WEFI Career Counsellor</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <h5 class="card-title">Career Guidance Session</h5>
-                                                        <p class="card-text flex-grow-1">Expert career counseling session providing personalized guidance on educational choices, career paths, and professional development strategies.</p>
-                                                        <div class="schedule-extra mt-2">
-                                                            <span class="badge bg-success">Career Counseling</span>
+                                                            <span class="badge bg-primary">Vocational Careers</span>
+                                                            <span class="badge bg-primary">industry-relevant knowledge</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

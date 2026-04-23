@@ -91,24 +91,40 @@
                 }
                 @media (max-width: 767px) {
                     .schedule-tabs .nav-pills .nav-link {
-                        font-size: 1rem;
-                        padding: 10px 12px;
+                        font-size: 0.9rem;
+                        padding: 8px 16px;
                         margin: 0 4px 8px 4px;
                     }
                     .schedule-card.card {
-                        min-height: 220px;
+                        min-height: 280px;
                         width: 100%;
-                        padding: 12px;
+                        padding: 16px;
+                    }
+                    .schedule-card .card-title {
+                        font-size: 1rem;
+                    }
+                    .schedule-time {
+                        font-size: 0.95rem;
+                    }
+                    .schedule-speaker-card {
+                        min-height: 60px;
+                        padding: 8px !important;
+                    }
+                    .schedule-speaker-card .fw-bold {
+                        font-size: 0.9rem;
+                    }
+                    .schedule-speaker-card .text-muted {
+                        font-size: 0.8rem;
                     }
                     .schedule-scroll-row > .col-md-6, .schedule-scroll-row > .col-md-4, .schedule-scroll-row > .col-md-3 {
-                        min-width: 95vw;
-                        max-width: 98vw;
-                        flex: 0 0 95vw;
+                        min-width: 75vw;
+                        max-width: 80vw;
+                        flex: 0 0 75vw;
                     }
                     .schedule-scroll-row {
-                        gap: 16px;
-                        padding-left: 4px;
-                        padding-right: 4px;
+                        gap: 12px;
+                        padding-left: 8px;
+                        padding-right: 8px;
                     }
                 }
                 .schedule-scroll-row {
@@ -123,10 +139,46 @@
                     padding-left: 24px;
                     padding-right: 24px;
                     scrollbar-width: none; /* Firefox */
+                    position: relative;
                 }
                 .schedule-scroll-row::-webkit-scrollbar {
                     display: none; /* Chrome, Safari, Opera */
                 }
+                
+                /* Sliding hint animation */
+                @keyframes slideHint {
+                    0%, 100% {
+                        transform: translateX(0);
+                    }
+                    50% {
+                        transform: translateX(20px);
+                    }
+                }
+                
+                /* Fade gradient to show more content */
+                .schedule-scroll-row::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 80px;
+                    height: 100%;
+                    background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.3));
+                    pointer-events: none;
+                    z-index: 1;
+                }
+                
+                /* Animate first card on load */
+                .schedule-scroll-row > .col-md-6:first-child {
+                    animation: slideHint 2s ease-in-out 1s 2;
+                }
+                
+                /* Remove gradient when scrolled */
+                .schedule-scroll-row.scrolled::after {
+                    opacity: 0;
+                    transition: opacity 0.3s;
+                }
+                
                 .schedule-scroll-row > .col-md-6, .schedule-scroll-row > .col-md-4, .schedule-scroll-row > .col-md-3 {
                     min-width: 440px;
                     max-width: 520px;

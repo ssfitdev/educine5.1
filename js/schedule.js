@@ -31,3 +31,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+// Add scroll detection for schedule rows to show/hide gradient hint
+document.addEventListener('DOMContentLoaded', function() {
+    var scrollRows = document.querySelectorAll('.schedule-scroll-row');
+    
+    scrollRows.forEach(function(row) {
+        row.addEventListener('scroll', function() {
+            // Add 'scrolled' class when user scrolls
+            if (this.scrollLeft > 10) {
+                this.classList.add('scrolled');
+            } else {
+                this.classList.remove('scrolled');
+            }
+        });
+    });
+});
