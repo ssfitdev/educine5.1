@@ -550,14 +550,23 @@
     </script>
 
     <script>
-        // Gallery mobile layout - split into two rows
+        // Gallery mobile layout - split into two horizontal scrolling rows
         function setupMobileGallery() {
             if (window.innerWidth <= 767) {
                 const gallery = document.getElementById('gallery');
+                
+                // Check if already set up
+                if (gallery.querySelector('.gallery-row')) {
+                    return;
+                }
+                
                 const items = Array.from(gallery.querySelectorAll('.item'));
                 
-                // Clear gallery
+                // Clear gallery and remove any existing classes that might interfere
                 gallery.innerHTML = '';
+                gallery.className = 'gallery de-gallery';
+                gallery.style.display = 'flex';
+                gallery.style.flexDirection = 'column';
                 
                 // Split items into two rows
                 const midpoint = Math.ceil(items.length / 2);
@@ -567,13 +576,19 @@
                 // Create row 1
                 const row1 = document.createElement('div');
                 row1.className = 'gallery-row';
-                row1Items.forEach(item => row1.appendChild(item));
+                row1Items.forEach(item => {
+                    item.style.display = 'block';
+                    row1.appendChild(item);
+                });
                 gallery.appendChild(row1);
                 
                 // Create row 2
                 const row2 = document.createElement('div');
                 row2.className = 'gallery-row';
-                row2Items.forEach(item => row2.appendChild(item));
+                row2Items.forEach(item => {
+                    item.style.display = 'block';
+                    row2.appendChild(item);
+                });
                 gallery.appendChild(row2);
                 
                 // Parallel scrolling effect
@@ -583,8 +598,12 @@
                     if (!isScrolling) {
                         isScrolling = true;
                         // Scroll row2 in opposite direction for parallel effect
-                        const scrollPercentage = this.scrollLeft / (this.scrollWidth - this.clientWidth);
-                        row2.scrollLeft = (row2.scrollWidth - row2.clientWidth) * (1 - scrollPercentage);
+                        const maxScroll1 = this.scrollWidth - this.clientWidth;
+                        const maxScroll2 = row2.scrollWidth - row2.clientWidth;
+                        if (maxScroll1 > 0 && maxScroll2 > 0) {
+                            const scrollPercentage = this.scrollLeft / maxScroll1;
+                            row2.scrollLeft = maxScroll2 * (1 - scrollPercentage);
+                        }
                         setTimeout(() => { isScrolling = false; }, 50);
                     }
                 });
@@ -593,20 +612,42 @@
                     if (!isScrolling) {
                         isScrolling = true;
                         // Scroll row1 in opposite direction for parallel effect
-                        const scrollPercentage = this.scrollLeft / (this.scrollWidth - this.clientWidth);
-                        row1.scrollLeft = (row1.scrollWidth - row1.clientWidth) * (1 - scrollPercentage);
+                        const maxScroll1 = row1.scrollWidth - row1.clientWidth;
+                        const maxScroll2 = this.scrollWidth - this.clientWidth;
+                        if (maxScroll1 > 0 && maxScroll2 > 0) {
+                            const scrollPercentage = this.scrollLeft / maxScroll2;
+                            row1.scrollLeft = maxScroll1 * (1 - scrollPercentage);
+                        }
                         setTimeout(() => { isScrolling = false; }, 50);
                     }
                 });
+                
+                // Re-initialize magnific popup for the new structure
+                if (typeof $.fn.magnificPopup !== 'undefined') {
+                    $('.gallery-row .item a').magnificPopup({
+                        type: 'image',
+                        gallery: {
+                            enabled: true
+                        }
+                    });
+                }
             }
         }
         
-        // Run on load and resize
-        window.addEventListener('load', setupMobileGallery);
-        window.addEventListener('resize', function() {
-            if (window.innerWidth <= 767) {
-                setupMobileGallery();
-            }
+        // Run on load
+        $(window).on('load', function() {
+            setTimeout(setupMobileGallery, 100);
+        });
+        
+        // Run on resize with debounce
+        let resizeTimer;
+        $(window).on('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                if (window.innerWidth <= 767) {
+                    location.reload(); // Reload to reset gallery
+                }
+            }, 250);
         });
     </script>
 
