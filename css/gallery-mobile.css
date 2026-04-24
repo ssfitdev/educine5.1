@@ -15,63 +15,85 @@
         overflow: hidden;
     }
     
-    /* Override default gallery styles */
-    #gallery.de-gallery {
+    /* Override ALL default gallery styles */
+    #gallery.de-gallery,
+    #gallery.de-gallery.full-gallery,
+    #gallery.de-gallery.zoom-gallery {
         display: flex !important;
         flex-direction: column !important;
+        flex-wrap: nowrap !important;
         gap: 16px !important;
         padding: 0 !important;
         margin: 0 !important;
         width: 100% !important;
+        height: auto !important;
     }
     
-    /* Force items to not float or use grid */
-    #gallery.de-gallery .item {
+    /* Force items to not float or use grid - STRONGEST OVERRIDE */
+    #gallery.de-gallery .item,
+    #gallery.de-gallery .item.residential,
+    #gallery.de-gallery .item.hospitaly,
+    .de-gallery .item,
+    .gallery .item {
         float: none !important;
-        display: block !important;
+        display: inline-block !important;
         width: auto !important;
         margin: 0 !important;
+        padding: 0 !important;
+        position: relative !important;
+        clear: none !important;
     }
     
-    /* Create two horizontal scrolling rows */
+    /* Create two horizontal scrolling rows - STRONGEST OVERRIDE */
     .gallery-row {
         display: flex !important;
         flex-direction: row !important;
-        gap: 12px;
-        overflow-x: auto;
-        overflow-y: hidden;
+        flex-wrap: nowrap !important;
+        gap: 12px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        padding: 0 16px;
+        padding: 0 16px !important;
         will-change: scroll-position;
-        width: 100%;
+        width: 100% !important;
+        height: auto !important;
     }
     
     .gallery-row::-webkit-scrollbar {
-        display: none;
+        display: none !important;
     }
     
-    /* Make images smaller and arrange horizontally */
-    .gallery-row .item {
+    /* Make images smaller and arrange horizontally - STRONGEST OVERRIDE */
+    .gallery-row .item,
+    .gallery-row > .item,
+    .gallery-row .item.residential,
+    .gallery-row .item.hospitaly {
         flex: 0 0 42vw !important;
         min-width: 42vw !important;
         max-width: 42vw !important;
         width: 42vw !important;
+        height: auto !important;
         scroll-snap-align: start;
-        display: block !important;
+        display: inline-block !important;
         float: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     
     .gallery-row .item .picframe {
         width: 100% !important;
         height: 160px !important;
-        overflow: hidden;
+        overflow: hidden !important;
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         transition: transform 0.3s, box-shadow 0.3s;
         position: relative;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     
     .gallery-row .item .picframe:active {
@@ -82,8 +104,12 @@
     .gallery-row .item .picframe img {
         width: 100% !important;
         height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
         object-fit: cover;
-        display: block;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     
     /* Second row starts from right (RTL effect) */
@@ -97,35 +123,38 @@
     
     /* Overlay styling for mobile */
     .gallery-row .item .overlay {
-        opacity: 0;
+        opacity: 0 !important;
         transition: opacity 0.3s;
-        background: rgba(106, 17, 203, 0.85);
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        background: rgba(106, 17, 203, 0.85) !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        height: 100% !important;
     }
     
     .gallery-row .item:active .overlay {
-        opacity: 1;
+        opacity: 1 !important;
     }
     
     .gallery-row .item .overlay .pf_text {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 100% !important;
+        width: 100% !important;
+        position: relative !important;
     }
     
     .gallery-row .item .overlay .project-name {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: white;
+        font-size: 0.9rem !important;
+        font-weight: 600 !important;
+        color: white !important;
     }
 }
 

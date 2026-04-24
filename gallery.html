@@ -567,9 +567,12 @@
             // Mark as setup
             gallerySetup = true;
             
+            console.log('Setting up mobile gallery with', items.length, 'items');
+            
             // Clear gallery
             gallery.innerHTML = '';
             gallery.className = 'gallery de-gallery';
+            gallery.style.cssText = 'display: flex !important; flex-direction: column !important; gap: 16px; padding: 0; margin: 0;';
             
             // Split items into two rows
             const midpoint = Math.ceil(items.length / 2);
@@ -579,14 +582,26 @@
             // Create row 1
             const row1 = document.createElement('div');
             row1.className = 'gallery-row';
-            row1Items.forEach(item => row1.appendChild(item));
+            row1.style.cssText = 'display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; overflow-x: auto; overflow-y: hidden; gap: 12px; padding: 0 16px; width: 100%;';
+            row1Items.forEach(item => {
+                item.style.cssText = 'flex: 0 0 42vw; min-width: 42vw; max-width: 42vw; width: 42vw; display: inline-block; float: none; margin: 0; padding: 0;';
+                row1.appendChild(item);
+            });
             gallery.appendChild(row1);
+            
+            console.log('Row 1 created with', row1Items.length, 'items');
             
             // Create row 2
             const row2 = document.createElement('div');
             row2.className = 'gallery-row';
-            row2Items.forEach(item => row2.appendChild(item));
+            row2.style.cssText = 'display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; overflow-x: auto; overflow-y: hidden; gap: 12px; padding: 0 16px; width: 100%; direction: rtl;';
+            row2Items.forEach(item => {
+                item.style.cssText = 'flex: 0 0 42vw; min-width: 42vw; max-width: 42vw; width: 42vw; display: inline-block; float: none; margin: 0; padding: 0; direction: ltr;';
+                row2.appendChild(item);
+            });
             gallery.appendChild(row2);
+            
+            console.log('Row 2 created with', row2Items.length, 'items');
             
             // Parallel scrolling effect
             let isScrolling = false;
@@ -626,10 +641,13 @@
                     }
                 });
             }
+            
+            console.log('Mobile gallery setup complete');
         }
         
         // Run on load with delay to ensure gallery is ready
         $(window).on('load', function() {
+            console.log('Page loaded, setting up gallery in 500ms');
             setTimeout(setupMobileGallery, 500);
         });
     </script>
