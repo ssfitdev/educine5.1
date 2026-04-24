@@ -42,6 +42,9 @@
 
     <!-- custom font -->
     <link rel="stylesheet" href="css/font-style.css" type="text/css">
+    
+    <!-- gallery mobile styles -->
+    <link rel="stylesheet" href="css/gallery-mobile.css" type="text/css">
 </head>
 
 <body id="homepage">
@@ -543,6 +546,67 @@
         $(window).on("load", function () {
             $(".twentytwenty-container[data-orientation!='vertical']").twentytwenty({ default_offset_pct: 0.7 });
             $(".twentytwenty-container[data-orientation='vertical']").twentytwenty({ default_offset_pct: 0.3, orientation: 'vertical' });
+        });
+    </script>
+
+    <script>
+        // Gallery mobile layout - split into two rows
+        function setupMobileGallery() {
+            if (window.innerWidth <= 767) {
+                const gallery = document.getElementById('gallery');
+                const items = Array.from(gallery.querySelectorAll('.item'));
+                
+                // Clear gallery
+                gallery.innerHTML = '';
+                
+                // Split items into two rows
+                const midpoint = Math.ceil(items.length / 2);
+                const row1Items = items.slice(0, midpoint);
+                const row2Items = items.slice(midpoint);
+                
+                // Create row 1
+                const row1 = document.createElement('div');
+                row1.className = 'gallery-row';
+                row1Items.forEach(item => row1.appendChild(item));
+                gallery.appendChild(row1);
+                
+                // Create row 2
+                const row2 = document.createElement('div');
+                row2.className = 'gallery-row';
+                row2Items.forEach(item => row2.appendChild(item));
+                gallery.appendChild(row2);
+                
+                // Parallel scrolling effect
+                let isScrolling = false;
+                
+                row1.addEventListener('scroll', function() {
+                    if (!isScrolling) {
+                        isScrolling = true;
+                        // Scroll row2 in opposite direction for parallel effect
+                        const scrollPercentage = this.scrollLeft / (this.scrollWidth - this.clientWidth);
+                        row2.scrollLeft = (row2.scrollWidth - row2.clientWidth) * (1 - scrollPercentage);
+                        setTimeout(() => { isScrolling = false; }, 50);
+                    }
+                });
+                
+                row2.addEventListener('scroll', function() {
+                    if (!isScrolling) {
+                        isScrolling = true;
+                        // Scroll row1 in opposite direction for parallel effect
+                        const scrollPercentage = this.scrollLeft / (this.scrollWidth - this.clientWidth);
+                        row1.scrollLeft = (row1.scrollWidth - row1.clientWidth) * (1 - scrollPercentage);
+                        setTimeout(() => { isScrolling = false; }, 50);
+                    }
+                });
+            }
+        }
+        
+        // Run on load and resize
+        window.addEventListener('load', setupMobileGallery);
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 767) {
+                setupMobileGallery();
+            }
         });
     </script>
 
