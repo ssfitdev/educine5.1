@@ -559,25 +559,34 @@
             }
             
             const gallery = document.getElementById('gallery');
-            if (!gallery) return;
+            if (!gallery) {
+                console.log('Gallery element not found');
+                return;
+            }
             
             const items = Array.from(gallery.querySelectorAll('.item'));
-            if (items.length === 0) return;
+            if (items.length === 0) {
+                console.log('No gallery items found');
+                return;
+            }
             
-            // Mark as setup
+            // Mark as setup to prevent re-running
             gallerySetup = true;
             
             console.log('Setting up mobile gallery with', items.length, 'items');
             
+            // Store items before clearing
+            const itemsClone = items.map(item => item.cloneNode(true));
+            
             // Clear gallery
             gallery.innerHTML = '';
-            gallery.className = 'gallery de-gallery';
+            gallery.className = 'gallery de-gallery mobile-gallery';
             gallery.style.cssText = 'display: flex !important; flex-direction: column !important; gap: 16px; padding: 0; margin: 0;';
             
             // Split items into two rows
-            const midpoint = Math.ceil(items.length / 2);
-            const row1Items = items.slice(0, midpoint);
-            const row2Items = items.slice(midpoint);
+            const midpoint = Math.ceil(itemsClone.length / 2);
+            const row1Items = itemsClone.slice(0, midpoint);
+            const row2Items = itemsClone.slice(midpoint);
             
             // Create row 1
             const row1 = document.createElement('div');
@@ -633,31 +642,26 @@
             });
             
             // Re-initialize magnific popup for the new structure
-            if (typeof $.fn.magnificPopup !== 'undefined') {
-                $('.gallery-row .item a').magnificPopup({
-                    type: 'image',
-                    gallery: {
-                        enabled: true
-                    }
-                });
-            }
+            setTimeout(function() {
+                if (typeof $.fn.magnificPopup !== 'undefined') {
+                    $('.gallery-row .item a').magnificPopup({
+                        type: 'image',
+                        gallery: {
+                            enabled: true
+                        }
+                    });
+                }
+            }, 100);
             
             console.log('Mobile gallery setup complete');
         }
         
-        // Run immediately when DOM is ready (before images load)
-        $(document).ready(function() {
-            if (window.innerWidth <= 767) {
-                console.log('DOM ready, setting up mobile gallery immediately');
-                setupMobileGallery();
-            }
-        });
-        
-        // Also run on full page load as backup
+        // Wait for all scripts and plugins to load
         $(window).on('load', function() {
-            if (window.innerWidth <= 767 && !gallerySetup) {
-                console.log('Page loaded, setting up gallery as backup');
-                setupMobileGallery();
+            if (window.innerWidth <= 767) {
+                console.log('Window loaded, setting up mobile gallery after delay');
+                // Delay to ensure all gallery plugins have initialized
+                setTimeout(setupMobileGallery, 1000);
             }
         });
     </script>
