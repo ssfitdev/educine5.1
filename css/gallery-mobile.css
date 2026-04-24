@@ -1,5 +1,19 @@
 /* Gallery Mobile Styles */
 
+/* Hide gallery initially on mobile to prevent flash of vertical layout */
+@media (max-width: 767px) {
+    #gallery.de-gallery:not(.mobile-ready) {
+        opacity: 0;
+        visibility: hidden;
+    }
+    
+    #gallery.de-gallery.mobile-ready {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.3s ease-in;
+    }
+}
+
 /* Desktop - default grid layout */
 @media (min-width: 768px) {
     #gallery.de-gallery {

@@ -603,6 +603,9 @@
             
             console.log('Row 2 created with', row2Items.length, 'items');
             
+            // Show gallery with fade-in
+            gallery.classList.add('mobile-ready');
+            
             // Parallel scrolling effect
             let isScrolling = false;
             
@@ -645,10 +648,20 @@
             console.log('Mobile gallery setup complete');
         }
         
-        // Run on load with delay to ensure gallery is ready
+        // Run immediately when DOM is ready (before images load)
+        $(document).ready(function() {
+            if (window.innerWidth <= 767) {
+                console.log('DOM ready, setting up mobile gallery immediately');
+                setupMobileGallery();
+            }
+        });
+        
+        // Also run on full page load as backup
         $(window).on('load', function() {
-            console.log('Page loaded, setting up gallery in 500ms');
-            setTimeout(setupMobileGallery, 500);
+            if (window.innerWidth <= 767 && !gallerySetup) {
+                console.log('Page loaded, setting up gallery as backup');
+                setupMobileGallery();
+            }
         });
     </script>
 
